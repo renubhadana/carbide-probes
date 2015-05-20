@@ -1,0 +1,42 @@
+/* =Navigation
+----------------------------------------------- */
+.navbar {
+  background: none;
+  margin-top: 1em;
+  ul {
+    float: right;
+    li {
+      line-height: 1em;
+      &.menu-item-has-children {
+        a {
+          &:after {
+
+          }
+        }
+      }
+      &:hover {
+        background: transparent;
+        a {
+          background: transparent !important;
+        }
+        .dropdown {
+          ul {
+            float: left;
+          }
+        }
+      }
+      & > a {
+        color: $font-color;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 0.9em;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-shadow: none;
+        line-height: 6em;
+        &:hover {
+          background: transparent;
+        }
+      }
+    }
+  }
+}

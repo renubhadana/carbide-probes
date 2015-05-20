@@ -1,0 +1,47 @@
+#masthead {
+  background: url("assets/img/header_bg.png") no-repeat;
+  background-size: cover;
+  // temp
+  min-height: 620px;
+}
+
+#upper-header {
+  background-color: #000;
+  color: #fff;
+  padding: 8px;
+  font-weight: 600;
+  a {
+    color: #fff;
+  }
+  #menu-upper-header {
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    float: right;
+    li {
+      display: inline;
+      padding: 10px 20px;
+      &:last-child {
+        background-color: #ef4c34;
+      }
+    }
+  }
+}
+
+.header-title {
+  margin-top: 6em;
+  h1 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 5em;
+    border-left: solid 5px $orange;
+    padding: 0 10px;
+    margin-bottom: 0;
+    color: #000;
+    line-height: 0.8;
+  }
+  h2 {
+    font-size: 2.5em;
+  }
+}

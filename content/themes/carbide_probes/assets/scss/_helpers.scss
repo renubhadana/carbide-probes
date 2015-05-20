@@ -1,0 +1,14 @@
+.category-container {
+  width: 33.3333333%;
+  float: left;
+  .category-content {
+    min-height: 200px;
+    border: solid 1px #ccc;
+    box-sizing: border-box;
+    margin: 1em;
+    padding: 1em;
+    img {
+      display: block;
+    }
+  }
+}
