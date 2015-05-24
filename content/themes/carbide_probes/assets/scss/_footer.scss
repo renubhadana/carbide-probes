@@ -1,7 +1,49 @@
+.footer-widget-container {
+  border-top: solid 1px #c2c2c2;
+  padding-top: 1em;
+  margin-top: 2em;
+  color: #424240;
+  @media(max-width: 767px) {
+    border: none;
+    margin-top: 1em;
+  }
+  .footer-widget-content {
+    float: left;
+    width: 33.3333333%;
+    padding: 1em;
+    &.newsletter {
+      p {
+        padding-top: 1em;
+      }
+    }
+    &.contact-info {
+      @media(max-width: 767px) {
+        width: 100%;
+      }
+      ul {
+        li {
+          i {
+            color: $red-orange;
+            font-size: 1.2em;
+            padding-right: 0.25em;
+          }
+          a {
+            color: #424240;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 footer {
   background: $font-color;
   padding: 0.5em 0;
   color: #fff;
+  font-size: 0.9em;
   .footer-menu {
     ul.menu {
       float: right;

@@ -15,6 +15,13 @@
 require_once get_template_directory() . '/inc/lib.php';
 require_once get_template_directory() . '/inc/helpers.php';
 require_once get_template_directory() . '/inc/gumby-nav-walker.php';
+
+/**
+ * Include some useful widgets
+ */
+require_once get_template_directory() . '/inc/widgets/catalog-download.php';
+require_once get_template_directory() . '/inc/widgets/quote.php';
+
 /**
  * Sets up the theme and registers support for WordPress features
  *
@@ -66,6 +73,7 @@ function rdmgumby_register_nav_menus() {
 	register_nav_menus( array(
 		'primary' => __( 'Primary Menu', 'rdmgumby' ),
 		'upper_header' => __( 'Upper Header', 'rdmgumby' ),
+        'upper_header_mobile' => __( 'Upper Header Mobile', 'rdmgumby' ),
         'footer_menu' => __( 'Footer Menu', 'rdmgumby' )
 	) );
 }
@@ -86,6 +94,16 @@ function rdmgumby_widgets_init() {
 		'before_title'  => '<h1 class="widget-title">',
 		'after_title'   => '</h1>'
 	) );
+
+    register_sidebar( array(
+        'name'          => __( 'Home Page Widgets', 'rdmgumby' ),
+        'id'            => 'home-page-widgets',
+        'description'   => 'Widgets for the Home Page',
+        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</aside>',
+        'before_title'  => '<h1 class="widget-title">',
+        'after_title'   => '</h1>'
+    ) );
 }
 
 /**

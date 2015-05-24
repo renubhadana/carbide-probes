@@ -1,2 +1,27 @@
 /* =Widgets
 ----------------------------------------------- */
+
+.widget-title {
+  font-size: 1.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.testimonial {
+  border-bottom: solid 1px #c2c2c2;
+  margin: 0 0.5em;
+  &:last-child {
+    border-bottom: none;
+  }
+  blockquote {
+    border-left: none;
+    padding: 1em 0 0 0;
+    p {
+      color: #424240;
+    }
+    cite {
+      font-size: 1em;
+      color: $red-orange;
+    }
+  }
+}

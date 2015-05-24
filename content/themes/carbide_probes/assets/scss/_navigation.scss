@@ -3,8 +3,19 @@
 .navbar {
   background: none;
   margin-top: 1em;
+  .logo {
+    @media(max-width: 992px) {
+      width: 100% !important;
+      text-align: center;
+    }
+  }
   ul {
     float: right;
+    @media(max-width: 992px) {
+      float: none;
+      text-align: center;
+      width: 100%;
+    }
     li {
       line-height: 1em;
       &.menu-item-has-children {

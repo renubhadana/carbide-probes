@@ -1,0 +1,190 @@
+.home-page-widgets {
+  margin-top: 1em;
+  aside {
+    float: left;
+    margin: 0;
+    min-height: 300px;
+    &.widget_quote_widget {
+      width: 66.6666666%;
+      .quote-widget-content {
+        background: #ebebeb;
+        padding: 3em 2em;
+        margin-right: 1em;
+        min-height: 300px;
+        blockquote {
+          border: none;
+          p {
+            font-size: 2em;
+            @media(max-width: 992px) {
+              font-size: 1.5em;
+            }
+            font-weight: 300;
+            line-height: 1.2;
+            color: #424240;
+          }
+          cite {
+            font-family: 'Shadows Into Light Two', cursive;
+            color: $red-orange;
+            font-size: 2em;
+          }
+        }
+      }
+    }
+    &.widget_catalog_download_widget {
+      width: 33.3333333%;
+      border: solid 1px #ccc;
+      padding: 1em;
+      position: relative;
+      @media(max-width: 1235px) {
+        overflow: hidden;
+      }
+      h1 {
+        font-size: 1.5em;
+        text-align: center;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      p {
+        width: 66%;
+        margin-top: 1em;
+        margin-bottom: 4em;
+      }
+      .catalog-img {
+        position: absolute;
+        bottom: 0;
+        right: -50px;
+        @media(max-width: 1235px) {
+          z-index: -9999;
+        }
+      }
+    }
+  }
+}
+
+.home-middle-blocks {
+  position: relative;
+  list-style: none;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  figure {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 10px 1%;
+    min-width: 320px;
+    max-width: 100%;
+    max-height: 360px;
+    width: 100%;
+    background: $red-orange;
+    text-align: center;
+    cursor: pointer;
+    h2 {
+      word-spacing: -0.15em;
+      font-weight: 700;
+      font-size: 1.35em;
+      @media(max-width: 992px) {
+        font-size: 1em;
+      }
+      margin: 0;
+      color: #000;
+    }
+    p {
+      margin: 0;
+      letter-spacing: 1px;
+      font-size: 68.5%;
+      max-width: 200px;
+    }
+    img {
+      position: relative;
+      display: block;
+      min-height: 100%;
+      max-width: 100%;
+      width: 100%;
+      opacity: 0.8;
+    }
+    figcaption {
+      padding: 2em;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 1.25em;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      & > a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        text-indent: 200%;
+        white-space: nowrap;
+        font-size: 0;
+        opacity: 0;
+      }
+      &:before {
+        pointer-events: none;
+      }
+      &:after {
+        pointer-events: none;
+      }
+    }
+    &.effect-ruby {
+      background-color: transparent;
+      -webkit-transition: background 0.35s, -webkit-transform 0.35s;
+      transition: background 0.35s, transform 0.35s;
+      img {
+        opacity: 0.2;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: scale(1.15);
+        transform: scale(1.15);
+      }
+      &:hover {
+        background: $red-orange;
+        background: repeating-linear-gradient(-45deg, $orange, $orange 9px, $red-orange 10px, $red-orange 12px);
+        img {
+          opacity: 0.1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+        h2 {
+          -webkit-transform: translate3d(0,-20px,0);
+          transform: translate3d(0,-20px,0);
+          color: #fff;
+        }
+        p {
+          opacity: 1;
+          -webkit-transform: translate3d(0,0,0) scale(1);
+          transform: translate3d(0,0,0) scale(1);
+        }
+      }
+      h2 {
+        margin-top: 10%;
+        @media(max-width: 992px) {
+          margin-top: 3%;
+        }
+        -webkit-transition: -webkit-transform 0.35s;
+        transition: transform 0.35s;
+        -webkit-transform: translate3d(0,20px,0);
+        transform: translate3d(0,20px,0);
+      }
+      p {
+        margin: 1em auto 0;
+        padding: 1em;
+        font-weight: 600;
+        border: 1px solid #fff;
+        opacity: 0;
+        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+        transition: opacity 0.35s, transform 0.35s;
+        -webkit-transform: translate3d(0,20px,0) scale(1.1);
+        transform: translate3d(0,20px,0) scale(1.1);
+      }
+    }
+  }
+}
