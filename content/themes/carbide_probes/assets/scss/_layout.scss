@@ -55,3 +55,52 @@ aside {
         margin-top: em($small);
     }
 }
+
+article {
+  &.post {
+    margin: 1em 0;
+    border-top: solid 1px #ccc;
+    padding-top: 2em;
+  }
+  &:before {
+    content: "";
+    display: table;
+  }
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+.featured-image {
+  img {
+    margin: 1.5em 0;
+    border: solid 1px #ccc;
+    padding: 0.25em;
+  }
+}
+
+#content {
+  .row {
+    &:first-child {
+      article.post {
+        border-top: none;
+      }
+    }
+  }
+}
+
+.alignleft {
+  float: left;
+}
+
+.alignright {
+  float: right;
+}
+
+#sidebar {
+  aside {
+    width: 100%;
+  }
+}

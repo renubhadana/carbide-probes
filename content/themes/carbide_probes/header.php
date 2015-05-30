@@ -12,7 +12,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php wp_title( '|', true, 'right' ); ?></title>
+	<title><?php wp_title( '|', true, 'right' ); ?><?php bloginfo('name'); ?></title>
 
 	<link rel="author" href="<?php get_template_directory_uri(); ?>/inc/humans.txt">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
@@ -28,7 +28,13 @@
     <header id="mobileMasthead" class="site-header visible-xs" role="banner">
         <div class="row navbar" id="mobileNav1">
             <!-- Toggle for mobile navigation, targeting the <ul> -->
-            <a class="toggle" gumby-trigger="#mobileNav1 > ul" href="#"><i class="icon-menu"></i></a>
+            <!--<a class="toggle" gumby-trigger="#mobileNav1 > ul" href="#"><i class="icon-menu"></i></a>-->
+            <a href="#" class="mobile-menu-button toggle" gumby-trigger="#mobileNav1 > ul">
+                <div class="mobile-menu-button-wrapper">
+                    <div class="line one"><span></span></div>
+                    <div class="line two"><span></span></div>
+                </div>
+            </a>
             <h1 class="logo">
                 <a href="/">
                     <img src="<?php echo ot_get_option('company_logo'); ?>" alt="Carbide Probes Logo">

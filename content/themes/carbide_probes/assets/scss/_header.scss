@@ -113,8 +113,68 @@
   }
   h2 {
     font-size: 2.5em;
+    color: $header-font-color-dark;
+    font-weight: 300;
     @media(max-width: 767px) {
       font-size: 1.25em;
     }
+  }
+}
+
+.mobile-menu-button-wrapper {
+  width: em($larger);
+  height: em($large);
+  position: absolute;
+  top: 0;
+  right: 40%;
+
+  .line span {
+    width: 50px;
+    height: 6px;
+    position: absolute;
+    background-color: $red-orange;
+    border-radius: 3px;
+  }
+}
+
+.mobile-menu-button {
+  .line.one {
+    transform: translateY(0);
+    transition: transform 0.25s 0.25s;
+  }
+
+  .line.two {
+    transform: translateY(em($small));
+  }
+
+  .line.one span {
+    transform: rotate(0);
+    transition: transform 0.25s;
+  }
+
+  .line.two span {
+    transform: rotate(0);
+    transition: transform 0.25s;
+  }
+}
+
+.mobile-menu-button.active {
+  .line.one {
+    transform: translateY(em($small));
+    transition: transform 0.25s;
+  }
+
+  .line.two {
+    transition: transform 0.25s;
+  }
+
+  .line.one span {
+    transform: rotate(45deg);
+    transition: transform 0.25s 0.25s;
+  }
+
+  .line.two span {
+    transform: rotate(-45deg);
+    transition: transform 0.25s 0.25s;
   }
 }

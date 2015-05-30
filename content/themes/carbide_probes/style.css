@@ -1743,6 +1743,20 @@ aside:first-child { margin-left: 6.36161%; }
 .l-v-margin.medium { margin-top: 1.125em; }
 .l-v-margin.short { margin-top: 0.625em; }
 
+article.post { margin: 1em 0; border-top: solid 1px #ccc; padding-top: 2em; }
+article:before { content: ""; display: table; }
+article:after { content: ""; display: table; clear: both; }
+
+.featured-image img { margin: 1.5em 0; border: solid 1px #ccc; padding: 0.25em; }
+
+#content .row:first-child article.post { border-top: none; }
+
+.alignleft { float: left; }
+
+.alignright { float: right; }
+
+#sidebar aside { width: 100%; }
+
 /* =Modules
 ----------------------------------------------- */
 /* === GENERAL PURPOSE === */
@@ -1829,23 +1843,23 @@ span.right, li.right { float: right; }
 
 .typography-light { color: #555555; }
 .typography-light a { color: #d04526; }
-.typography-light a:hover { color: #c03d20; }
+.typography-light a:hover { color: #c03d20; text-decoration: underline; }
 .typography-light h1, .typography-light h2, .typography-light h3, .typography-light h4, .typography-light h5, .typography-light h6 { color: #444444; }
 
 .typography-dark { color: #555555; }
 .typography-dark a { color: #d04526; }
 .typography-dark a:hover { color: #c03d20; }
-.typography-dark h1, .typography-dark h2, .typography-dark h3, .typography-dark h4, .typography-dark h5, .typography-dark h6 { color: #444444; }
+.typography-dark h1, .typography-dark h2, .typography-dark h3, .typography-dark h4, .typography-dark h5, .typography-dark h6 { color: #424240; }
 
 h1, h2, h3, h4, h5, h6 { font-family: "Open Sans"; color: inherit; }
 
-h1 { font-size: 60px; font-size: 3.75rem; }
+h1 { font-size: 60px; font-size: 3.75rem; font-weight: 700; color: #424240; }
 
-h2 { font-size: 48px; font-size: 3rem; }
+h2 { font-size: 48px; font-size: 3rem; font-weight: 600; color: #ef4c34; }
 
-h3 { font-size: 36px; font-size: 2.25rem; }
+h3 { font-size: 36px; font-size: 2.25rem; text-transform: uppercase; font-weight: 600; }
 
-h4 { font-size: 30px; font-size: 1.875rem; }
+h4 { font-size: 30px; font-size: 1.875rem; font-weight: 600; }
 
 h5 { font-size: 24px; font-size: 1.5rem; }
 
@@ -1867,6 +1881,23 @@ p.bold { font-weight: 600; }
 .lowercase { text-transform: lowercase; }
 
 p.small, .small p { font-size: 14px; font-size: 0.875rem; }
+
+blockquote p { font-weight: 100; }
+
+article { width: 100%; float: none; margin-left: 0px; }
+
+.pagination ul { display: inline-block; border-radius: 4px; }
+.pagination ul li { display: inline; }
+.pagination ul li a, .pagination ul li span { float: left; padding: 4px 12px; line-height: 20.8px; text-decoration: none; border: 1px solid #f2f2f2; border-left-width: 0; }
+.pagination ul li a:hover, .pagination ul li a:focus { background-color: #f2f2f2; }
+.pagination ul li:first-child a, .pagination ul li:first-child span { border-left-width: 1px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+.pagination ul li:last-child a, .pagination ul li:last-child span { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+.pagination ul .active a, .pagination ul .active span { background-color: #f2f2f2; color: #cccccc; cursor: default; }
+.pagination ul .disabled span, .pagination ul .disabled a, .pagination ul .disabled a:hover, .pagination ul .disabled a:focus { color: #cccccc; background-color: transparent; cursor: default; }
+
+.pagination-center { text-align: center; }
+
+.pagination-right { text-align: right; }
 
 #masthead { background: url("assets/img/header_bg.png") no-repeat; background-size: cover !important; min-height: 620px; }
 
@@ -1898,8 +1929,21 @@ p.small, .small p { font-size: 14px; font-size: 0.875rem; }
 .header-title { margin-top: 6em; }
 .header-title h1 { text-transform: uppercase; font-weight: 700; font-size: 5em; border-left: solid 5px #ff842e; padding: 0 10px; margin-bottom: 0; color: #000; line-height: 0.8; }
 @media (max-width: 767px) { .header-title h1 { font-size: 2.25em; } }
-.header-title h2 { font-size: 2.5em; }
+.header-title h2 { font-size: 2.5em; color: #424240; font-weight: 300; }
 @media (max-width: 767px) { .header-title h2 { font-size: 1.25em; } }
+
+.mobile-menu-button-wrapper { width: 1.875em; height: 1.625em; position: absolute; top: 0; right: 40%; }
+.mobile-menu-button-wrapper .line span { width: 50px; height: 6px; position: absolute; background-color: #ef4c34; border-radius: 3px; }
+
+.mobile-menu-button .line.one { -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0); -webkit-transition: -webkit-transform 0.25s 0.25s; transition: transform 0.25s 0.25s; }
+.mobile-menu-button .line.two { -webkit-transform: translateY(0.625em); -ms-transform: translateY(0.625em); transform: translateY(0.625em); }
+.mobile-menu-button .line.one span { -webkit-transform: rotate(0); -ms-transform: rotate(0); transform: rotate(0); -webkit-transition: -webkit-transform 0.25s; transition: transform 0.25s; }
+.mobile-menu-button .line.two span { -webkit-transform: rotate(0); -ms-transform: rotate(0); transform: rotate(0); -webkit-transition: -webkit-transform 0.25s; transition: transform 0.25s; }
+
+.mobile-menu-button.active .line.one { -webkit-transform: translateY(0.625em); -ms-transform: translateY(0.625em); transform: translateY(0.625em); -webkit-transition: -webkit-transform 0.25s; transition: transform 0.25s; }
+.mobile-menu-button.active .line.two { -webkit-transition: -webkit-transform 0.25s; transition: transform 0.25s; }
+.mobile-menu-button.active .line.one span { -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); -webkit-transition: -webkit-transform 0.25s 0.25s; transition: transform 0.25s 0.25s; }
+.mobile-menu-button.active .line.two span { -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); transform: rotate(-45deg); -webkit-transition: -webkit-transform 0.25s 0.25s; transition: transform 0.25s 0.25s; }
 
 .footer-widget-container { border-top: solid 1px #c2c2c2; padding-top: 1em; margin-top: 2em; color: #424240; }
 @media (max-width: 767px) { .footer-widget-container { border: none; margin-top: 1em; } }
@@ -1953,6 +1997,8 @@ footer .footer-menu ul.menu li a { color: #fff; }
 @media (max-width: 767px) { .visible-xs { display: block; } }
 
 @media (max-width: 767px) { .mobile-no-padding { padding: 0; } }
+
+#disqus_thread { max-width: 1160px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 1em; }
 
 .home-page-widgets { margin-top: 1em; }
 .home-page-widgets aside { float: left; margin: 0; min-height: 300px; }

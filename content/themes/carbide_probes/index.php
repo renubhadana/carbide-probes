@@ -22,11 +22,17 @@ get_header(); ?>
 					 * If you want to override this in a child theme, then include a file
 					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 					 */
-                    var_dump(get_post_format());
 					get_template_part( 'content', get_post_format() );
 				?>
 
 			<?php endwhile; ?>
+
+            <div class="row">
+                <div class="sixteen columns">
+                    <div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
+                    <div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
+                </div>
+            </div>
 
 		<?php else : ?>
 

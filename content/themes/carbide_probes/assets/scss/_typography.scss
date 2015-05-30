@@ -18,6 +18,7 @@
 
   a:hover {
     color: $body-link-hover-color;
+    text-decoration: underline;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -48,20 +49,27 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   @include font-size(60px);
+  font-weight: 700;
+  color: $header-font-color-dark;
 }
 
 h2 {
   // 48px
   @include font-size($xxlarge);
+  font-weight: 600;
+  color: $red-orange;
 }
 
 h3 {
   @include font-size(36px);
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 h4 {
   // 30px
   @include font-size($larger);
+  font-weight: 600;
 }
 
 h5 {
@@ -110,4 +118,16 @@ p {
 p.small,
 .small p {
   @include font-size(14px);
+}
+
+blockquote {
+  p {
+    font-weight: 100;
+  }
+}
+
+article {
+  width: 100%;
+  float: none;
+  margin-left: 0px;
 }
