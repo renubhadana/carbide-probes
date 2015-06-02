@@ -25,3 +25,16 @@
     }
   }
 }
+
+aside.widget {
+  ul {
+    margin-left: 0;
+    li {
+      border-top: solid 1px #ccc;
+      padding: 5px 0;
+      &:last-child {
+        border-bottom: solid 1px #ccc;
+      }
+    }
+  }
+}

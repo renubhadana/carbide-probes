@@ -1749,6 +1749,7 @@ article:after { content: ""; display: table; clear: both; }
 
 .featured-image img { margin: 1.5em 0; border: solid 1px #ccc; padding: 0.25em; }
 
+#content { margin-top: 1em; }
 #content .row:first-child article.post { border-top: none; }
 
 .alignleft { float: left; }
@@ -1836,6 +1837,10 @@ span.right, li.right { float: right; }
 .testimonial blockquote { border-left: none; padding: 1em 0 0 0; }
 .testimonial blockquote p { color: #424240; }
 .testimonial blockquote cite { font-size: 1em; color: #ef4c34; }
+
+aside.widget ul { margin-left: 0; }
+aside.widget ul li { border-top: solid 1px #ccc; padding: 5px 0; }
+aside.widget ul li:last-child { border-bottom: solid 1px #ccc; }
 
 /* =Typography
 ----------------------------------------------- */
@@ -1961,7 +1966,7 @@ footer .footer-menu ul.menu li:first-child { padding-left: 0; }
 footer .footer-menu ul.menu li:last-child { padding-right: 0; }
 footer .footer-menu ul.menu li a { color: #fff; }
 
-.search-form { margin-top: -30px; }
+.search-form { margin-top: -45px; }
 .search-form input[type=search] { height: 60px; border-radius: 0 !important; }
 .search-form button.btn { width: 17%; height: 60px !important; border-radius: 0 !important; }
 
@@ -1986,7 +1991,7 @@ footer .footer-menu ul.menu li a { color: #fff; }
 .custom-quote-widget-container .custom-quote-widget-content { background: #009eb4; min-height: 210px; border: solid 1px #ccc; box-sizing: border-box; margin: 0.5em 0 0.5em 0.5em; padding: 0.5em; }
 @media (max-width: 992px) { .custom-quote-widget-container .custom-quote-widget-content { min-height: 250px; } }
 @media (max-width: 767px) { .custom-quote-widget-container .custom-quote-widget-content { margin: 0; padding: 0; background: #fff; min-height: 0; border-top: solid 1px #ccc; border-bottom: solid 1px #ccc; border-left: none; border-right: none; padding: 0.5em; } }
-.custom-quote-widget-container .custom-quote-widget-content h2 { font-weight: 700; text-transform: uppercase; font-size: 1.75em; }
+.custom-quote-widget-container .custom-quote-widget-content h2 { font-weight: 700; text-transform: uppercase; font-size: 1.75em; color: #fff; }
 @media (max-width: 767px) { .custom-quote-widget-container .custom-quote-widget-content h2 { color: #009eb4; font-size: 1.25em; } }
 .custom-quote-widget-container .custom-quote-widget-content p { font-size: 1.25em; }
 @media (max-width: 767px) { .custom-quote-widget-container .custom-quote-widget-content p { color: #424240; font-size: 1em; text-align: center; } }
@@ -2034,3 +2039,20 @@ footer .footer-menu ul.menu li a { color: #fff; }
 .home-middle-blocks figure.effect-ruby h2 { margin-top: 10%; -webkit-transition: -webkit-transform 0.35s; transition: transform 0.35s; -webkit-transform: translate3d(0, 20px, 0); transform: translate3d(0, 20px, 0); }
 @media (max-width: 992px) { .home-middle-blocks figure.effect-ruby h2 { margin-top: 3%; } }
 .home-middle-blocks figure.effect-ruby p { margin: 1em auto 0; padding: 1em; font-weight: 600; border: 1px solid #fff; opacity: 0; -webkit-transition: opacity 0.35s, -webkit-transform 0.35s; transition: opacity 0.35s, transform 0.35s; -webkit-transform: translate3d(0, 20px, 0) scale(1.1); transform: translate3d(0, 20px, 0) scale(1.1); }
+
+.woocommerce #content div.product div.summary, .woocommerce div.product div.summary, .woocommerce-page #content div.product div.summary, .woocommerce-page div.product div.summary { float: none; width: 100%; padding-left: 1em; }
+
+.woocommerce #content div.product div.images, .woocommerce div.product div.images, .woocommerce-page #content div.product div.images, .woocommerce-page div.product div.images { float: none; width: 100%; border: solid 1px #ccc; padding: 0.5em; }
+
+.woocommerce .quantity .qty { text-align: center; height: 38px; width: 70px; }
+
+#tab-description h2 { display: none; }
+
+#tab-additional_information h2 { font-size: 2em; text-transform: uppercase; }
+
+.related.products h2 { font-size: 2em; text-transform: uppercase; margin-bottom: 1em; }
+
+.woocommerce .related ul li.product, .woocommerce .related ul.products li.product, .woocommerce .upsells.products ul li.product, .woocommerce .upsells.products ul.products li.product, .woocommerce-page .related ul li.product, .woocommerce-page .related ul.products li.product, .woocommerce-page .upsells.products ul li.product, .woocommerce-page .upsells.products ul.products li.product { width: 33.333333%; }
+@media (max-width: 767px) { .woocommerce .related ul li.product, .woocommerce .related ul.products li.product, .woocommerce .upsells.products ul li.product, .woocommerce .upsells.products ul.products li.product, .woocommerce-page .related ul li.product, .woocommerce-page .related ul.products li.product, .woocommerce-page .upsells.products ul li.product, .woocommerce-page .upsells.products ul.products li.product { width: 100%; } }
+
+@media (max-width: 767px) { .cart .btn { width: auto; } }
