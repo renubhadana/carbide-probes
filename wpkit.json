@@ -1,0 +1,27 @@
+{
+	repo: "git@gitlab.com:Gaijin/carbide-probes.git",
+	linkedFiles: [
+		"wp-config.php",
+		".htaccess"
+	],
+	linkedDirs: [
+		"content/uploads"
+	],
+	local: {
+		url: “carbide.dev”,
+		dbName: “carbide_probes_dev”,
+		dbUser: “root”,
+		dbPass: “root”
+	},
+	production: {
+		host: "104.131.175.228",
+		username: "serverpilot",
+		url: "http://build.inthera.in/carbide",
+		branch: "staging",
+		privatePath: "/srv/users/serverpilot/apps/build/carbide",
+		publicPath: "/srv/users/serverpilot/apps/build/public/carbide",
+		dbName: "carbide",
+		dbUser: "9821e3581452",
+		dbPass: "659ce71d198302f7"
+	}
+}
