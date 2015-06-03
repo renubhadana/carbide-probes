@@ -220,7 +220,7 @@ add_filter( 'get_the_excerpt', 'rdmgumby_trim_excerpt' );
 // Sets up the theme color
 // this is used as the ms tile background color and the chrome toolbar color
 global $favicon_theme_color;
-$favicon_theme_color = '#ffffff';
+$favicon_theme_color = '#424240';
 // Adds generated favicons to theme from end and backend
 // http://realfavicongenerator.net/
 add_action( 'wp_head', 'rdmgumby_output_favicons' );
