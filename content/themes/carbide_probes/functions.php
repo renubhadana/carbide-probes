@@ -114,7 +114,7 @@ function rdmgumby_widgets_init() {
  * This includes the free version (4.3.9) of ACF and is included with this theme
  * Comment this out if you are using ACF Pro
  */
-include_once( get_template_directory() . '/inc/advanced-custom-fields/acf.php' );
+//include_once( get_template_directory() . '/inc/advanced-custom-fields/acf.php' );
 
 /**
  * This includes ACF Pro, but you must install into ./inc/ yourself
