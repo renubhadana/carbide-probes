@@ -18,18 +18,13 @@
                 <ul>
                     <li><i class="fa fa-phone"></i>&nbsp; <?php echo generate_phone_link(ot_get_option('footer_phone')); ?></li>
                     <li><i class="fa fa-fax"></i> <?php echo generate_phone_link(ot_get_option('footer_fax')); ?></li>
-                    <li><i class="fa fa-envelope"></i> <a href="mailto:<?php echo ot_get_option('footer_email'); ?>"><?php echo ot_get_option('footer_email'); ?></a></li>
+                    <li><i class="fa fa-envelope"></i> <a href="mailto:<?php echo antispambot( ot_get_option('footer_email') ); ?>"><?php echo ot_get_option('footer_email'); ?></a></li>
                 </ul>
             </div>
             <div class="footer-widget-content newsletter hidden-xs">
                 <h1 class="widget-title">Newsletter</h1>
                 <p>Get the latest news! Sign up for our newsletter to stay current!</p>
-                <form action="#">
-                    <div class="field">
-                        <input class="input" type="email" name="email" placeholder="Email" />
-                    </div>
-                    <button type="submit" class="btn orange-btn">Submit</button>
-                </form>
+                <?php gravity_form( "Newsletter", false, false, false ); ?>
             </div>
             <div class="footer-widget-content hidden-xs">
                 <h1 class="widget-title">Testimonials</h1>

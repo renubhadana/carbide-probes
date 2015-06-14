@@ -1,2 +1,21 @@
 /* =Forms
 ----------------------------------------------- */
+
+.gform_wrapper {
+  form {
+    &#gform_1 {
+      max-width: 600px;
+    }
+    input {
+      border: solid 1px #ccc;
+      border-radius: 3px;
+      width: 100% !important;
+    }
+    textarea {
+      border: solid 1px #ccc;
+      border-radius: 3px;
+      margin-top: 10px;
+      width: 100% !important;
+    }
+  }
+}

@@ -138,6 +138,14 @@ function acfSettingsDir( $dir )
 include_once( get_template_directory() . '/inc/advanced-custom-fields-pro/acf.php' );
 */
 
+// Gravity Forms
+add_filter( 'gform_enable_field_label_visibility_settings', '__return_true' );
+
+add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
+function form_submit_button( $button, $form ) {
+    return "<button class='btn orange-btn' id='gform_submit_button_{$form['id']}'><span>Submit</span></button>";
+}
+
 /**
  * RICG Responsive Images plugin v2.1.1
  * It seems like this will change in the future to become part of the WordPress core,

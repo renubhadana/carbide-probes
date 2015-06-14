@@ -1815,6 +1815,10 @@ span.right, li.right { float: right; }
 
 /* =Forms
 ----------------------------------------------- */
+.gform_wrapper form#gform_1 { max-width: 600px; }
+.gform_wrapper form input { border: solid 1px #ccc; border-radius: 3px; width: 100% !important; }
+.gform_wrapper form textarea { border: solid 1px #ccc; border-radius: 3px; margin-top: 10px; width: 100% !important; }
+
 /* =Navigation
 ----------------------------------------------- */
 .navbar { background: none; margin-top: 1em; }
@@ -1838,6 +1842,7 @@ span.right, li.right { float: right; }
 .testimonial blockquote p { color: #424240; }
 .testimonial blockquote cite { font-size: 1em; color: #ef4c34; }
 
+aside.widget { margin-left: 0; width: 100%; }
 aside.widget ul { margin-left: 0; }
 aside.widget ul li { border-top: solid 1px #ccc; padding: 5px 0; }
 aside.widget ul li:last-child { border-bottom: solid 1px #ccc; }

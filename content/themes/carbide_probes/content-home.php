@@ -11,15 +11,17 @@
         $wimage = wp_get_attachment_url( $wthumbnail_id );
         ?>
         <div class="category-container">
-            <div class="category-content">
-                <?php if($wimage!=""):?>
-                    <div class="category-image-container">
-                        <img src="<?php echo $wimage?>">
-                    </div>
-                <?php endif;?>
-                <a href="<?php echo get_term_link( $wcatTerm->slug, $wcatTerm->taxonomy ); ?>"><?php echo $wcatTerm->name; ?> <span class="right-caret"></span></a>
-                <div style="clear: both;"></div>
-            </div>
+            <a href="<?php echo get_term_link( $wcatTerm->slug, $wcatTerm->taxonomy ); ?>">
+                <div class="category-content">
+                    <?php if($wimage!=""):?>
+                        <div class="category-image-container">
+                            <img src="<?php echo $wimage?>">
+                        </div>
+                    <?php endif;?>
+                    <a href="<?php echo get_term_link( $wcatTerm->slug, $wcatTerm->taxonomy ); ?>"><?php echo $wcatTerm->name; ?> <span class="right-caret"></span></a>
+                    <div style="clear: both;"></div>
+                </div>
+            </a>
         </div>
     <?php endforeach; ?>
     <div class="custom-quote-widget-container hidden-xs">

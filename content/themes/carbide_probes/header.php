@@ -36,7 +36,7 @@
                 </div>
             </a>
             <h1 class="logo">
-                <a href="/">
+                <a href="<?php echo home_url(); ?>">
                     <img src="<?php echo ot_get_option('company_logo'); ?>" alt="Carbide Probes Logo">
                 </a>
             </h1>
@@ -73,7 +73,7 @@
 			<!-- Toggle for mobile navigation, targeting the <ul> -->
 			<a class="toggle" gumby-trigger="#nav1 > ul" href="#"><i class="icon-menu"></i></a>
 			<h1 class="four columns logo">
-				<a href="/">
+				<a href="<?php echo home_url(); ?>">
                     <img src="<?php echo ot_get_option('company_logo'); ?>" alt="Carbide Probes Logo">
 				</a>
 			</h1>
