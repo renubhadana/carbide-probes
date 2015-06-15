@@ -18,7 +18,7 @@
                 <ul>
                     <li><i class="fa fa-phone"></i>&nbsp; <?php echo generate_phone_link(ot_get_option('footer_phone')); ?></li>
                     <li><i class="fa fa-fax"></i> <?php echo generate_phone_link(ot_get_option('footer_fax')); ?></li>
-                    <li><i class="fa fa-envelope"></i> <a href="mailto:<?php echo antispambot( ot_get_option('footer_email') ); ?>"><?php echo ot_get_option('footer_email'); ?></a></li>
+                    <li><i class="fa fa-envelope"></i> <a href="mailto:<?php echo antispambot( ot_get_option('footer_email') ); ?>"><?php echo antispambot( ot_get_option('footer_email') ); ?></a></li>
                 </ul>
             </div>
             <div class="footer-widget-content newsletter hidden-xs">
