@@ -104,6 +104,26 @@ function rdmgumby_widgets_init() {
         'before_title'  => '<h1 class="widget-title">',
         'after_title'   => '</h1>'
     ) );
+
+	register_sidebar( array(
+		'name'          => __( 'Sidebar Left Widgets', 'rdmgumby' ),
+		'id'            => 'sidebar-left-widgets',
+		'description'   => 'Widgets for the Sidebar Left Template',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>'
+	) );
+
+	register_sidebar( array(
+		'name'          => __( 'Sidebar Right Widgets', 'rdmgumby' ),
+		'id'            => 'sidebar-right-widgets',
+		'description'   => 'Widgets for the Sidebar Right Template',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>'
+	) );
 }
 
 /**
