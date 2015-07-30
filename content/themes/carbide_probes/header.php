@@ -51,7 +51,7 @@
             <div class="sixteen columns">
                 <div class="header-title">
                     <h1>Find Exactly<br>What You Need.</h1>
-                    <h2>Finding the right gage tip or stylus<br>has never been easier.</h2>
+                    <h2>Finding the right gauge tip or stylus<br>has never been easier.</h2>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
             <div class="sixteen columns">
                 <div class="header-title">
                     <h1>Find Exactly<br>What You Need.</h1>
-                    <h2>Finding the right gage tip or stylus<br>has never been easier.</h2>
+                    <h2>Finding the right gauge tip or stylus<br>has never been easier.</h2>
                 </div>
             </div>
         </div>

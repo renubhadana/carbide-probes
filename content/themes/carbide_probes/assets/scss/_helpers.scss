@@ -8,6 +8,7 @@
     text-align: left;
   }
   &:nth-child(3n+1) {
+    clear: left;
     .category-content {
       margin-left: 0;
     }
@@ -69,6 +70,7 @@
     img {
       display: block;
       margin: 0 auto;
+      height: 200px;
     }
     a {
       color: $font-color;
