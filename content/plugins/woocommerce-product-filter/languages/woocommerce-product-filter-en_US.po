@@ -1,0 +1,753 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Product Filter v2.8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2015-07-28 09:46:07+0000\n"
+"Last-Translator: admin <ahm.farhad@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: helper.php:72
+#: options.php:226
+#: widget/category.php:70
+#: widget/nonh_category.php:68
+#@ woocommerce-product-filter
+msgid "Category"
+msgstr ""
+
+#: helper.php:73
+#: options.php:227
+#: widget/attribute.php:72
+#: widget/image_attribute.php:59
+#@ woocommerce-product-filter
+msgid "Attribute"
+msgstr ""
+
+#: helper.php:74
+#: options.php:225
+#@ woocommerce-product-filter
+msgid "All Shop Archive"
+msgstr ""
+
+#: helper.php:75
+#: woocommerce-product-filter.php:246
+#@ woocommerce-product-filter
+msgid "Remove"
+msgstr ""
+
+#: helper.php:266
+#@ woocommerce-product-filter
+msgid "Any category"
+msgstr ""
+
+#: helper.php:332
+#@ woocommerce-product-filter
+msgid "Rate"
+msgstr ""
+
+#: helper.php:333
+#@ woocommerce-product-filter
+msgid "Price"
+msgstr ""
+
+#: helper.php:334
+#@ woocommerce-product-filter
+msgid "Weight"
+msgstr ""
+
+#: helper.php:335
+#@ woocommerce-product-filter
+msgid "Total Sales"
+msgstr ""
+
+#: helper.php:336
+#@ woocommerce-product-filter
+msgid "Length"
+msgstr ""
+
+#: helper.php:337
+#: widget/image_attribute.php:115
+#@ woocommerce-product-filter
+msgid "Width"
+msgstr ""
+
+#: helper.php:338
+#: widget/image_attribute.php:123
+#@ woocommerce-product-filter
+msgid "Height"
+msgstr ""
+
+#: html.php:275
+#@ woocommerce-product-filter
+msgid "Upload Image"
+msgstr ""
+
+#: html.php:318
+#: html.php:634
+#@ woocommerce-product-filter
+msgid "Any"
+msgstr ""
+
+#: html.php:408
+#@ woocommerce-product-filter
+msgid "Any Category"
+msgstr ""
+
+#: html.php:468
+#@ woocommerce-product-filter
+msgid "Default sorting"
+msgstr ""
+
+#: html.php:469
+#@ woocommerce-product-filter
+msgid "Sort by popularity"
+msgstr ""
+
+#: html.php:470
+#@ woocommerce-product-filter
+msgid "Sort by average rating"
+msgstr ""
+
+#: html.php:471
+#@ woocommerce-product-filter
+msgid "Sort by newness"
+msgstr ""
+
+#: html.php:472
+#@ woocommerce-product-filter
+msgid "Sort by price: low to high"
+msgstr ""
+
+#: html.php:473
+#@ woocommerce-product-filter
+msgid "Sort by price: high to low"
+msgstr ""
+
+#: options.php:67
+#@ woocommerce-product-filter
+msgid "Changes Saved."
+msgstr ""
+
+#: options.php:73
+#@ woocommerce-product-filter
+msgid "Security check failed."
+msgstr ""
+
+#: options.php:99
+#@ woocommerce-product-filter
+msgid "WooCommerce AJAX Product Filter"
+msgstr ""
+
+#: options.php:104
+#@ woocommerce-product-filter
+msgid "Options"
+msgstr ""
+
+#: options.php:167
+#@ woocommerce-product-filter
+msgid "Count filters items"
+msgstr ""
+
+#: options.php:148
+#: options.php:155
+#: options.php:163
+#: options.php:169
+#: options.php:176
+#: options.php:183
+#: options.php:190
+#: options.php:197
+#: options.php:205
+#: options.php:281
+#: options.php:288
+#: options.php:295
+#@ woocommerce-product-filter
+msgid "Yes"
+msgstr ""
+
+#: options.php:147
+#: options.php:154
+#: options.php:162
+#: options.php:170
+#: options.php:177
+#: options.php:184
+#: options.php:191
+#: options.php:198
+#: options.php:206
+#: options.php:282
+#: options.php:289
+#: options.php:296
+#@ woocommerce-product-filter
+msgid "No"
+msgstr ""
+
+#: options.php:174
+#@ woocommerce-product-filter
+msgid "Hide empty items"
+msgstr ""
+
+#: options.php:181
+#@ woocommerce-product-filter
+msgid "Hide empty widgets"
+msgstr ""
+
+#: options.php:188
+#@ woocommerce-product-filter
+msgid "Display count of products"
+msgstr ""
+
+#: options.php:279
+#@ woocommerce-product-filter
+msgid "Scroll to top after loading"
+msgstr ""
+
+#: options.php:299
+#@ woocommerce-product-filter
+msgid "Custom taxonomies"
+msgstr ""
+
+#: options.php:303
+#@ woocommerce-product-filter
+msgid "Override products wrapper"
+msgstr ""
+
+#: options.php:307
+#@ woocommerce-product-filter
+msgid "Custom areas to update"
+msgstr ""
+
+#: options.php:215
+#@ woocommerce-product-filter
+msgid "Create new sidebar"
+msgstr ""
+
+#: options.php:218
+#: options.php:264
+#: widget/attribute.php:97
+#: widget/category.php:83
+#: widget/custom_slider_meta.php:80
+#: widget/custom_taxonomy.php:85
+#: widget/image_attribute.php:94
+#: widget/meta.php:90
+#: widget/nonh_category.php:81
+#: widget/order.php:51
+#: widget/reset.php:51
+#@ woocommerce-product-filter
+msgid "Title"
+msgstr ""
+
+#: options.php:222
+#: options.php:265
+#@ woocommerce-product-filter
+msgid "Visible To"
+msgstr ""
+
+#: options.php:266
+#@ woocommerce-product-filter
+msgid "Shortcode"
+msgstr ""
+
+#: options.php:267
+#@ woocommerce-product-filter
+msgid "Action"
+msgstr ""
+
+#: options.php:274
+#@ woocommerce-product-filter
+msgid "New Sidebar"
+msgstr ""
+
+#: options.php:331
+#@ woocommerce-product-filter
+msgid "Save Changes"
+msgstr ""
+
+#: widget/attribute.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by Attribute"
+msgstr ""
+
+#: widget/attribute.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by their attributes."
+msgstr ""
+
+#: widget/attribute.php:59
+#: widget/category.php:58
+#: widget/custom_slider_meta.php:58
+#: widget/custom_taxonomy.php:61
+#: widget/meta.php:58
+#: widget/nonh_category.php:57
+#@ woocommerce-product-filter
+msgid "Display Type"
+msgstr ""
+
+#: widget/attribute.php:66
+#: widget/category.php:65
+#: widget/custom_taxonomy.php:68
+#@ woocommerce-product-filter
+msgid "Dropdown"
+msgstr ""
+
+#: widget/attribute.php:67
+#: widget/custom_slider_meta.php:64
+#: widget/custom_taxonomy.php:69
+#: widget/meta.php:64
+#@ woocommerce-product-filter
+msgid "Slider"
+msgstr ""
+
+#: widget/attribute.php:107
+#: widget/category.php:93
+#: widget/custom_slider_meta.php:90
+#: widget/custom_taxonomy.php:95
+#: widget/image_attribute.php:104
+#: widget/meta.php:100
+#: widget/nonh_category.php:91
+#: widget/order.php:61
+#: widget/reset.php:61
+#@ woocommerce-product-filter
+msgid "Sub Title"
+msgstr ""
+
+#: widget/attribute.php:117
+#: widget/custom_taxonomy.php:105
+#: widget/image_attribute.php:83
+#: widget/nonh_category.php:101
+#@ woocommerce-product-filter
+msgid "Query Type"
+msgstr ""
+
+#: widget/attribute.php:123
+#: widget/custom_taxonomy.php:111
+#: widget/image_attribute.php:89
+#: widget/nonh_category.php:107
+#@ woocommerce-product-filter
+msgid "OR"
+msgstr ""
+
+#: widget/attribute.php:124
+#: widget/custom_taxonomy.php:112
+#: widget/image_attribute.php:90
+#: widget/nonh_category.php:108
+#@ woocommerce-product-filter
+msgid "AND"
+msgstr ""
+
+#: widget/attribute.php:128
+#: widget/custom_slider_meta.php:100
+#: widget/custom_taxonomy.php:116
+#: widget/meta.php:110
+#@ woocommerce-product-filter
+msgid "Range Template"
+msgstr ""
+
+#: widget/attribute.php:138
+#: widget/custom_slider_meta.php:110
+#: widget/custom_taxonomy.php:126
+#: widget/meta.php:120
+#@ woocommerce-product-filter
+msgid "Minimum Value"
+msgstr ""
+
+#: widget/attribute.php:146
+#: widget/custom_slider_meta.php:118
+#: widget/custom_taxonomy.php:134
+#: widget/meta.php:128
+#@ woocommerce-product-filter
+msgid "Maximum Value"
+msgstr ""
+
+#: widget/attribute.php:155
+#: widget/custom_slider_meta.php:127
+#: widget/custom_taxonomy.php:143
+#: widget/meta.php:137
+#@ woocommerce-product-filter
+msgid "Step"
+msgstr ""
+
+#: widget/attribute.php:172
+#: widget/category.php:121
+#: widget/custom_slider_meta.php:144
+#: widget/custom_taxonomy.php:160
+#: widget/image_attribute.php:173
+#: widget/meta.php:154
+#: widget/nonh_category.php:140
+#: widget/order.php:79
+#: widget/reset.php:79
+#@ woocommerce-product-filter
+msgid "Print Widget Opener"
+msgstr ""
+
+#: widget/attribute.php:183
+#: widget/category.php:132
+#: widget/custom_slider_meta.php:155
+#: widget/custom_taxonomy.php:171
+#: widget/image_attribute.php:184
+#: widget/meta.php:165
+#: widget/nonh_category.php:151
+#: widget/order.php:90
+#: widget/reset.php:89
+#@ woocommerce-product-filter
+msgid "Print Widget Closer"
+msgstr ""
+
+#: widget/attribute.php:186
+#: widget/category.php:135
+#: widget/custom_slider_meta.php:158
+#: widget/custom_taxonomy.php:174
+#: widget/image_attribute.php:198
+#: widget/meta.php:168
+#: widget/nonh_category.php:154
+#: widget/order.php:93
+#: widget/reset.php:92
+#@ woocommerce-product-filter
+msgid "Custom CSS Class"
+msgstr ""
+
+#: widget/category.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by Category"
+msgstr ""
+
+#: widget/category.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by hierarchical category navigation."
+msgstr ""
+
+#: widget/attribute.php:65
+#: widget/category.php:64
+#: widget/custom_taxonomy.php:67
+#: widget/nonh_category.php:63
+#@ woocommerce-product-filter
+msgid "List (Checkbox/Toggle List)"
+msgstr ""
+
+#: widget/category.php:110
+#: widget/nonh_category.php:119
+#@ woocommerce-product-filter
+msgid "Hide Empty"
+msgstr ""
+
+#: widget/custom_slider_meta.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by Custom Meta"
+msgstr ""
+
+#: widget/custom_slider_meta.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by non-native WooCommerce products meta."
+msgstr ""
+
+#: widget/custom_slider_meta.php:69
+#@ woocommerce-product-filter
+msgid "Custom Meta Name"
+msgstr ""
+
+#: widget/custom_taxonomy.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by Custom Taxonomy"
+msgstr ""
+
+#: widget/custom_taxonomy.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by custom taxonomies."
+msgstr ""
+
+#: widget/custom_taxonomy.php:74
+#@ woocommerce-product-filter
+msgid "Custom Taxonomy"
+msgstr ""
+
+#: widget/image_attribute.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by Image Attribute"
+msgstr ""
+
+#: widget/image_attribute.php:195
+#@ woocommerce-product-filter
+msgid "Use Theme Toggle Effect"
+msgstr ""
+
+#: widget/meta.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by Meta"
+msgstr ""
+
+#: widget/meta.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by WooCommerce products meta."
+msgstr ""
+
+#: widget/meta.php:69
+#@ woocommerce-product-filter
+msgid "Meta"
+msgstr ""
+
+#: widget/nonh_category.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter by multiple Categories"
+msgstr ""
+
+#: widget/nonh_category.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by multiple categories at the same time (Non Hierarchical)."
+msgstr ""
+
+#: widget/nonh_category.php:129
+#@ woocommerce-product-filter
+msgid "Hide On Categories"
+msgstr ""
+
+#: widget/order.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter Order"
+msgstr ""
+
+#: widget/order.php:22
+#@ woocommerce-product-filter
+msgid "Reorder products using AJAX in 6 styles."
+msgstr ""
+
+#: widget/reset.php:21
+#@ woocommerce-product-filter
+msgid "Product Filter Reset Button"
+msgstr ""
+
+#: widget/reset.php:22
+#@ woocommerce-product-filter
+msgid "Reset all filters by a single click."
+msgstr ""
+
+#: woocommerce-product-filter.php:85
+#@ woocommerce-product-filter
+msgid "WooCommerce Product Filter"
+msgstr ""
+
+#: woocommerce-product-filter.php:217
+#@ woocommerce-product-filter
+msgid "No products found which match your selection."
+msgstr ""
+
+#: woocommerce-product-filter.php:244
+#@ woocommerce-product-filter
+msgid "Create Sidebar"
+msgstr ""
+
+#: woocommerce-product-filter.php:245
+#@ woocommerce-product-filter
+msgid "Cancel"
+msgstr ""
+
+#: options.php:107
+#@ woocommerce-product-filter
+msgid "AJAX overlay image"
+msgstr ""
+
+#: options.php:113
+#@ woocommerce-product-filter
+msgid "AJAX overlay style"
+msgstr ""
+
+#: options.php:115
+#@ woocommerce-product-filter
+msgid "Replace"
+msgstr ""
+
+#: options.php:116
+#@ woocommerce-product-filter
+msgid "Append"
+msgstr ""
+
+#: options.php:117
+#@ woocommerce-product-filter
+msgid "Prepend"
+msgstr ""
+
+#: options.php:145
+#@ woocommerce-product-filter
+msgid "Absolute positioned container"
+msgstr ""
+
+#: options.php:122
+#@ woocommerce-product-filter
+msgid "AJAX overlay color"
+msgstr ""
+
+#: options.php:124
+#@ woocommerce-product-filter
+msgid "Transparent"
+msgstr ""
+
+#: options.php:125
+#@ woocommerce-product-filter
+msgid "Overlaid"
+msgstr ""
+
+#: options.php:129
+#@ woocommerce-product-filter
+msgid "AJAX overlay opacity"
+msgstr ""
+
+#: options.php:131
+#@ woocommerce-product-filter
+msgid "1"
+msgstr ""
+
+#: options.php:132
+#@ woocommerce-product-filter
+msgid "0.9"
+msgstr ""
+
+#: options.php:133
+#@ woocommerce-product-filter
+msgid "0.8"
+msgstr ""
+
+#: options.php:134
+#@ woocommerce-product-filter
+msgid "0.7"
+msgstr ""
+
+#: options.php:135
+#@ woocommerce-product-filter
+msgid "0.6"
+msgstr ""
+
+#: options.php:136
+#@ woocommerce-product-filter
+msgid "0.5"
+msgstr ""
+
+#: options.php:137
+#@ woocommerce-product-filter
+msgid "0.4"
+msgstr ""
+
+#: options.php:138
+#@ woocommerce-product-filter
+msgid "0.3"
+msgstr ""
+
+#: options.php:139
+#@ woocommerce-product-filter
+msgid "0.2"
+msgstr ""
+
+#: options.php:140
+#@ woocommerce-product-filter
+msgid "0.1"
+msgstr ""
+
+#: options.php:141
+#@ woocommerce-product-filter
+msgid "0"
+msgstr ""
+
+#: options.php:203
+#@ woocommerce-product-filter
+msgid "Display no products message"
+msgstr ""
+
+#: options.php:311
+#@ woocommerce-product-filter
+msgid "Custom CSS"
+msgstr ""
+
+#: options.php:318
+#@ woocommerce-product-filter
+msgid "Custom JavaScript"
+msgstr ""
+
+#: woocommerce-product-filter.php:85
+#@ woocommerce-product-filter
+msgid "Product Filter"
+msgstr ""
+
+#: widget/image_attribute.php:22
+#@ woocommerce-product-filter
+msgid "Filter products by their attributes using images as title."
+msgstr ""
+
+#: helper.php:472
+#: html.php:478
+#@ woocommerce-product-filter
+msgid "Sort by random"
+msgstr ""
+
+#: options.php:106
+#@ woocommerce-product-filter
+msgid "Overlay & Container Settings"
+msgstr ""
+
+#: options.php:166
+#@ woocommerce-product-filter
+msgid "Counting Products Settings"
+msgstr ""
+
+#: options.php:195
+#@ woocommerce-product-filter
+msgid "Cache count of products"
+msgstr ""
+
+#: options.php:210
+#@ woocommerce-product-filter
+msgid "Count template"
+msgstr ""
+
+#: options.php:212
+#@ woocommerce-product-filter
+msgid "Dynamic Sidebars Settings"
+msgstr ""
+
+#: options.php:213
+#@ woocommerce-product-filter
+msgid "Add or Remove a sidebar"
+msgstr ""
+
+#: options.php:278
+#@ woocommerce-product-filter
+msgid "Enable Extra Functionality"
+msgstr ""
+
+#: options.php:286
+#@ woocommerce-product-filter
+msgid "Enable random order"
+msgstr ""
+
+#: options.php:298
+#@ woocommerce-product-filter
+msgid "Advanced Settings"
+msgstr ""
+
+#: options.php:152
+#@ woocommerce-product-filter
+msgid "Disable Product Wrapping"
+msgstr ""
+
+#: options.php:160
+#@ woocommerce-product-filter
+msgid "Reload Entire Page (No AJAX)"
+msgstr ""
+
+#: options.php:293
+#@ woocommerce-product-filter
+msgid "Hide duplicate pagination"
+msgstr ""
+
+#: options.php:78
+#@ woocommerce-product-filter
+msgid "WooCommerce not found. Get a version at <a href=\"https://wordpress.org/plugins/woocommerce/\">WordPress.rg</a> . "
+msgstr ""
+
