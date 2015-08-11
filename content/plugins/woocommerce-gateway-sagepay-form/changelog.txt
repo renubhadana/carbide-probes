@@ -1,0 +1,124 @@
+*** SagePay Form / Direct Changelog ***
+2015.07.26 - version 3.1.0
+ * Enhancement - Add basket to Direct
+ * Enhancement - improve SagePay Form error message, add info to System Status
+ * Enhancement - Add filters to shipping info
+ * Fix - deprecated function notice.
+ * Fix SagePay Direct $$
+ * WC 2.4 Compatibility
+
+2015.07.05 - version 3.0.3
+ * Fix - backwards compatibility with older versions of PHP
+ * Fix - missing CC image
+ * Enhancement - Improve delivery address checking
+
+2015.06.19 - version 3.0.2
+ * Fix - Image paths
+
+2015.06.17 - version 3.0.1
+ * Fix - Windows hosting path
+
+2015.06.14 - version 3.0.0
+ * Enhancement - SagePay Direct
+
+2015.03.11 - version 2.2.6
+ * SSL paths
+
+2015.02.24 - version 2.2.5
+ * Fix path to cc images
+
+2015.02.19 - version 2.2.4
+ * WC 2.3 compatibility
+
+2015.01.18 - version 2.2.3
+ * fix headers already sent message
+ * remove unnecessary nag notice code
+ * fix discount in My SagePay 
+
+2015.01.13 - version 2.2.1
+ * Proper logging
+ * Rearrange settings
+
+2014.12.21 - version 2.2.0
+ * Add “What is SagePay link
+ * Add SagePay Logo
+ * Add Protocol 3 nag notice - 2.23 is no longer supported after July 2015.
+
+2014.10.19 - version 2.1.8
+ * Add transaction ID to payment_complete for WC 2.2
+ * Add additional checks and die message if return fails
+ * Make V3 the default protocol in settings
+
+2014.05.29 - version 2.1.7
+ * remove spaces from TX Code if they exist
+
+2014.03.31 - version 2.1.6
+ * Allow $order->get_cancel_order_url() to be filtered
+
+2014.03.24 - version 2.1.5
+ * PayPal logo added to card types
+ * html_entity_decode( $order->get_cancel_order_url() )
+
+2014.03.09 - version 2.1.4
+ * check for shipping value in basket XML
+
+2014.02.07 - version 2.1.3
+ * modify success URL
+
+2014.01.18 - version 2.1.2
+ * Fix WC Deprecated function message (add_inline_js)
+ * Use proper checkout page redirect 
+
+2013.12.14 - Version 2.1.1
+ * WC 2.1 support
+ * use get_woocommerce_currency()
+
+2013.11.05 - Version 2.1.0
+ * Add Protocol 3 support
+ * Add surcharge XML / Settings / Add surcharge vhtml_entity_decode( $order->get_cancel_order_url() )alue to order
+ * Add Test and Simulate Encryption Password fields.
+ * Fix sagepay info in order notes 
+
+2013.10.16 - Version 2.0.5
+ * Remove debugging code causing some checkouts to not auto transfer to Sage
+
+2013.10.15 - Version 2.0.4
+ * Fix parse error
+
+2013.10.02 - Version 2.0.3
+ * Remove all the non-english things
+ * Add proper localization
+ * Add credit card chooser for Admin, image shown to customer reflects choice made in settings
+
+2013.06.06 - Version 2.0.2
+ * Added Sage return values to order notes
+
+2013.03.19 - Version 2.0.1
+ * Add Discount / Coupon to order information sent to SagePay
+
+2013.02.25 - Version 2.0.0
+ * Fix incorrect order status for deferred and registered payments
+ * Delivery State fix
+
+2012.12.05 - version 1.3.0
+ * Cleaned up code
+ * WC 2.0 Compat
+
+2012.12.05 - version 1.2.1
+ * Updater
+
+2012.05.30 - version 1.2
+ * Changes to allow integration with Sage 50 Accounts
+
+2012.01.26 - version 1.1.1
+ * WC 1.4 compatibility
+
+2011.12.01 - version 1.1
+ * Added Woo Updater
+ * Changed item price code to work better with WC 1.3
+
+2011.11.07 - version 1.0.1
+ * Fixed shipping address when not set
+
+2011.10.06 - version 1.0
+ * First Release
