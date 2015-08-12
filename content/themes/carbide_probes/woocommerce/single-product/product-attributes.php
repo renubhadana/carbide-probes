@@ -53,7 +53,7 @@ ob_start();
 				if ( $attribute['is_taxonomy'] ) {
 
 					$values = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
-                    $metric = ( $attribute['name'] == 'pa_length' ) ? '" ('.( $values[0] / 0.039370 ).'mm)' : '';
+                    $metric = ( $attribute['name'] == 'pa_length' ) ? ' ('.( $values[0] / 0.039370 ).'mm)' : '';
 					echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) . $metric ), $attribute, $values );
 
 				} else {
