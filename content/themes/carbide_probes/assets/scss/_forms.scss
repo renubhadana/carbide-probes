@@ -19,3 +19,18 @@
     }
   }
 }
+
+select {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid black;
+    background: white;
+    color: $font-color;
+    @include font-size(16px);
+}
+
+input[type="search"] {
+    border: 1px solid black;
+    @include font-size(16px);
+    border: 1px solid black;
+}

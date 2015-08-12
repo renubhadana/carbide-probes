@@ -1,6 +1,6 @@
 /* =Buttons
 ----------------------------------------------- */
-.btn {
+.btn, input[type="submit"] {
     > a {
         white-space: nowrap;
 
@@ -14,7 +14,7 @@
     }
 }
 
-.no-touch .btn {
+.no-touch .btn, .no-touch input[type="submit"] {
     transition: $base-transition;
 
     > a {
@@ -52,7 +52,7 @@
   }
 }
 
-.btn.blue-btn {
+.btn.blue-btn, input[type="submit"] {
   background: $carbide-blue;
   text-transform: uppercase;
   padding: 0.5em 1em !important;
