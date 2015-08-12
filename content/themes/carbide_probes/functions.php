@@ -225,6 +225,8 @@ function wcs_woo_remove_reviews_tab($tabs) {
     return $tabs;
 }
 
+add_filter( 'wc_product_sku_enabled', '__return_false' );
+
 /**
  * Features you can enable or disable as needed.
  */
