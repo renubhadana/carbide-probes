@@ -1836,7 +1836,7 @@ input[type="search"] { border: 1px solid black; font-size: 16px; font-size: 1rem
 
 /* =Widgets
 ----------------------------------------------- */
-.widget-title { font-size: 1.5em; font-weight: 700; text-transform: uppercase; }
+.widget-title, .woocommerce-product-search label { font-size: 1.5em; font-weight: 700; text-transform: uppercase; }
 
 .testimonial { border-bottom: solid 1px #c2c2c2; margin: 0 0.5em; }
 .testimonial:last-child { border-bottom: none; }
