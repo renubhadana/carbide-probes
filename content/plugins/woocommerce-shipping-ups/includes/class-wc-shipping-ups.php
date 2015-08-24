@@ -919,7 +919,7 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 							'body'      => $send_request
 						)
 					);
-                    print_r($response);
+
 					if ( ! empty( $response['body'] ) ) {
 						$ups_responses[ $code ] = $response['body'];
 						set_transient( $transient, $response['body'], YEAR_IN_SECONDS );

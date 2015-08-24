@@ -226,6 +226,7 @@ function wcs_woo_remove_reviews_tab($tabs) {
 }
 
 add_filter( 'wc_product_sku_enabled', '__return_false' );
+add_filter( 'wc_product_enable_dimensions_display', '__return_false' );
 
 /**
  * Features you can enable or disable as needed.

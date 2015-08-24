@@ -6,8 +6,8 @@ class catalog_download_widget extends WP_Widget {
 
 
     /** constructor -- name this the same as the class above */
-    function catalog_download_widget() {
-        parent::WP_Widget(false, $name = 'Catalog Download Widget');
+    public function __construct() {
+        parent::__construct(false, $name = 'Catalog Download Widget');
         add_action('admin_enqueue_scripts', array($this, 'upload_scripts'));
     }
 

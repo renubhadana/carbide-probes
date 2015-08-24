@@ -6,8 +6,8 @@ class quote_widget extends WP_Widget {
 
 
     /** constructor -- name this the same as the class above */
-    function quote_widget() {
-        parent::WP_Widget(false, $name = 'Quote Widget');
+    public function __construct() {
+        parent::__construct(false, $name = 'Quote Widget');
     }
 
     /** @see WP_Widget::widget -- do not rename this */

@@ -17,6 +17,10 @@
   padding: 0.5em;
 }
 
+.woocommerce .product .thumbnails a {
+    width: 100% !important;
+}
+
 .woocommerce .quantity .qty {
   text-align: center;
   height: 38px;
