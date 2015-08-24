@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WC_Shipping_UPS extends WC_Shipping_Method {
 
-	private $endpoint = 'https://wwwcie.ups.com/webservices/Rate';
+	private $endpoint = 'https://www.ups.com/ups.app/xml/Rate';
 
 	private $pickup_code = array(
 		'01' => "Daily Pickup",
