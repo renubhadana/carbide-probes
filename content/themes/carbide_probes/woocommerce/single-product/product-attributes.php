@@ -16,6 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 $has_row    = false;
 $alt        = 1;
 $attributes = $product->get_attributes();
+$len_units = 'inches';
+$ewl_units = 'inches';
+$dia_units = 'inches';
+
+$terms = get_the_terms( $product->id, 'product_cat' );
+foreach ( $terms as $term ) {
+    if ( $term->slug === 'cmm-replacement-styli' ) {
+        $len_units = 'mm';
+        $ewl_units = 'mm';
+        $dia_units = 'mm';
+
+    } elseif ( $term->slug === 'agbgm' ) {
+        $dia_units = 'mm';
+
+    }
+}
 
 ob_start();
 
@@ -43,6 +59,8 @@ ob_start();
 	<?php foreach ( $attributes as $attribute ) :
 		if ( empty( $attribute['is_visible'] ) || ( $attribute['is_taxonomy'] && ! taxonomy_exists( $attribute['name'] ) ) ) {
 			continue;
+        } else if ( empty ( wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) ) ) ) {
+            continue;
 		} else {
 			$has_row = true;
 		}
@@ -53,8 +71,20 @@ ob_start();
 				if ( $attribute['is_taxonomy'] ) {
 
 					$values = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
-                    $metric = ( $attribute['name'] == 'pa_length' ) ? ' ('.( $values[0] / 0.039370 ).'mm)' : '';
-					echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) . $metric ), $attribute, $values );
+                    if ( $attribute['name'] === 'pa_length')
+                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $len_units ) ), $attribute, $values );
+
+                    elseif ( $attribute['name'] === 'pa_ewl' )
+                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $ewl_units ) ), $attribute, $values );
+
+                    elseif ( $attribute['name'] === 'pa_ball-diameter' || $attribute['name'] === 'pa_diameter' )
+                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $dia_units ) ), $attribute, $values );
+
+                    elseif ( $attribute['name'] === 'pa_radius' )
+                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' inches' ) ), $attribute, $values );
+
+                    else
+                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values );
 
 				} else {
 
