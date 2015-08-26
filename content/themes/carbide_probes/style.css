@@ -1989,7 +1989,7 @@ footer .footer-menu ul.menu li a { color: #fff; }
 @media (max-width: 992px) { .category-container .category-content { min-height: 250px; } }
 @media (max-width: 767px) { .category-container .category-content { min-height: 0; margin: 0 !important; border-bottom: none; border-left: none; border-right: none; display: inline-block; width: 100%; padding: 1em 0.5em; } }
 .category-container .category-content .category-image-container { padding: 1em 0; margin-bottom: 0.5em; background: -webkit-repeating-linear-gradient(135deg, transparent, transparent 5px, transparent 9px, transparent 7px); background: repeating-linear-gradient(-45deg, transparent, transparent 5px, transparent 9px, transparent 7px); -webkit-transition: background 5s ease; transition: background 5s ease; }
-@media (max-width: 767px) { .category-container .category-content .category-image-container { padding: 0 1em 0 0; margin-bottom: 0; background: none; width: 25%; display: inline-block; vertical-align: middle; } }
+@media (max-width: 767px) { .category-container .category-content .category-image-container { padding: 0 1em 0 0; margin-bottom: 0; background: none; width: 100%; display: inline-block; vertical-align: middle; } }
 .category-container .category-content:hover .category-image-container { background: -webkit-repeating-linear-gradient(135deg, transparent, transparent 5px, #ff833a 9px, #ff833a 7px); background: repeating-linear-gradient(-45deg, transparent, transparent 5px, #ff833a 9px, #ff833a 7px); }
 @media (max-width: 767px) { .category-container .category-content:hover .category-image-container { background: none; } }
 .category-container .category-content img { display: block; margin: 0 auto; height: 200px; }
