@@ -2054,8 +2054,6 @@ footer .footer-menu ul.menu li a { color: #fff; }
 
 .woocommerce #content div.product div.images, .woocommerce div.product div.images, .woocommerce-page #content div.product div.images, .woocommerce-page div.product div.images { float: none; width: 100%; border: solid 1px #ccc; padding: 0.5em; }
 
-.woocommerce .product .thumbnails a { width: 100% !important; }
-
 .woocommerce .quantity .qty { text-align: center; height: 38px; width: 70px; }
 
 #tab-description h2 { display: none; }
