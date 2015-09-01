@@ -27,7 +27,7 @@ foreach ( $terms as $term ) {
         $ewl_units = 'mm';
         $dia_units = 'mm';
 
-    } elseif ( $term->slug === 'agbgm' ) {
+    } elseif ( $term->slug === 'ball-metric' ) {
         $dia_units = 'mm';
 
     }
