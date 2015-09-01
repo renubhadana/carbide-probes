@@ -71,7 +71,10 @@ ob_start();
 				if ( $attribute['is_taxonomy'] ) {
 
 					$values = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
-                    if ( $attribute['name'] === 'pa_length')
+                    if ( strpos( implode( ', ', $values ), 'mm' ) !== false )
+                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values );
+
+                    elseif ( $attribute['name'] === 'pa_length')
                         echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $len_units ) ), $attribute, $values );
 
                     elseif ( $attribute['name'] === 'pa_ewl' )
