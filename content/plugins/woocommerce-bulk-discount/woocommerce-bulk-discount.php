@@ -27,25 +27,6 @@ License: GPL3
 
 if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/*$args = array( 'post_type' => 'product', 'posts_per_page' => -1 );
-$products = get_posts( $args );
-
-foreach ( $products as $product ) {
-    echo $product->ID;
-    update_post_meta( $product->ID, '_bulkdiscount_enabled', 'yes' );
-    update_post_meta( $product->ID, '_bulkdiscount_text_info', '' );
-    update_post_meta( $product->ID, '_bulkdiscount_quantity_1', '10' );
-    update_post_meta( $product->ID, '_bulkdiscount_discount_1', '5' );
-    update_post_meta( $product->ID, '_bulkdiscount_quantity_2', '24' );
-    update_post_meta( $product->ID, '_bulkdiscount_discount_2', '10' );
-    update_post_meta( $product->ID, '_bulkdiscount_quantity_3', '50' );
-    update_post_meta( $product->ID, '_bulkdiscount_discount_3', '15' );
-    update_post_meta( $product->ID, '_bulkdiscount_quantity_4', '100' );
-    update_post_meta( $product->ID, '_bulkdiscount_discount_4', '20' );
-    update_post_meta( $product->ID, '_bulkdiscount_quantity_5', '' );
-    update_post_meta( $product->ID, '_bulkdiscount_discount_5', '' );
-}*/
-
 if ( !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) return; // Check if WooCommerce is active
 
 if ( !class_exists( 'Woo_Bulk_Discount_Plugin_t4m' ) ) {
