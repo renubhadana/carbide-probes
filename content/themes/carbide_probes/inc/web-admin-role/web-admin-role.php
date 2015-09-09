@@ -15,14 +15,11 @@ add_action( 'after_switch_theme', 'rdmgumby_activate_web_admin_role' );
 add_action( 'switch_theme', 'rdmgumby_deactivate_web_admin_role' );
 add_filter( 'editable_roles', 'rdmgumby_filter_editable_roles' );
 
-rdmgumby_activate_web_admin_role();
-
 /**
  * Creates the Web Admin role with a subset of the Administrator capabilities
  */
 function rdmgumby_activate_web_admin_role()
 {
-    echo 'executed';
     // reset the web admin role to make sure it gets the correct capabilities
     if ( get_role( 'web_admin' ) !== null )
         remove_role( 'web_admin' );
