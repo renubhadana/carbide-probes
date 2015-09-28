@@ -58,6 +58,12 @@ h2 {
   @include font-size($xxlarge);
   font-weight: 600;
   color: $red-orange;
+  sub{
+    font-size: .5em;
+    span{
+      margin-left: .25em;
+    }
+  }
 }
 
 h3 {

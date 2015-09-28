@@ -47,9 +47,9 @@
             <figure class="effect-ruby">
                 <img src="<?php echo ot_get_option('middle_block_background_image_1'); ?>" alt="Figure Image"/>
                 <figcaption>
-                    <h2>Over 2,000 items in stock<br>&amp; on-site fabrication</h2>
+                    <h2><?php echo ot_get_option('call_to_action_left_text'); ?></h2>
                     <p>Learn More</p>
-                    <a href="#">Learn More</a>
+                    <a href="<?php echo ot_get_option('call_to_action_left_link'); ?>">Learn More</a>
                 </figcaption>
             </figure>
         </div>
@@ -57,9 +57,9 @@
             <figure class="effect-ruby">
                 <img src="<?php echo ot_get_option('middle_block_background_image_2'); ?>" alt="Figure Image"/>
                 <figcaption>
-                    <h2>Over 2,000 items in stock<br>&amp; on-site fabrication</h2>
+                    <h2><?php echo ot_get_option('call_to_action_right_text'); ?></h2>
                     <p>Learn More</p>
-                    <a href="#">Learn More</a>
+                    <a href="<?php echo ot_get_option('call_to_action_right_link'); ?>">Learn More</a>
                 </figcaption>
             </figure>
         </div>
