@@ -113,6 +113,33 @@ final class Menu_Icons_Settings {
 
 
 	/**
+	 * Check if menu icons is disabled for a menu
+	 *
+	 * @since 0.8.0
+	 *
+	 * @param int $menu_id Menu ID. Defaults to current menu being edited.
+	 *
+	 * @return bool
+	 */
+	public static function is_menu_icons_disabled_for_menu( $menu_id = 0 ) {
+		if ( empty( $menu_id ) ) {
+			$menu_id = self::get_current_menu_id();
+		}
+
+		// When we're creating a new menu or the recently edited menu
+		// could not be found.
+		if ( empty( $menu_id ) ) {
+			return true;
+		}
+
+		$menu_settings = self::get_menu_settings( $menu_id );
+		$is_disabled   = ! empty( $menu_settings['disabled'] );
+
+		return $is_disabled;
+	}
+
+
+	/**
 	 * Settings init
 	 *
 	 * @since 0.3.0
@@ -120,6 +147,10 @@ final class Menu_Icons_Settings {
 	public static function init() {
 		self::$defaults['global']['icon_types'] = array_keys( Menu_Icons::get( 'icon_types' ) );
 		self::_get();
+
+		if ( self::is_menu_icons_disabled_for_menu() ) {
+			return;
+		}
 
 		require_once Menu_Icons::get( 'dir' ) . 'includes/admin.php';
 		Menu_Icons_Admin_Nav_Menus::init();
@@ -169,8 +200,7 @@ final class Menu_Icons_Settings {
 
 			$redirect_url = self::_update_settings( $_POST['menu-icons']['settings'] );
 			wp_redirect( $redirect );
-		}
-		elseif ( ! empty( $_REQUEST[ self::RESET_KEY ] ) ) {
+		} elseif ( ! empty( $_REQUEST[ self::RESET_KEY ] ) ) {
 			check_admin_referer( self::RESET_KEY, self::RESET_KEY );
 			wp_redirect( self::_reset_settings() );
 		}
@@ -284,22 +314,27 @@ final class Menu_Icons_Settings {
 
 
 	/**
-	 * Get ID of nav menu being edited
+	 * Get ID of menu being edited
 	 *
-	 * @since  %ver
+	 * @since  0.7.0
+	 * @since  0.8.0 Get the recently edited menu from user option.
+	 *
 	 * @return int
 	 */
 	public static function get_current_menu_id() {
 		global $nav_menu_selected_id;
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && ! empty( $_POST['menu'] ) ) {
-			$menu_id = absint( $_POST['menu'] );
-		}
-		else {
-			$menu_id = $nav_menu_selected_id;
+		if ( ! empty( $nav_menu_selected_id ) ) {
+			return $nav_menu_selected_id;
 		}
 
-		return $menu_id;
+		if ( is_admin() && isset( $_REQUEST['menu'] ) ) {
+			$nav_menu_selected_id = absint( $_REQUEST['menu'] );
+		} else {
+			$nav_menu_selected_id = absint( get_user_option( 'nav_menu_recently_edited' ) );
+		}
+
+		return $nav_menu_selected_id;
 	}
 
 
@@ -460,28 +495,34 @@ final class Menu_Icons_Settings {
 			<div class="taxonomydiv">
 				<ul id="menu-icons-settings-tabs" class="taxonomy-tabs add-menu-item-tabs hide-if-no-js">
 					<?php foreach ( self::get_fields() as $section ) : ?>
-						<?php printf(
-							'<li><a href="#" title="%s" class="mi-settings-nav-tab" data-type="menu-icons-settings-%s">%s</a></li>',
-							esc_attr( $section['description'] ),
-							esc_attr( $section['id'] ),
-							esc_html( $section['title'] )
-						) ?>
-					<?php endforeach ?>
-					<?php printf(
-						'<li><a href="#" class="mi-settings-nav-tab" data-type="menu-icons-settings-extensions">%s</a></li>',
-						__( 'Extensions', 'menu-icons' )
-					) ?>
+						<?php
+							printf(
+								'<li><a href="#" title="%s" class="mi-settings-nav-tab" data-type="menu-icons-settings-%s">%s</a></li>',
+								esc_attr( $section['description'] ),
+								esc_attr( $section['id'] ),
+								esc_html( $section['title'] )
+							);
+						?>
+					<?php endforeach; ?>
+					<?php
+						printf(
+							'<li><a href="#" class="mi-settings-nav-tab" data-type="menu-icons-settings-extensions">%s</a></li>',
+							esc_html__( 'Extensions', 'menu-icons' )
+						);
+					?>
 				</ul>
 				<?php foreach ( self::_get_fields() as $section_index => $section ) : ?>
 					<div id="menu-icons-settings-<?php echo esc_attr( $section['id'] ) ?>" class="tabs-panel _<?php echo esc_attr( $section_index ) ?>">
 						<h4 class="hide-if-js"><?php echo esc_html( $section['title'] ) ?></h4>
 						<?php foreach ( $section['fields'] as $field ) : ?>
 							<div class="_field">
-								<?php printf(
-									'<label for="%s" class="_main">%s</label>',
-									esc_attr( $field->id ),
-									esc_html( $field->label )
-								) ?>
+								<?php
+									printf(
+										'<label for="%s" class="_main">%s</label>',
+										esc_attr( $field->id ),
+										esc_html( $field->label )
+									);
+								?>
 								<?php $field->render() ?>
 							</div>
 						<?php endforeach; ?>
@@ -497,28 +538,32 @@ final class Menu_Icons_Settings {
 			<p class="submitbox button-controls">
 				<?php wp_nonce_field( self::UPDATE_KEY, self::UPDATE_KEY ) ?>
 				<span class="list-controls">
-					<?php printf(
-						'<a href="%s" title="%s" class="select-all submitdelete">%s</a>',
-						esc_url(
-							wp_nonce_url(
-								admin_url( '/nav-menus.php' ),
-								self::RESET_KEY,
-								self::RESET_KEY
-							)
-						),
-						esc_attr__( 'Discard all changes and reset to default state', 'menu-icons' ),
-						esc_html__( 'Reset', 'menu-icons' )
-					) ?>
+					<?php
+						printf(
+							'<a href="%s" title="%s" class="select-all submitdelete">%s</a>',
+							esc_url(
+								wp_nonce_url(
+									admin_url( '/nav-menus.php' ),
+									self::RESET_KEY,
+									self::RESET_KEY
+								)
+							),
+							esc_attr__( 'Discard all changes and reset to default state', 'menu-icons' ),
+							esc_html__( 'Reset', 'menu-icons' )
+						);
+					?>
 				</span>
 
 				<span class="add-to-menu">
 					<span class="spinner"></span>
-					<?php submit_button(
-						__( 'Save Settings', 'menu-icons' ),
-						'secondary',
-						'menu-item-settings-save',
-						false
-					) ?>
+					<?php
+						submit_button(
+							__( 'Save Settings', 'menu-icons' ),
+							'secondary',
+							'menu-item-settings-save',
+							false
+						);
+					?>
 				</span>
 			</p>
 		<?php
