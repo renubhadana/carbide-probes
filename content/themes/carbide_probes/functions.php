@@ -239,6 +239,17 @@ function wcs_woo_remove_reviews_tab($tabs) {
 add_filter( 'wc_product_sku_enabled', '__return_false' );
 add_filter( 'wc_product_enable_dimensions_display', '__return_false' );
 
+/*
+ * wc_remove_related_products
+ *
+ * Clear the query arguments for related products so none show.
+ * Add this code to your theme functions.php file.
+ */
+add_filter( 'woocommerce_related_products_args', 'carbide_remove_related_products', 10 );
+function carbide_remove_related_products( $args ) {
+    return array();
+}
+
 /**
  * Features you can enable or disable as needed.
  */
