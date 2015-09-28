@@ -11,11 +11,7 @@
  * @package rdmgumby
  */
 get_header(); ?>
-    <div class="row">
-        <div class="sixteen columns">
-            <?php get_search_form(true); ?>
-        </div>
-    </div>
+
 		<?php if ( have_posts() ) : ?>
 
 			<?php /* Start the Loop */ ?>

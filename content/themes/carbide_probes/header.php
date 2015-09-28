@@ -105,3 +105,8 @@
 	<!-- #masthead -->
 
 	<div id="content" class="site-content">
+        <div class="row">
+            <div class="sixteen columns">
+                <?php get_search_form(true); ?>
+            </div>
+        </div>
