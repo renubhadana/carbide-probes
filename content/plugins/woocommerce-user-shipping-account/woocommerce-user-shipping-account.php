@@ -44,6 +44,8 @@ function woocommerce_user_shipping_account_init()
     add_action( 'woocommerce_checkout_order_processed', 'woocommerce_user_shipping_account_update_order', 99, 2 );
     // hook in to add the customer shipping account number to the order 'totals'
     add_filter( 'woocommerce_get_order_item_totals', 'woocommerce_user_shipping_account_update_emails', 99, 2 );
+    // hook in to the view order admin page to add the shipping account number
+    add_action( 'woocommerce_admin_order_data_after_shipping_address', 'woocommerce_user_shipping_account_admin_details', 99 );
 }
 add_action( 'plugins_loaded', 'woocommerce_user_shipping_account_init', 0 );
 
@@ -187,4 +189,20 @@ function woocommerce_user_shipping_account_update_emails( $fields, $order )
     }
 
     return $fields;
+}
+
+/**
+ * woocommerce_user_shipping_account_admin_details function
+ * adds the customer shipping account number field to the admin order details,
+ * if the order has one
+ *
+ * @param object $order The current Order object
+ */
+function woocommerce_user_shipping_account_admin_details( $order )
+{
+    $account = get_post_meta( $order->id, '_customer_shipping_account', true );
+
+    if ( ! empty( $account ) ) {
+        echo '<p><strong>'.__( 'Shipping Account' ).':</strong> ' . $account . '</p>';
+    }
 }
