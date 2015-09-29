@@ -209,6 +209,35 @@ function theme_enqueue_scripts() {
 }
 
 /**
+ * carbide_keep_dash_in_search_before
+ * carbide_keep_dash_in_search_after
+ *
+ * keeps the dash in the search tokens for relevanssi
+ * normal behavior for relevanssi is to strip out all punctuation, but for
+ * carbide, the dash is relevant to nailing down the best possible search results.
+ * we split this into two filters, the first filter replaces dashes with
+ * something that will not be stripped out by relevanssi. the second filter
+ * replaces that original replacement with the dash, thus keeping the dash
+ * in the search term.
+ *
+ * @param string $a The search string
+ * @param string The updated search string
+ */
+add_filter('relevanssi_remove_punctuation', 'carbide_keep_dash_in_search_before', 9);
+add_filter('relevanssi_remove_punctuation', 'carbide_keep_dash_in_search_after', 11);
+function carbide_keep_dash_in_search_before( $a )
+{
+    $a = str_replace( '-', 'HYPHENDASH', $a );
+    return $a;
+}
+
+function carbide_keep_dash_in_search_after( $a )
+{
+    $a = str_replace( 'HYPHENDASH', '-', $a );
+    return $a;
+}
+
+/**
  * Declare Woocommerce support and customize content wrapper markup
  */
 add_action( 'after_setup_theme', 'woocommerce_support' );
