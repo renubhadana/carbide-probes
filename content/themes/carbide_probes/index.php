@@ -27,11 +27,23 @@ get_header(); ?>
 
 			<?php endwhile; ?>
 
-            <div class="row">
-                <div class="sixteen columns">
-                    <div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
-                    <div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
-                </div>
+            <div class="l-v-margin woocommerce">
+                <nav class="woocommerce-pagination">
+                    <?php
+                        echo paginate_links( array(
+                            'base'         => esc_url_raw( str_replace( 999999999, '%#%', get_pagenum_link( 999999999, false ) ) ),
+                            'format'       => '',
+                            'add_args'     => '',
+                            'current'      => max( 1, get_query_var( 'paged' ) ),
+                            'total'        => $wp_query->max_num_pages,
+                            'prev_text'    => '&larr;',
+                            'next_text'    => '&rarr;',
+                            'type'         => 'list',
+                            'end_size'     => 3,
+                            'mid_size'     => 3
+                        ) );
+                    ?>
+                </nav>
             </div>
 
 		<?php else : ?>
