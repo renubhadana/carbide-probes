@@ -251,6 +251,75 @@ function carbide_remove_related_products( $args ) {
 }
 
 /**
+ * carbide_add_purchase_order_field
+ * adds the purchase order number form field to the checkout page
+ *
+ * @param object $checkout The checkout object for the current order
+ */
+add_action( 'woocommerce_before_order_notes', 'carbide_add_purchase_order_field', 99 );
+function carbide_add_purchase_order_field( $checkout )
+{
+    woocommerce_form_field( 'purchase_order_number', array(
+            'type' => 'text',
+            'class' => array( 'form-row-wide' ),
+            'label' => __( 'Add a Purchase Order Number' )
+        ), $checkout->get_value( 'purchase_order_number' ));
+}
+
+/**
+ * carbide_save_purchase_order_field
+ * saves the purchase order number to the post meta, if the field is not empty
+ *
+ * @param int $order_id The ID of the current order
+ */
+add_action( 'woocommerce_checkout_update_order_meta', 'carbide_save_purchase_order_field', 99 );
+function carbide_save_purchase_order_field( $order_id )
+{
+    if ( ! empty( $_POST['purchase_order_number'] ) )
+        update_post_meta( $order_id, '_purchase_order_number', sanitize_text_field( $_POST['purchase_order_number'] ) );
+}
+
+/**
+ * carbide_add_purchase_order_to_item_totals
+ * adds the PO number to the order totals array if it has one
+ *
+ * @param array $fields The current order total fields
+ * @param object $order The current order object
+ * @return array The updated order totals array
+ */
+add_filter( 'woocommerce_get_order_item_totals', 'carbide_add_purchase_order_to_item_totals', 99, 2 );
+function carbide_add_purchase_order_to_item_totals( $fields, $order )
+{
+    $po_number = get_post_meta( $order->id, '_purchase_order_number', true );
+
+    if ( ! empty( $po_number ) ) {
+        $po_field = array(
+                'label' => 'PO Number',
+                'value' => $po_number
+            );
+        array_unshift( $fields, $po_field );
+    }
+
+    return $fields;
+}
+
+/**
+ * carbide_add_purchase_order_to_admin
+ * adds the purchase order field to the admin screen if there is one
+ *
+ * @param object $order The current order object
+ */
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'carbide_add_purchase_order_to_admin', 99 );
+function carbide_add_purchase_order_to_admin( $order )
+{
+    $po_number = get_post_meta( $order->id, '_purchase_order_number', true );
+
+    if ( ! empty( $po_number ) ) {
+        echo '<p><strong>'.__( 'Purchase Order' ).':</strong> ' . $po_number . '</p>';
+    }
+}
+
+/**
  * Features you can enable or disable as needed.
  */
 
