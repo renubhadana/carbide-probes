@@ -51,7 +51,7 @@
 
             add_action( 'valid-sagepaymentsusaapi-request', array( $this, 'successful_request' ) );
             add_action( 'woocommerce_receipt_sagepaymentsusaapi', array( $this, 'receipt_page' ) );
-			
+
 			// SSL Check
 			add_action( 'admin_notices', array( $this,'sagepaymentsusaapi_ssl_check') );
 
@@ -65,7 +65,7 @@
 			$this->supports = array(
   									'products'
 									);
-				
+
         } // END __construct
 
         /**
@@ -134,24 +134,24 @@
 				    'default'       => '01'
 				),
 				'cardtypes'			=> array(
-					'title' 		=> __( 'Accepted Cards', 'woocommerce-spusa' ), 
+					'title' 		=> __( 'Accepted Cards', 'woocommerce-spusa' ),
 					'type' 			=> 'multiselect',
 					'class'			=> 'chosen_select',
-					'css'         => 'width: 350px;', 
-					'description' 	=> __( 'Select which card types to accept.', 'woocommerce-spusa' ), 
+					'css'         => 'width: 350px;',
+					'description' 	=> __( 'Select which card types to accept.', 'woocommerce-spusa' ),
 					'default' 		=> '',
 					'options' 		=> array(
-							'MasterCard'		=> 'MasterCard', 
+							'MasterCard'		=> 'MasterCard',
 							'Visa'				=> 'Visa',
 							'Discover'			=> 'Discover',
 							'American Express' 	=> 'American Express'
 						),
-				),		
+				),
 				'cvv' 				=> array(
-					'title' 		=> __( 'CVV', 'woocommerce-spusa' ), 
-					'label' 		=> __( 'Require customer to enter credit card CVV code', 'woocommerce-spusa' ), 
-					'type' 			=> 'checkbox', 
-					'description' 	=> __( '', 'woocommerce-spusa' ), 
+					'title' 		=> __( 'CVV', 'woocommerce-spusa' ),
+					'label' 		=> __( 'Require customer to enter credit card CVV code', 'woocommerce-spusa' ),
+					'type' 			=> 'checkbox',
+					'description' 	=> __( '', 'woocommerce-spusa' ),
 					'default' 		=> 'no'
 				),
 				'order_button_text'	=> array(
@@ -168,7 +168,7 @@
 				    'label'     	=> __( 'Enable Debug Mode', 'woocommerce-spusa' ),
 				    'default'       => 'no'
 				)
-			);			
+			);
 		}
 
 		/**
@@ -178,16 +178,16 @@
 
 			return str_replace('/classes','',untrailingslashit( plugins_url( '/', __FILE__ ) ) );
 		}
-		
+
 		/**
 		 * Check if SSL is enabled and notify the user
 	 	 **/
 		function sagepaymentsusaapi_ssl_check() {
-	     
+
 		     if ( get_option('woocommerce_force_ssl_checkout')=='no' && $this->enabled=='yes' ) :
-	     
+
 		     	echo '<div class="error"><p>'.sprintf(__('Sage Payment Solutions API is enabled and the <a href="%s">force SSL option</a> is disabled; your checkout is not secure! Please enable SSL and ensure your server has a valid SSL certificate.', 'woocommerce-spusa'), admin_url('admin.php?page=woocommerce')).'</p></div>';
-	     
+
 	     	endif;
 		}
 
@@ -213,13 +213,13 @@
 			$icon = '';
 
 			if ( $this->icon ) :
-		
+
 				if ( get_option('woocommerce_force_ssl_checkout')=='no' ) :
 					// use icon provided by filter
-					$icon = '<img src="' . esc_url( $this->icon ) . '" alt="' . esc_attr( $this->title ) . '" />';			
+					$icon = '<img src="' . esc_url( $this->icon ) . '" alt="' . esc_attr( $this->title ) . '" />';
 				else :
 					// use icon provided by filter
-					$icon = '<img src="' . esc_url( WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->title ) . '" />';		
+					$icon = '<img src="' . esc_url( WC_HTTPS::force_https_url( $this->icon ) ) . '" alt="' . esc_attr( $this->title ) . '" />';
 				endif;
 
 			elseif ( ! empty( $this->cardtypes ) ) :
@@ -229,9 +229,9 @@
 					// display icons for the selected card types
 					foreach ( $this->cardtypes as $card_type ) {
 
-						$icon .= '<img src="' . 
-									esc_url( $this->get_plugin_url() . '/assets/card-' . 
-									strtolower( str_replace(' ','-',$card_type) ) . '.png' ) . '" alt="' . 
+						$icon .= '<img src="' .
+									esc_url( $this->get_plugin_url() . '/assets/card-' .
+									strtolower( str_replace(' ','-',$card_type) ) . '.png' ) . '" alt="' .
 									esc_attr( strtolower( $card_type ) ) . '" />';
 					}
 
@@ -240,9 +240,9 @@
 					// display icons for the selected card types
 					foreach ( $this->cardtypes as $card_type ) {
 
-						$icon .= '<img src="' . 
-									esc_url( WC_HTTPS::force_https_url( $this->get_plugin_url() ) . '/assets/card-' . 
-									strtolower( str_replace(' ','-',$card_type) ) . '.png' ) . '" alt="' . 
+						$icon .= '<img src="' .
+									esc_url( WC_HTTPS::force_https_url( $this->get_plugin_url() ) . '/assets/card-' .
+									strtolower( str_replace(' ','-',$card_type) ) . '.png' ) . '" alt="' .
 									esc_attr( strtolower( $card_type ) ) . '" />';
 					}
 
@@ -339,7 +339,7 @@
 					$card_exp_year < date('y')
 				) {
 					throw new Exception( __( 'Card expiration date is invalid', 'woocommerce-spusa' ) );
-				}	
+				}
 
 				if ( empty( $card_number ) || ! ctype_digit( $card_number ) ) {
 					throw new Exception( __( 'Card number is invalid', 'woocommerce-spusa' ) );
@@ -375,7 +375,7 @@
 			$card_expiry    = array_map( 'trim', explode( '/', $card_expiry ) );
 			$card_exp_month = str_pad( $card_expiry[0], 2, "0", STR_PAD_LEFT );
 			$card_exp_year  = $card_expiry[1];
-			
+
 			// set the URL that will be posted to.
 			$eftsecure_url = "https://gateway.sagepayments.net/cgi-bin/eftbankcard.dll?transaction";
 
@@ -384,17 +384,17 @@
 			else :
 				$state = $order->billing_state;
 			endif;
-			 
+
 			// make your query.
 			if ( $this->status == 'live' ) :
 				$data  = "m_id=" 		. 	$this->M_id;
 				$data .= "&m_key=" 		. 	$this->M_key;
 			else :
 				$data  = "m_id=" 		. 	$this->M_id_testing;
-				$data .= "&m_key=" 		. 	$this->M_key_testing;			
+				$data .= "&m_key=" 		. 	$this->M_key_testing;
 			endif;
 			$data .= "&T_ordernum=" 	. 	urlencode( $order_id );
-			$data .= "&T_amt=" 			. 	urlencode( $order->order_total ); 
+			$data .= "&T_amt=" 			. 	urlencode( $order->order_total );
 			$data .= "&C_name=" 		. 	urlencode( $order->billing_first_name . ' ' . $order->billing_last_name );
 			$data .= "&C_address=" 		. 	urlencode( $order->billing_address_1 );
 			$data .= "&C_state=" 		. 	urlencode( $state );
@@ -406,7 +406,7 @@
 			$data .= "&C_exp=" 			. 	urlencode( $card_exp_month . $card_exp_year );
 			$data .= "&C_cvv=" 			. 	urlencode( $card_cvc );
 			$data .= "&T_code=" 		. 	urlencode( $this->T_code );
-			
+
 			/**
 			 * Send the info to Sage for processing, use wp_remote_post cos Mike Jolley says so!
 			 */
@@ -437,12 +437,12 @@
    				}
 
 			} else {
- 
+
 				/**
 				 * Retreive response
 				 */
 				if ( $res['body'][1] == 'A' ) {
-					
+
 					/**
 					 * Successful payment
 					 */
@@ -450,16 +450,17 @@
 												(Approval Code: ' . substr($res['body'], 2, 6) . ')<br />
 												Approval Msg: ' .substr($res['body'], 8, 32).'<br />
 												Reference: ' . substr($res['body'], 46, 10) );
-					
+
 					$order->payment_complete( substr($res['body'], 46, 10) );
-		
+
 					$woocommerce->cart->empty_cart();
 
 					/**
 					 * Empty awaiting payment session
 					 */
-					unset($_SESSION['order_awaiting_payment']);
-						
+                    unset( WC()->session->order_awaiting_payment );
+					//unset($_SESSION['order_awaiting_payment']);
+
 					/**
 					 * Return thank you redirect
 					 */
@@ -474,12 +475,12 @@
                         'result'	=> 'success',
                         'redirect'	=> $redirect
                     );
-	
+
 				} else {
-					
-					$cancelNote = __('Payment failed', 'woocommerce-spusa') . 
-									' (Response Code: ' . substr($res['body'], 2, 6) . '). ' . 
-									__('Payment was rejected due to an error', 'woocommerce-spusa') . 
+
+					$cancelNote = __('Payment failed', 'woocommerce-spusa') .
+									' (Response Code: ' . substr($res['body'], 2, 6) . '). ' .
+									__('Payment was rejected due to an error', 'woocommerce-spusa') .
 									': "' . substr($res['body'], 8, 32) . '". ';
 					$order->add_order_note( $cancelNote );
 					$message = (__('Payment error', 'woocommerce-spusa') . ': ' . substr($res['body'], 8, 32) . '');
@@ -498,10 +499,10 @@
    					}
 
 				}
-			
+
 			}
-	
-		} 
+
+		}
 
 		// Process Payment
 		public function process_refund( $order_id, $amount = NULL, $reason = '' ) {
@@ -509,7 +510,7 @@
 			global $woocommerce;
 
 			$order = new WC_Order( $order_id );
-			
+
 			// set the URL that will be posted to.
 			$eftsecure_url = "https://gateway.sagepayments.net/cgi-bin/eftbankcard.dll?transaction";
 
@@ -518,17 +519,17 @@
 			else :
 				$state = $order->billing_state;
 			endif;
-			 
+
 			// make your query.
 			if ( $this->status == 'live' ) :
 				$data  = "m_id=" 		. 	$this->M_id;
 				$data .= "&m_key=" 		. 	$this->M_key;
 			else :
 				$data  = "m_id=" 		. 	$this->M_id_testing;
-				$data .= "&m_key=" 		. 	$this->M_key_testing;			
+				$data .= "&m_key=" 		. 	$this->M_key_testing;
 			endif;
 			$data .= "&T_ordernum=" 	. 	urlencode( $order_id );
-			$data .= "&T_amt=" 			. 	urlencode( $amount ); 
+			$data .= "&T_amt=" 			. 	urlencode( $amount );
 			$data .= "&C_name=" 		. 	urlencode( $order->billing_first_name . ' ' . $order->billing_last_name );
 			$data .= "&C_address=" 		. 	urlencode( $order->billing_address_1 );
 			$data .= "&C_state=" 		. 	urlencode( $state );
@@ -538,7 +539,7 @@
 			$data .= "&C_email=" 		. 	urlencode( $order->billing_email );
 			$data .= "&T_code=" 		. 	urlencode( '06' );
 			$data .= "&T_REFERENCE=" 	. 	get_post_meta( $order_id, '_transaction_id', true );
-			
+
 			/**
 			 * Send the info to Sage for processing
 			 */
@@ -560,13 +561,13 @@
 				return false;
 
 			} else {
- 
+
 				// wp_mail( 'andrew@chromeorange.co.uk' , 'Sage Refunds ' . time() , '<pre>' . print_r( $data , TRUE ) . '</pre>' . '<pre>' . print_r( $res , TRUE ) . '</pre>' );
 				return true;
 
-			}  			 
-  			
-  			
+			}
+
+
 		}
 
 	} // END CLASS
