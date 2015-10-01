@@ -17,20 +17,20 @@ jQuery(window).load(function(){
 
 				// Hide other settings until API details entered
 				if ( $( '#woocommerce_ups_user_id' ).filter(function() { return $(this).val(); }).length <= 0 || $( '#woocommerce_ups_password' ).filter(function() { return $(this).val(); }).length <= 0 || $( '#woocommerce_ups_access_key' ).filter(function() { return $(this).val(); }).length <= 0 || $( '#woocommerce_ups_shipper_number' ).filter(function() { return $(this).val(); }).length <= 0 ) {
-					$( '#woocommerce_ups_shipper_number' ).closest('table').nextAll().hide();
+					$( '#woocommerce_ups_shipper_number' ).closest('table').nextAll(':not(p.submit)').hide();
 				} else {
 					$("select#woocommerce_ups_packing_method").change();
 				}
 			} else {
-				$(this).closest('table').nextAll().hide();
+				$(this).closest('table').nextAll(':not(p.submit)').hide();
 			}
 		});
 
 		$( ups_settings_api.join(',') ).on( 'change input', function() {
 			if ( $( '#woocommerce_ups_user_id' ).filter(function() { return $(this).val(); }).length <= 0 || $( '#woocommerce_ups_password' ).filter(function() { return $(this).val(); }).length <= 0 || $( '#woocommerce_ups_access_key' ).filter(function() { return $(this).val(); }).length <= 0 || $( '#woocommerce_ups_shipper_number' ).filter(function() { return $(this).val(); }).length <= 0 ) {
-					$( '#woocommerce_ups_shipper_number' ).closest('table').nextAll().hide();
+					$( '#woocommerce_ups_shipper_number' ).closest('table').nextAll(':not(p.submit)').hide();
 			} else {
-				$( '#woocommerce_ups_shipper_number' ).closest('table').nextAll().show();
+				$( '#woocommerce_ups_shipper_number' ).closest('table').nextAll(':not(p.submit)').show();
 				$("select#woocommerce_ups_packing_method").change();
 			}
 		});

@@ -71,6 +71,7 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 	// http://www.ups.com/content/us/en/resources/ship/packaging/supplies/envelopes.html
 	// http://www.ups.com/content/us/en/resources/ship/packaging/supplies/paks.html
 	// http://www.ups.com/content/us/en/resources/ship/packaging/supplies/boxes.html
+	// https://www.ups.com/content/us/en/shipping/create/package_type_help.html
 	private $packaging = array(
 		"01" => array(
 					"name" 	 => "UPS Letter",
@@ -84,35 +85,35 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 					"length" => "38",
 					"width"  => "6",
 					"height" => "6",
-					"weight" => "100"
+					"weight" => "100" // no limit, but use 100
 				),
 		"24" => array(
 					"name" 	 => "25KG Box",
 					"length" => "19.375",
 					"width"  => "17.375",
 					"height" => "14",
-					"weight" => "25"
+					"weight" => "55.1156"
 				),
 		"25" => array(
 					"name" 	 => "10KG Box",
 					"length" => "16.5",
 					"width"  => "13.25",
 					"height" => "10.75",
-					"weight" => "10"
+					"weight" => "22.0462"
 				),
 		"2a" => array(
 					"name" 	 => "Small Express Box",
 					"length" => "13",
 					"width"  => "11",
 					"height" => "2",
-					"weight" => "100"
+					"weight" => "100" // no limit, but use 100
 				),
 		"2b" => array(
 					"name" 	 => "Medium Express Box",
 					"length" => "15",
 					"width"  => "11",
 					"height" => "3",
-					"weight" => "100"
+					"weight" => "100" // no limit, but use 100
 				),
 		"2c" => array(
 					"name" 	 => "Large Express Box",
@@ -259,11 +260,8 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 	 */
 
 	public function assets() {
-
-		$suffix	= defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
 		wp_register_style( 'ups-admin-css', plugin_dir_url( __FILE__ ) . '../assets/css/ups-admin.css', '', WC_Shipping_UPS_Init::VERSION );
-		wp_register_script( 'ups-admin-js', plugin_dir_url( __FILE__ ) . '../assets/js/ups-admin' . $suffix . '.js', array( 'jquery' ), WC_Shipping_UPS_Init::VERSION, true );
+		wp_register_script( 'ups-admin-js', plugin_dir_url( __FILE__ ) . '../assets/js/ups-admin.js', array( 'jquery' ), WC_Shipping_UPS_Init::VERSION, true );
 
 		wp_enqueue_style( 'ups-admin-css' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
@@ -465,7 +463,7 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 							<th><?php _e( 'Inner Length', 'woocommerce-shipping-ups' ); ?></th>
 							<th><?php _e( 'Inner Width', 'woocommerce-shipping-ups' ); ?></th>
 							<th><?php _e( 'Inner Height', 'woocommerce-shipping-ups' ); ?></th>
-							<th><?php _e( 'Box Weight', 'woocommerce-shipping-ups' ); ?></th>
+							<th><?php _e( 'Weight of Box', 'woocommerce-shipping-ups' ); ?></th>
 							<th><?php _e( 'Max Weight', 'woocommerce-shipping-ups' ); ?></th>
 						</tr>
 					</thead>
@@ -1278,6 +1276,88 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 		return $requests;
 	}
 
+    /**
+     * Convert in to what user wants
+     */
+    public function get_packaging_dimension( $dim ) {
+    	$from_unit 	 = 'in';
+    	$to_unit	 = strtolower( $this->dim_unit );
+
+    	// Unify all units to cm first
+    	if ( $from_unit !== $to_unit ) {
+
+    		switch ( $from_unit ) {
+    			case 'in':
+    				$dim *= 2.54;
+    			break;
+    			case 'm':
+    				$dim *= 100;
+    			break;
+    			case 'mm':
+    				$dim *= 0.1;
+    			break;
+    			case 'yd':
+    				$dim *= 91.44;
+    			break;
+    		}
+
+    		// Output desired unit
+    		switch ( $to_unit ) {
+    			case 'in':
+    				$dim *= 0.3937;
+    			break;
+    			case 'm':
+    				$dim *= 0.01;
+    			break;
+    			case 'mm':
+    				$dim *= 10;
+    			break;
+    			case 'yd':
+    				$dim *= 0.010936133;
+    			break;
+    		}
+    	}
+    	return ( $dim < 0 ) ? 0 : $dim;
+    }
+
+    /**
+     * Convert lbs to what user wants
+     */
+    public function get_packaging_weight( $weight ) {
+    	$from_unit 	 = strtolower( 'lbs' );
+    	$to_unit	 = strtolower( $this->weight_unit );
+
+    	//Unify all units to kg first
+    	if ( $from_unit !== $to_unit ) {
+
+    		switch ( $from_unit ) {
+    			case 'g':
+    				$weight *= 0.001;
+    			break;
+    			case 'lbs':
+    				$weight *= 0.453592;
+    			break;
+    			case 'oz':
+    				$weight *= 0.0283495;
+    			break;
+    		}
+
+    		// Output desired unit
+    		switch ( $to_unit ) {
+    			case 'g':
+    				$weight *= 1000;
+    			break;
+    			case 'lbs':
+    				$weight *= 2.20462;
+    			break;
+    			case 'oz':
+    				$weight *= 35.274;
+    			break;
+    		}
+    	}
+    	return ( $weight < 0 ) ? 0 : $weight;
+    }
+
 	/**
 	 * box_shipping function.
 	 *
@@ -1298,31 +1378,26 @@ class WC_Shipping_UPS extends WC_Shipping_Method {
 		// Add Standard UPS boxes
 		if ( ! empty( $this->ups_packaging )  ) {
 			foreach ( $this->ups_packaging as $key => $box_code ) {
-
-				$box = $this->packaging[ $box_code ];
-				$newbox = $boxpack->add_box( $key, $box['length'], $box['width'], $box['height'] );
-
-				$newbox->set_inner_dimensions( $box['length'], $box['width'], $box['height'] );
+				$box    = $this->packaging[ $box_code ];
+				$newbox = $boxpack->add_box( $this->get_packaging_dimension( $box['length'] ), $this->get_packaging_dimension( $box['width'] ), $this->get_packaging_dimension( $box['height'] ) );
+				$newbox->set_inner_dimensions( $this->get_packaging_dimension( $box['length'] ), $this->get_packaging_dimension( $box['width'] ), $this->get_packaging_dimension( $box['height'] ) );
+                $newbox->set_id( $box['name'] );
 
 				if ( $box['weight'] ) {
-					$newbox->set_max_weight( $box['weight'] );
+					$newbox->set_max_weight( $this->get_packaging_weight( $box['weight'] ) );
 				}
-
 			}
 		}
 
 		// Define boxes
 		if ( ! empty( $this->boxes ) ) {
 			foreach ( $this->boxes as $box ) {
-
 				$newbox = $boxpack->add_box( $box['outer_length'], $box['outer_width'], $box['outer_height'], $box['box_weight'] );
-
 				$newbox->set_inner_dimensions( $box['inner_length'], $box['inner_width'], $box['inner_height'] );
 
 				if ( $box['max_weight'] ) {
 					$newbox->set_max_weight( $box['max_weight'] );
 				}
-
 			}
 		}
 
