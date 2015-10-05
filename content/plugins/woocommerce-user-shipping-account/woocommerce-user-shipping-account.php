@@ -41,7 +41,11 @@ function woocommerce_user_shipping_account_init()
     // hook into the checkout process to validate the user shipping account
     add_action( 'woocommerce_checkout_process', 'woocommerce_user_shipping_account_validation' );
     // hook in to add a note with the user's shipping account info
-    add_action( 'woocommerce_checkout_order_processed', 'woocommerce_user_shipping_account_add_note', 99, 2 );
+    add_action( 'woocommerce_checkout_order_processed', 'woocommerce_user_shipping_account_update_order', 99, 2 );
+    // hook in to add the customer shipping account number to the order 'totals'
+    add_filter( 'woocommerce_get_order_item_totals', 'woocommerce_user_shipping_account_update_emails', 99, 2 );
+    // hook in to the view order admin page to add the shipping account number
+    add_action( 'woocommerce_admin_order_data_after_shipping_address', 'woocommerce_user_shipping_account_admin_details', 99 );
 }
 add_action( 'plugins_loaded', 'woocommerce_user_shipping_account_init', 0 );
 
@@ -137,34 +141,68 @@ function woocommerce_user_shipping_account_validation()
 
     // only worried about this if the selected method is this one
     if ( isset( $method ) && $method[0] == 'user_shipping_method' ) {
-        $user_id = get_current_user_id();
-        $shipper = get_the_author_meta( 'woocommerce_user_shipping_company', $user_id );
-        $account = get_the_author_meta( 'woocommerce_user_shipping_account', $user_id );
+        //$user_id = get_current_user_id();
+        //$shipper = get_the_author_meta( 'woocommerce_user_shipping_company', $user_id );
+        //$account = get_the_author_meta( 'woocommerce_user_shipping_account', $user_id );
+        $account = $_POST['shipping_customer_account'];
 
         if ( $account == '' ) {
-            wc_add_notice( '<strong>Customer Shipping</strong> account required in <a href="'.get_edit_user_link().'">User Profile</a>', 'error' );
+            wc_add_notice( 'Please enter your <strong>shipping account number</strong>.', 'error' );
         }
     }
 }
 
 /**
- * woocommerce_user_shipping_account_add_note function
+ * woocommerce_user_shipping_account_update_order function
  * adds the user's shipping account into to the order for easy access
  *
  * @param int $order_id The ID of the new order
  * @param array $posted The processed array of the posted form fields
  * @return void
  */
-function woocommerce_user_shipping_account_add_note( $order_id, $posted )
+function woocommerce_user_shipping_account_update_order( $order_id, $posted )
 {
     $order = new WC_Order( $order_id );
 
     // only worried about this if the selected method is this one
     if ( isset( $posted['shipping_method'] ) && $posted['shipping_method'][0] == 'user_shipping_method' ) {
-        $user_id = get_current_user_id();
-        $shipper = get_the_author_meta( 'woocommerce_user_shipping_company', $user_id );
-        $account = get_the_author_meta( 'woocommerce_user_shipping_account', $user_id );
+        $account = $_POST['shipping_customer_account'];
 
-        $order->add_order_note( __( 'Customer Shipping Account: ', 'woocommerce-user-shipping-account' ) . $shipper . ' ' . $account );
+        // add the customer's shipping account to the order
+        add_post_meta( $order_id, '_customer_shipping_account', $account );
+        $order->add_order_note( __( 'Customer Shipping Account: ', 'woocommerce-user-shipping-account' ) . ' ' . $account );
+    }
+}
+
+/**
+ * woocommerce_user_shipping_account_update_emails function
+ * inserts the customer shipping account into the shipping method in all emails
+ *
+ * @param array $fields The current order totals fields array
+ * @param object $order The instance of this order's object
+ * @return array The updated $fields object
+ */
+function woocommerce_user_shipping_account_update_emails( $fields, $order )
+{
+    if ( $fields['shipping']['value'] == 'Customer Shipping Account' ) {
+        $fields['shipping']['value'] = $fields['shipping']['value'] . ' (' . get_post_meta( $order->id, '_customer_shipping_account', true ) . ')';
+    }
+
+    return $fields;
+}
+
+/**
+ * woocommerce_user_shipping_account_admin_details function
+ * adds the customer shipping account number field to the admin order details,
+ * if the order has one
+ *
+ * @param object $order The current Order object
+ */
+function woocommerce_user_shipping_account_admin_details( $order )
+{
+    $account = get_post_meta( $order->id, '_customer_shipping_account', true );
+
+    if ( ! empty( $account ) ) {
+        echo '<p><strong>'.__( 'Shipping Account' ).':</strong> ' . $account . '</p>';
     }
 }

@@ -1,5 +1,10 @@
 *** UPS Shipping ***
 
+2015.08.26 - version 3.1.2
+* Fix - Never hide save button.
+* Fix - Correct KG box weights.
+* Fix - Corrected use of default boxes.
+
 2015.06.03 - version 3.1.1
 * Tweak - Change fallback to price input.
 * Fix - Sanitize XML responses.

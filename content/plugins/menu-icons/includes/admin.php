@@ -92,7 +92,7 @@ final class Menu_Icons_Admin_Nav_Menus {
 			array(
 				'' => array(
 					'id'    => '',
-					'label' => __( '&mdash; Select &mdash;', 'menu-icons' )
+					'label' => __( '&mdash; Select &mdash;', 'menu-icons' ),
 				),
 			),
 			self::$_icon_types
@@ -125,7 +125,7 @@ final class Menu_Icons_Admin_Nav_Menus {
 			'settingsFields' => Menu_Icons_Settings::get_settings_fields(),
 			'ajaxUrls'       => array(
 				'update' => add_query_arg( 'action', 'menu_icons_update_settings', $ajax_url ),
-			)
+			),
 		);
 
 		foreach ( self::$_icon_types as $id => $props ) {
@@ -258,39 +258,45 @@ final class Menu_Icons_Admin_Nav_Menus {
 					 */
 					do_action( 'menu_icons_before_fields', $item, $depth, $args, $id );
 				?>
-				<?php
-				?>
 				<div class="easy">
 					<p class="description submitbox">
 						<label><?php esc_html_e( 'Icon:', 'menu-icons' ) ?></label>
-						<?php printf(
-							'<a id="menu-icons-%1$d-select" class="_select" title="%2$s" data-id="%1$d" data-text="%2$s">%3$s</a>',
-							esc_attr__( $item->ID ),
-							esc_attr__( 'Select', 'menu-icons' ),
-							self::_get_preview( $item->ID, $current )
-						) ?>
-						<?php printf(
-							'<a id="menu-icons-%1$d-remove" class="_remove hidden submitdelete" data-id="%1$d">%2$s</a>',
-							$item->ID,
-							esc_attr__( 'Remove', 'menu-icons' )
-						) ?>
+						<?php
+							printf(
+								'<a id="menu-icons-%1$d-select" class="_select" title="%2$s" data-id="%1$d" data-text="%2$s">%3$s</a>',
+								esc_attr__( $item->ID ),
+								esc_attr__( 'Select', 'menu-icons' ),
+								self::_get_preview( $item->ID, $current ) // xss ok
+							);
+						?>
+						<?php
+							printf(
+								'<a id="menu-icons-%1$s-remove" class="_remove hidden submitdelete" data-id="%1$s">%2$s</a>',
+								esc_attr( $item->ID ),
+								esc_html__( 'Remove', 'menu-icons' )
+							);
+						?>
 					</p>
 				</div>
 				<div class="original hidden">
 					<p class="description">
 						<label for="<?php echo esc_attr( $input_id ) ?>-type"><?php esc_html_e( 'Icon type', 'menu-icons' ); ?></label>
-						<?php printf(
-							'<select id="%s-type" name="%s[type]" class="_type hasdep" data-dep-scope="div.menu-icons-wrap" data-dep-children=".field-icon-child" data-key="type">',
-							esc_attr( $input_id ),
-							esc_attr( $input_name )
-						) ?>
+						<?php
+							printf(
+								'<select id="%s-type" name="%s[type]" class="_type hasdep" data-dep-scope="div.menu-icons-wrap" data-dep-children=".field-icon-child" data-key="type">',
+								esc_attr( $input_id ),
+								esc_attr( $input_name )
+							);
+						?>
 							<?php foreach ( self::_get_types() as $id => $props ) : ?>
-								<?php printf(
-									'<option value="%s"%s>%s</option>',
-									esc_attr( $id ),
-									selected( ( isset( $current['type'] ) && $id === $current['type'] ), true, false ),
-									esc_html( $props['label'] )
-								) ?>
+								<?php
+									printf(
+										'<option value="%s"%s>%s</option>',
+										esc_attr( $id ),
+										selected( ( isset( $current['type'] ) && $id === $current['type'] ), true, false ),
+										esc_html( $props['label'] )
+									);
+								?>
 							<?php endforeach; ?>
 						</select>
 					</p>
@@ -310,12 +316,14 @@ final class Menu_Icons_Admin_Nav_Menus {
 							)
 						);
 					?>
-						<p class="description field-icon-child" data-dep-on='<?php echo json_encode( $type_ids ) ?>'>
-							<?php printf(
-								'<label for="%s">%s</label>',
-								esc_attr( $field->id ),
-								esc_html( $field->label )
-							) ?>
+						<p class="description field-icon-child" data-dep-on='<?php echo wp_json_encode( $type_ids ) ?>'>
+							<?php
+								printf(
+									'<label for="%s">%s</label>',
+									esc_attr( $field->id ),
+									esc_html( $field->label )
+								);
+							?>
 							<?php $field->render() ?>
 						</p>
 					<?php endforeach; ?>
@@ -356,6 +364,52 @@ final class Menu_Icons_Admin_Nav_Menus {
 
 
 	/**
+	 * Save menu item metadata
+	 *
+	 * @since 0.8.0
+	 *
+	 * @param int   $id    Menu item ID.
+	 * @param mixed $value Metadata value.
+	 *
+	 * @return void
+	 */
+	public static function save_menu_item_meta( $id, $value ) {
+		/**
+		 * Allow plugins/themes to filter the values
+		 *
+		 * Deprecated.
+		 *
+		 * @since 0.1.0
+		 * @param array $value Metadata value.
+		 * @param int   $id    Menu item ID.
+		 */
+		$_value = apply_filters( 'menu_icons_values', $value, $id );
+
+		if ( $_value !== $value ) {
+			_deprecated_function( 'menu_icons_values', '0.8.0', 'menu_icons_item_meta_values' );
+		}
+
+		/**
+		 * Allow plugins/themes to filter the values
+		 *
+		 * Deprecated.
+		 *
+		 * @since 0.8.0
+		 * @param array $value Metadata value.
+		 * @param int   $id    Menu item ID.
+		 */
+		$value = apply_filters( 'menu_icons_item_meta_values', $_value, $id );
+
+		// Update
+		if ( ! empty( $value ) ) {
+			update_post_meta( $id, 'menu-icons', $value );
+		} else {
+			delete_post_meta( $id, 'menu-icons' );
+		}
+	}
+
+
+	/**
 	 * Save menu item's icons values
 	 *
 	 * @since  0.1.0
@@ -372,31 +426,24 @@ final class Menu_Icons_Admin_Nav_Menus {
 			return;
 		}
 
+		$screen = get_current_screen();
+		if ( ! $screen instanceof WP_Screen || 'nav-menus' !== $screen->id ) {
+			return;
+		}
+
 		check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
 
 		// Sanitize
 		if ( ! empty( $_POST['menu-icons'][ $menu_item_db_id ] ) ) {
-			$value = (array) $_POST['menu-icons'][ $menu_item_db_id ];
-		}
-		else {
+			$value = array_map(
+				'sanitize_text_field',
+				wp_unslash( (array) $_POST['menu-icons'][ $menu_item_db_id ] )
+			);
+		} else {
 			$value = array();
 		}
 
-		/**
-		 * Allow plugins/themes to filter the values
-		 *
-		 * @since 0.1.0
-		 * @param array $value Metadata value
-		 */
-		$value = apply_filters( 'menu_icons_values', $value, $menu_item_db_id );
-
-		// Update
-		if ( ! empty( $value ) ) {
-			update_post_meta( $menu_item_db_id, 'menu-icons', $value );
-		}
-		else {
-			delete_post_meta( $menu_item_db_id, 'menu-icons' );
-		}
+		self::save_menu_item_meta( $menu_item_db_id, $value );
 	}
 
 
@@ -439,7 +486,7 @@ final class Menu_Icons_Admin_Nav_Menus {
 	protected static function _print_tempate( $id, $template ) {
 		?>
 			<script type="text/html" id="<?php echo esc_attr( $id ) ?>">
-				<?php echo $template // xss ok ?>
+				<?php echo $template; // xss ok ?>
 			</script>
 		<?php
 	}

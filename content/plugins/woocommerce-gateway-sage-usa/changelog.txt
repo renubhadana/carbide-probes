@@ -1,0 +1,27 @@
+*** SageExpressPay Changelog ***
+2015.03.12 - version 1.0.7
+ * removes deprecated function
+
+2015.02.15 - version 1.0.6
+ * updates for WooCommerce 2.3
+ * pay now button text
+ * Fix HTTPS error
+
+2014.02.13 - version 1.0.5
+ * Add debugging options
+ * fix expiry date error in some cases
+
+2014.02.09 - version 1.0.4
+ * Include payment form scripts
+
+2014.01.27 - version 1.0.3
+ * translation updates
+
+2014.01.18 - version 1.0.2
+ * WooCommerce 2.1 support
+
+2013.05.14 - version 1.0.1
+ * Set the state as the city if no state supplied
+
+2013.05.14 - version 1.0.0
+ * First Release

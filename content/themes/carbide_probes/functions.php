@@ -209,6 +209,35 @@ function theme_enqueue_scripts() {
 }
 
 /**
+ * carbide_keep_dash_in_search_before
+ * carbide_keep_dash_in_search_after
+ *
+ * keeps the dash in the search tokens for relevanssi
+ * normal behavior for relevanssi is to strip out all punctuation, but for
+ * carbide, the dash is relevant to nailing down the best possible search results.
+ * we split this into two filters, the first filter replaces dashes with
+ * something that will not be stripped out by relevanssi. the second filter
+ * replaces that original replacement with the dash, thus keeping the dash
+ * in the search term.
+ *
+ * @param string $a The search string
+ * @param string The updated search string
+ */
+add_filter('relevanssi_remove_punctuation', 'carbide_keep_dash_in_search_before', 9);
+add_filter('relevanssi_remove_punctuation', 'carbide_keep_dash_in_search_after', 11);
+function carbide_keep_dash_in_search_before( $a )
+{
+    $a = str_replace( '-', 'HYPHENDASH', $a );
+    return $a;
+}
+
+function carbide_keep_dash_in_search_after( $a )
+{
+    $a = str_replace( 'HYPHENDASH', '-', $a );
+    return $a;
+}
+
+/**
  * Declare Woocommerce support and customize content wrapper markup
  */
 add_action( 'after_setup_theme', 'woocommerce_support' );
@@ -238,6 +267,86 @@ function wcs_woo_remove_reviews_tab($tabs) {
 
 add_filter( 'wc_product_sku_enabled', '__return_false' );
 add_filter( 'wc_product_enable_dimensions_display', '__return_false' );
+
+/*
+ * wc_remove_related_products
+ *
+ * Clear the query arguments for related products so none show.
+ * Add this code to your theme functions.php file.
+ */
+add_filter( 'woocommerce_related_products_args', 'carbide_remove_related_products', 10 );
+function carbide_remove_related_products( $args ) {
+    return array();
+}
+
+/**
+ * carbide_add_purchase_order_field
+ * adds the purchase order number form field to the checkout page
+ *
+ * @param object $checkout The checkout object for the current order
+ */
+add_action( 'woocommerce_before_order_notes', 'carbide_add_purchase_order_field', 99 );
+function carbide_add_purchase_order_field( $checkout )
+{
+    woocommerce_form_field( 'purchase_order_number', array(
+            'type' => 'text',
+            'class' => array( 'form-row-wide' ),
+            'label' => __( 'Add a Purchase Order Number' )
+        ), $checkout->get_value( 'purchase_order_number' ));
+}
+
+/**
+ * carbide_save_purchase_order_field
+ * saves the purchase order number to the post meta, if the field is not empty
+ *
+ * @param int $order_id The ID of the current order
+ */
+add_action( 'woocommerce_checkout_update_order_meta', 'carbide_save_purchase_order_field', 99 );
+function carbide_save_purchase_order_field( $order_id )
+{
+    if ( ! empty( $_POST['purchase_order_number'] ) )
+        update_post_meta( $order_id, '_purchase_order_number', sanitize_text_field( $_POST['purchase_order_number'] ) );
+}
+
+/**
+ * carbide_add_purchase_order_to_item_totals
+ * adds the PO number to the order totals array if it has one
+ *
+ * @param array $fields The current order total fields
+ * @param object $order The current order object
+ * @return array The updated order totals array
+ */
+add_filter( 'woocommerce_get_order_item_totals', 'carbide_add_purchase_order_to_item_totals', 99, 2 );
+function carbide_add_purchase_order_to_item_totals( $fields, $order )
+{
+    $po_number = get_post_meta( $order->id, '_purchase_order_number', true );
+
+    if ( ! empty( $po_number ) ) {
+        $po_field = array(
+                'label' => 'PO Number',
+                'value' => $po_number
+            );
+        array_unshift( $fields, $po_field );
+    }
+
+    return $fields;
+}
+
+/**
+ * carbide_add_purchase_order_to_admin
+ * adds the purchase order field to the admin screen if there is one
+ *
+ * @param object $order The current order object
+ */
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'carbide_add_purchase_order_to_admin', 99 );
+function carbide_add_purchase_order_to_admin( $order )
+{
+    $po_number = get_post_meta( $order->id, '_purchase_order_number', true );
+
+    if ( ! empty( $po_number ) ) {
+        echo '<p><strong>'.__( 'Purchase Order' ).':</strong> ' . $po_number . '</p>';
+    }
+}
 
 /**
  * Features you can enable or disable as needed.
