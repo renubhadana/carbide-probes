@@ -73,12 +73,11 @@ class PMXI_File_Record extends PMXI_Model_Record {
 		return parent::__get($field);
 	}
 	
-	public function delete() {
-		// if ($this->id) { // delete history file first
-		// 	$uploads = wp_upload_dir();
-		// 	$file_name = $uploads['basedir'] . DIRECTORY_SEPARATOR . PMXI_Plugin::HISTORY_DIRECTORY . DIRECTORY_SEPARATOR . $this->id;
-		// 	@file_exists($file_name) and @is_file($file_name) and wp_all_import_remove_source($file_name, false);
-		// }
+	public function delete( $unlink = true ) {		
+		$import_file_path = wp_all_import_get_absolute_path($this->path);
+		if ( @file_exists($import_file_path) and $unlink ){ 
+			wp_all_import_remove_source($import_file_path);				
+		}
 		return parent::delete();
 	}
 }

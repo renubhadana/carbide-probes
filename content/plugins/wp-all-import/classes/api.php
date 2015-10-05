@@ -353,13 +353,16 @@ class PMXI_API
 		if (empty($img_url)) return false;
 
 		$url = str_replace(" ", "%20", trim($img_url));
-		$bn  = preg_replace('/[\\?|&].*/', '', basename($url));
+		$bn  = wp_all_import_sanitize_filename(basename($url));		
 
 		if ($image_name == ""){
 			$img_ext = pmxi_getExtensionFromStr($url);			
 			$default_extension = pmxi_getExtension($bn);
 			if ($img_ext == "") $img_ext = pmxi_get_remote_image_ext($url);
-			$image_name = urldecode(sanitize_file_name(($img_ext) ? str_replace("." . $default_extension, "", $bn) : $bn)) . (("" != $img_ext) ? '.' . $img_ext : '');
+			
+			// generate local file name
+			$image_name = apply_filters("wp_all_import_image_filename", urldecode(sanitize_file_name((($img_ext) ? str_replace("." . $default_extension, "", $bn) : $bn))) . (("" != $img_ext) ? '.' . $img_ext : ''));
+
 		}
 
 		$uploads   = wp_upload_dir();
@@ -369,9 +372,9 @@ class PMXI_API
 		$result = false;
 		$wp_filetype = false;
 
-		global $wpdb;
+		global $wpdb;		
 
-		$attch = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->posts . " WHERE (post_title = %s OR post_title = %s) AND post_type = %s;", $image_name, preg_replace('/\\.[^.\\s]{3,4}$/', '', $image_name), "attachment" ) );
+		$attch = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . $wpdb->posts . " WHERE (post_title = %s OR post_title = %s OR post_name = %s) AND post_type = %s AND post_mime_type LIKE %s;", $image_name, preg_replace('/\\.[^.\\s]{3,4}$/', '', $image_name), sanitize_title($image_name), "attachment", "image%" ) );
 
 		if ( $attch != null ){			
 

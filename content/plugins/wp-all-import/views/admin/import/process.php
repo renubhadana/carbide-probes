@@ -169,7 +169,7 @@
 							$('.processing_step_1').hide();	
 
 							// detect broken auto-created Unique ID and notify user
-							<?php if ( $this->isWizard and $update_previous->options['wizard_type'] == 'new'): ?>
+							<?php if ( $this->isWizard and $update_previous->options['wizard_type'] == 'new' and ! $update_previous->options['deligate']): ?>
 								if ( data.imported != data.created )
 								{
 									//$('.wpallimport-complete-success').hide();

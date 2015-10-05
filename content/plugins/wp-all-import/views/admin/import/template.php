@@ -135,7 +135,41 @@
 						do_action('pmxi_extend_options_nested', $post_type);
 					}*/
 
-				?>																
+					$uploads = wp_upload_dir();
+					$functions = $uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';					
+					
+					?>
+
+					<div class="wpallimport-collapsed closed wpallimport-section">
+						<div class="wpallimport-content-section">
+							<div class="wpallimport-collapsed-header">
+								<h3><?php _e('Function Editor', 'wp_all_import_plugin'); ?></h3>	
+							</div>
+							<div class="wpallimport-collapsed-content" style="padding: 0;">
+								<div class="wpallimport-collapsed-content-inner">									
+									<div class="wpallimport-free-edition-notice" style="text-align:center; margin-top:0; margin-bottom: 40px;">
+										<a href="http://www.wpallimport.com/upgrade-to-pro/?utm_source=free-plugin&utm_medium=in-plugin&utm_campaign=custom-fields" target="_blank" class="upgrade_link"><?php _e('Upgrade to the professional edition of WP All Import to enable the Function Editor.', 'wp_all_import_plugin');?></a>
+									</div>
+									
+									<textarea id="wp_all_import_code" name="wp_all_import_code"><?php echo "<?php\n\n?>";?></textarea>						
+
+									<div class="input" style="margin-top: 10px;">
+
+										<div class="input" style="display:inline-block; margin-right: 20px;">
+											<input type="button" class="button-primary wp_all_import_save_functions" disabled="disabled" value="<?php _e("Save Functions", 'wp_all_import_plugin'); ?>"/>
+											<a href="#help" class="wpallimport-help" title="<?php printf(__("Add functions here for use during your import. You can access this file at %s", "wp_all_import_plugin"), preg_replace("%.*wp-content%", "wp-content", $functions));?>" style="top: 0;">?</a>
+											<div class="wp_all_import_functions_preloader"></div>
+										</div>						
+										<div class="input wp_all_import_saving_status" style="display:inline-block;">
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>															
 				
 				<hr>
 				

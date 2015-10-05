@@ -59,11 +59,11 @@ $.fn.wplupload  = function($options) {
 		
 		$up.bind('FileUploaded', function(up, file, r) {
 			var fetch = typeof(shortform) == 'undefined' ? 1 : 2;			
-			
+			var response = r.response;						
 			r = _parseJSON(r.response);		
-			
-			if (r.error !== null){
 
+			if (r.OK === 0) 
+			{	
 				$('.wpallimport-choose-file').find('.wpallimport-submit-buttons').hide();														
 				$('.wpallimport-import-from.selected').click();
 				$('#wpallimport-url-upload-status').html('');
@@ -72,48 +72,63 @@ $.fn.wplupload  = function($options) {
 				$('#progressbar').html('<span></span>');
 				$('#select-files').fadeIn();
 
-				$('.wpallimport-header').next('.clear').after('<div class="error inline"><p>' + r.error.message + '</p></div>');
-
+				$('.wpallimport-header').next('.clear').after('<div class="error inline"><p>' + response + '</p></div>');
 			}
-			else{
+			else
+			{
+			
+				if (r.error !== null){
 
-				if (r.post_type)
-				{
-					var index = $('#custom_type_selector li:has(input[value="'+ r.post_type +'"])').index();
-					if (index != -1)
+					$('.wpallimport-choose-file').find('.wpallimport-submit-buttons').hide();														
+					$('.wpallimport-import-from.selected').click();
+					$('#wpallimport-url-upload-status').html('');
+
+					$('#progress').hide();
+					$('#progressbar').html('<span></span>');
+					$('#select-files').fadeIn();
+
+					$('.wpallimport-header').next('.clear').after('<div class="error inline"><p>' + r.error.message + '</p></div>');
+
+				}
+				else{
+
+					if (r.post_type)
 					{
-						$('#custom_type_selector').ddslick('select', {index: index });
-						$('.auto-generate-template').css({'display':'inline-block'}).attr('rel', 'upload_type');
+						var index = $('#custom_type_selector li:has(input[value="'+ r.post_type +'"])').index();
+						if (index != -1)
+						{
+							$('#custom_type_selector').ddslick('select', {index: index });
+							$('.auto-generate-template').css({'display':'inline-block'}).attr('rel', 'upload_type');
+						}
+						else
+						{
+							$('.auto-generate-template').hide();
+						}
 					}
 					else
 					{
 						$('.auto-generate-template').hide();
 					}
+
+					$('#filepath').val(r.name);
+
+					$('#progressbar').html('<span>Upload Complete</span> - ' + file.name + ' (' + ( (file.size / (1024*1024) >= 1) ? (file.size / (1024*1024)).toFixed(2) + 'mb' : (file.size / (1024)).toFixed(2) + 'kb') + ')');					
+
+					setTimeout(function() {					
+						
+						$('.wpallimport-choose-file').find('.wpallimport-upload-resource-step-two').slideDown();	
+
+						$('.wpallimport-choose-file').find('.wpallimport-submit-buttons').show();		
+
+						if (r.OK) {					
+
+						} else if (r.error != undefined && '' != r.error.message) {
+							$('#progressbar').html(r.error.message);
+						}
+
+					}, 1000);			 			
 				}
-				else
-				{
-					$('.auto-generate-template').hide();
-				}
-
-				$('#filepath').val(r.name);
-
-				$('#progressbar').html('<span>Upload Complete</span> - ' + file.name + ' (' + ( (file.size / (1024*1024) >= 1) ? (file.size / (1024*1024)).toFixed(2) + 'mb' : (file.size / (1024)).toFixed(2) + 'kb') + ')');					
-
-				setTimeout(function() {					
-					
-					$('.wpallimport-choose-file').find('.wpallimport-upload-resource-step-two').slideDown();	
-
-					$('.wpallimport-choose-file').find('.wpallimport-submit-buttons').show();		
-
-					if (r.OK) {					
-
-					} else if (r.error != undefined && '' != r.error.message) {
-						$('#progressbar').html(r.error.message);
-					}
-
-				}, 1000);			 			
-			}
-			
+			}			
 		});
 		
 		$up.bind('UploadComplete', function(up) {

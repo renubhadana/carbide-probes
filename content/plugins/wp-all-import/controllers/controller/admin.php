@@ -59,11 +59,12 @@ abstract class PMXI_Controller_Admin extends PMXI_Controller {
 		
 		wp_enqueue_style('jquery-ui', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/css/redmond/jquery-ui.css');
 		wp_enqueue_style('jquery-tipsy', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/css/smoothness/jquery.tipsy.css');
-		wp_enqueue_style('pmxi-admin-style', WP_ALL_IMPORT_ROOT_URL . '/static/css/admin.css');
+		wp_enqueue_style('pmxi-admin-style', WP_ALL_IMPORT_ROOT_URL . '/static/css/admin.css', array(), PMXI_VERSION);
 		wp_enqueue_style('pmxi-admin-style-ie', WP_ALL_IMPORT_ROOT_URL . '/static/css/admin-ie.css');		
 		wp_enqueue_style('jquery-select2', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/css/select2/select2.css');
 		wp_enqueue_style('jquery-select2', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/css/select2/select2-bootstrap.css');
 		add_editor_style( WP_ALL_IMPORT_ROOT_URL . '/static/css/custom-editor-style.css' );
+		wp_enqueue_style('jquery-codemirror', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/codemirror.css', array(), PMXI_VERSION);
 
 		$wp_styles->add_data('pmxi-admin-style-ie', 'conditional', 'lte IE 7');
 		wp_enqueue_style('wp-pointer');			
@@ -81,13 +82,20 @@ abstract class PMXI_Controller_Admin extends PMXI_Controller {
 		}
 	
 		wp_enqueue_script('jquery-ui-datepicker', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/ui.datepicker.js', 'jquery-ui-core');
-		wp_enqueue_script('jquery-ui-autocomplete', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/ui.autocomplete.js', array('jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position'));
+		//wp_enqueue_script('wp-all-import-autocomplete', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/ui.autocomplete.js', array('jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position'));
 		wp_enqueue_script('jquery-tipsy', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/jquery.tipsy.js', 'jquery');
 		wp_enqueue_script('jquery-nestable', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/jquery.mjs.nestedSortable.js', array('jquery', 'jquery-ui-dialog', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-tabs', 'jquery-ui-progressbar'));
 		wp_enqueue_script('jquery-moment', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/moment.js', 'jquery');		
 		wp_enqueue_script('jquery-select2', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/select2.min.js', 'jquery');
 		wp_enqueue_script('jquery-ddslick', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/jquery.ddslick.min.js', 'jquery');
 		wp_enqueue_script('jquery-contextmenu', WP_ALL_IMPORT_ROOT_URL . '/static/js/jquery/jquery.ui-contextmenu.min.js', array('jquery', 'jquery-ui-menu'));
+		wp_enqueue_script('jquery-codemirror', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/codemirror.js', array(), PMXI_VERSION);
+		wp_enqueue_script('jquery-codemirror-matchbrackets', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/matchbrackets.js', array('jquery-codemirror'), PMXI_VERSION);
+		wp_enqueue_script('jquery-codemirror-htmlmixed', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/htmlmixed.js', array('jquery-codemirror-matchbrackets'), PMXI_VERSION);
+		wp_enqueue_script('jquery-codemirror-xml', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/xml.js', array('jquery-codemirror-htmlmixed'), PMXI_VERSION);
+		wp_enqueue_script('jquery-codemirror-javascript', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/javascript.js', array('jquery-codemirror-xml'), PMXI_VERSION);
+		wp_enqueue_script('jquery-codemirror-clike', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/clike.js', array('jquery-codemirror-javascript'), PMXI_VERSION);
+		wp_enqueue_script('jquery-codemirror-php', WP_ALL_IMPORT_ROOT_URL . '/static/codemirror/php.js', array('jquery-codemirror-clike'), PMXI_VERSION);
 		wp_enqueue_script('wp-pointer');
 
 		/* load plupload scripts */
@@ -99,7 +107,7 @@ abstract class PMXI_Controller_Admin extends PMXI_Controller {
 		wp_enqueue_script('full-plupload', WP_ALL_IMPORT_ROOT_URL . '/static/js/plupload/plupload.full.js', array('jquery-browserplus-min'));
 		wp_enqueue_script('jquery-plupload', WP_ALL_IMPORT_ROOT_URL . '/static/js/plupload/wplupload.js', array('full-plupload', 'jquery'));				
 
-		wp_enqueue_script('pmxi-admin-script', WP_ALL_IMPORT_ROOT_URL . '/static/js/admin.js', array('jquery', 'jquery-ui-dialog', 'jquery-ui-datepicker', 'jquery-ui-draggable', 'jquery-ui-droppable'));
+		wp_enqueue_script('pmxi-admin-script', WP_ALL_IMPORT_ROOT_URL . '/static/js/admin.js', array('jquery', 'jquery-ui-dialog', 'jquery-ui-datepicker', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-autocomplete'), PMXI_VERSION);
 							
 	}	
 	

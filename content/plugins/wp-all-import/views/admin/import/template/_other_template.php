@@ -271,17 +271,18 @@
 					<?php if ( ! empty($post['deligate']) and $post['deligate'] == 'wpallexport' ): ?>
 					<tr>
 						<td>
-							<h4><?php _e('Override Post Type', 'wp_all_import_plugin') ?></h4>
+							<h4><?php _e('Dynamic Post Type', 'wp_all_import_plugin') ?></h4>
 							<div class="input">
 								<div style="margin: 11px; float: left;">
 									<input type="hidden" name="is_override_post_type" value="0"/>
 									<input type="checkbox" value="1" class="switcher-horizontal fix_checkbox" name="is_override_post_type" id="is_override_post_type" <?php echo ( ! empty($post['is_override_post_type'])) ? 'checked="checked"' : '' ?>>
-									<label for="is_override_post_type"><?php _e('Override','wp_all_import_plugin');?></label>
+									<label for="is_override_post_type"><?php _e('Slug','wp_all_import_plugin');?></label>
 								</div>
 								<div class="switcher-target-is_override_post_type" style="float: left; overflow: hidden;">
 									<input type="text" name="post_type_xpath" style="vertical-align:middle; line-height: 26px;" value="<?php echo esc_attr($post['post_type_xpath']) ?>" />											
 								</div>	
-								<a href="#help" class="wpallimport-help" title="<?php _e('Slug for the post type.', 'wp_all_import_plugin') ?>" style="position:relative; top:12px;">?</a>
+								<a href="#help" class="wpallimport-help" title="<?php _e('If records in this import have different post types specify the slug of the desired post type here.
+', 'wp_all_import_plugin') ?>" style="position:relative; top:12px;">?</a>
 							</div>
 						</td>
 					</tr>			

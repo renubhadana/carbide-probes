@@ -5,7 +5,7 @@ if ( ! function_exists('wp_all_import_ctx_mapping')){
 		if ( ! empty( $mapping_rules) and $ctx['is_mapping']){			
 			foreach ($mapping_rules as $rule) {
 				foreach ($rule as $key => $value) {					
-					if ( trim($ctx['name']) == trim($key) ){ 
+					if ( trim($ctx['name']) == trim($key) || str_replace("&amp;", "&", trim($ctx['name'])) == str_replace("&amp;", "&", trim($key)) ){ 
 						$ctx['name'] = trim($value);
 						break;
 					}

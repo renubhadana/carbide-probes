@@ -263,7 +263,7 @@ class PMXI_Admin_Settings extends PMXI_Controller_Admin {
 
 		$files = array_diff(@scandir($dir), array('.','..'));
 
-		$cacheFiles = array_diff(@scandir($cacheDir), array('.','..'));
+		$cacheFiles = @array_diff(@scandir($cacheDir), array('.','..'));
 
 		$msg = __('Files not found', 'wp_all_import_plugin');
 
@@ -274,6 +274,76 @@ class PMXI_Admin_Settings extends PMXI_Controller_Admin {
 			wp_all_import_clear_directory( $cacheDir );		
 
 			$msg = __('Clean Up has been successfully completed.', 'wp_all_import_plugin');
+		}
+
+		// clean logs files
+		$table = PMXI_Plugin::getInstance()->getTablePrefix() . 'history';
+		global $wpdb;
+		$histories = $wpdb->get_results("SELECT * FROM $table", ARRAY_A);
+
+		if ( ! empty($histories) )
+		{
+			$importRecord = new PMXI_Import_Record();
+			$importRecord->clear();
+			foreach ($histories as $history) {
+				$importRecord->getById($history['import_id']);
+				if ( $importRecord->isEmpty() )
+				{
+					$historyRecord = new PMXI_History_Record();
+					$historyRecord->getById($history['id']);
+					if ( ! $historyRecord->isEmpty() ) {
+						$historyRecord->delete();
+					}
+				}
+				$importRecord->clear();
+			}
+		}
+
+		// clean uploads folder
+		$table = PMXI_Plugin::getInstance()->getTablePrefix() . 'files';		
+		$files = $wpdb->get_results("SELECT * FROM $table", ARRAY_A);
+
+		$required_dirs = array();
+
+		if ( ! empty($files) )
+		{
+			$importRecord = new PMXI_Import_Record();
+			$importRecord->clear();
+			foreach ($files as $file) {
+				$importRecord->getById($file['import_id']);				
+				if ( $importRecord->isEmpty()){
+					$fileRecord = new PMXI_File_Record();
+					$fileRecord->getById($file['id']);					
+					if ( ! $fileRecord->isEmpty() ) {						
+						$fileRecord->delete();
+					}
+				}
+				else
+				{
+					$path_parts = pathinfo(wp_all_import_get_absolute_path($file['path']));
+					if ( ! empty($path_parts['dirname'])){
+			            $path_all_parts = explode('/', $path_parts['dirname']);
+			            $dirname = array_pop($path_all_parts);
+			            if ( wp_all_import_isValidMd5($dirname)){    
+			            	$required_dirs[] = $path_parts['dirname'];
+			            }
+			        }					
+				}
+				$importRecord->clear();
+			}			
+		}
+
+		$uploads_dir = $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . PMXI_Plugin::UPLOADS_DIRECTORY;
+
+		if (($dir = @opendir($uploads_dir . DIRECTORY_SEPARATOR)) !== false or ($dir = @opendir($uploads_dir)) !== false) {				
+			while(($file = @readdir($dir)) !== false) {
+				$filePath = $uploads_dir . DIRECTORY_SEPARATOR . $file;									
+				
+				if ( is_dir($filePath) and ! in_array($filePath, $required_dirs) and ( ! in_array($file, array('.', '..'))))
+				{
+					wp_all_import_rmdir($filePath);								
+				}						
+			}
 		}
 
 		wp_redirect(add_query_arg('pmxi_nt', urlencode($msg), $this->baseUrl)); die();

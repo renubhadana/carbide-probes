@@ -894,6 +894,10 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			
 			PMXI_Plugin::$session->set('encoding', $post['import_encoding']);
 			PMXI_Plugin::$session->save_data();
+
+			$functions = $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';
+			if ( @file_exists($functions) )
+				require_once $functions;
 			
 			// validate
 			try {
@@ -1145,6 +1149,11 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			
 			PMXI_Plugin::$session->set('encoding', $post['import_encoding']);
 			PMXI_Plugin::$session->save_data();
+
+			$wp_uploads = wp_upload_dir();		
+			$functions  = $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';
+			if ( @file_exists($functions) )
+				require_once $functions;
 			
 			// validate
 			try {			
@@ -1222,6 +1231,8 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 				'single_product_regular_price' => '',
 				'single_product_sale_price' => '',
 				'disable_prepare_price' => 0,
+				'prepare_price_to_woo_format' => 0,
+				'convert_decimal_separator' => 1,
 				'single_product_regular_price_adjust' => '',			
 				'single_product_regular_price_adjust_type' => '%',	
 				'single_product_sale_price_adjust' => '',	
@@ -1303,13 +1314,13 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 
 					if ("" != $post['single_product_regular_price']){
 						list($this->data['product_regular_price']) = XmlImportParser::factory($xml, $xpath, $post['single_product_regular_price'], $file)->parse(); unlink($file);			
-						$this->data['product_regular_price'] = pmwi_adjust_price(pmwi_prepare_price($this->data['product_regular_price'], $post['disable_prepare_price']), 'regular_price', $post);
+						$this->data['product_regular_price'] = pmwi_adjust_price(pmwi_prepare_price($this->data['product_regular_price'], $post['disable_prepare_price'], $post['prepare_price_to_woo_format'], $post['convert_decimal_separator']), 'regular_price', $post);
 						$data_to_preview = true;
 						
 					}
 					if ("" != $post['single_product_sale_price']){
 						list($this->data['product_sale_price']) = XmlImportParser::factory($xml, $xpath, $post['single_product_sale_price'], $file)->parse(); unlink($file);			
-						$this->data['product_sale_price'] = pmwi_adjust_price(pmwi_prepare_price($this->data['product_sale_price'], $post['disable_prepare_price']), 'sale_price', $post);
+						$this->data['product_sale_price'] = pmwi_adjust_price(pmwi_prepare_price($this->data['product_sale_price'], $post['disable_prepare_price'], $post['prepare_price_to_woo_format'], $post['convert_decimal_separator']), 'sale_price', $post);
 						$data_to_preview = true;
 						
 					}
@@ -1394,6 +1405,11 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 		} elseif ($this->input->post('is_submitted')) { // save template submission
 
 			check_admin_referer('template', '_wpnonce_template');
+
+			$wp_uploads = wp_upload_dir();		
+			$functions  = $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';
+			if ( @file_exists($functions) )
+				require_once $functions;
 			
 			if (!empty($post['title'])) {			
 				$this->_validate_template($post['title'], 'Post title');
@@ -1694,7 +1710,12 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 		
 		if ($this->input->post('is_submitted')) {
 
-			check_admin_referer('options', '_wpnonce_options');						
+			check_admin_referer('options', '_wpnonce_options');		
+
+			$wp_uploads = wp_upload_dir();		
+			$functions  = $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';
+			if ( @file_exists($functions) )
+				require_once $functions;					
 			
 			if ($post['is_import_specified']) {
 				if (empty($post['import_specified'])) {
@@ -1956,7 +1977,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 								}
 								$history_file = new PMXI_File_Record();
 								$history_file->getBy('id', $file['id']);
-								if ( ! $history_file->isEmpty()) $history_file->delete();
+								if ( ! $history_file->isEmpty()) $history_file->delete( $history_file_path != $upload_result['filePath'] );
 							}
 						}
 						
@@ -2181,7 +2202,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 					}
 					$history_file = new PMXI_File_Record();
 					$history_file->getBy('id', $file['id']);
-					if ( ! $history_file->isEmpty()) $history_file->delete();
+					if ( ! $history_file->isEmpty()) $history_file->delete( $history_file_path != PMXI_Plugin::$session->filePath );
 				}
 			}
 
@@ -2305,6 +2326,10 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 		wp_cache_flush();
 
 		if ( PMXI_Plugin::is_ajax() or ! $ajax_processing ) {	
+
+			$functions  = $wp_uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY . DIRECTORY_SEPARATOR . 'functions.php';
+			if ( @file_exists($functions) )
+				require_once $functions;
 
 			$iteration_start_time = time();			
 			

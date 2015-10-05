@@ -8,7 +8,7 @@ function wp_all_import_sanitize_filename($filename) {
 		$sanitized = sanitize_file_name(substr($filename, 0, -(strlen($ext)+1)));
 		// Replace dots inside filename
 		$sanitized = str_replace('.','-', $sanitized);
-		return strtolower($sanitized . '.' . $ext);
+		return $sanitized . '.' . $ext;
 	}
 	return $filename;
 }

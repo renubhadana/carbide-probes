@@ -14,16 +14,16 @@
 			<?php $this->error() ?>
 		<?php endif ?>
 
-		<h3><?php _e('Test Image Import', 'wp_all_import_plugin'); ?></h3>	
+		<h3><?php _e('Test Images', 'wp_all_import_plugin'); ?></h3>	
 
 		<?php 
 
 		if ( ! empty($featured_images) ){		
 
 			?>
-			<p><?php _e('Click to test button to have WP All Import ensure it can import your images.', 'wp_all_import_plugin'); ?></p>
+			<p><?php _e('Click to test that your images are able to be accessed by WP All Import.', 'wp_all_import_plugin'); ?></p>
 
-			<a class="test_images" href="javascript:void(0);" style="margin-left:0;" rel="<?php echo $post[$get['slug'] . 'download_images']; ?>"><?php _e('Test', 'wp_all_import_plugin'); ?></a>
+			<a class="test_images" href="javascript:void(0);" style="margin-left:0;" rel="<?php echo $post[$get['slug'] . 'download_images']; ?>"><?php _e('Run Test', 'wp_all_import_plugin'); ?></a>
 					
 			<?php
 

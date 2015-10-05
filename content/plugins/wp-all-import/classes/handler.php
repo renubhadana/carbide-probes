@@ -132,13 +132,17 @@ class PMXI_Handler extends PMXI_Session {
 		}
 
 		if ( ! empty( $expired_sessions ) ) {
+			wp_cache_delete( 'notoptions', 'options' );
+			foreach ($expired_sessions as $expired) {				
+				wp_cache_delete( $expired, 'options' );		
+				delete_option($expired);
+			}
 			$expired_sessions_chunked = array_chunk( $expired_sessions, 100 );
-
-			foreach ( $expired_sessions_chunked as $chunk ) {
+			
+			foreach ( $expired_sessions_chunked as $chunk ) {								
 				$option_names = implode( "','", $chunk );
 				$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name IN ('$option_names')" );
-			}
+			}			
 		}
-
     }
 }

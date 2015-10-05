@@ -13,29 +13,14 @@ function pmxi_findDuplicates($articleData, $custom_duplicate_name = '', $custom_
 
 		if ( ! empty($articleData['post_type'])){
 			$post_types = (class_exists('PMWI_Plugin') and $articleData['post_type'] == 'product') ? array('product', 'product_variation') : array($articleData['post_type']);
-
-			$args = array(
-				'post_type'   => $post_types,
-				'post_status' => array('any'),
-				'meta_query'  => array(
-					'relation' => 'OR',
-					array(
-						'key' => trim($custom_duplicate_name),
-						'value' => trim($custom_duplicate_value),
-					),
-					array(
-						'key' => trim($custom_duplicate_name),
-						'value' => htmlspecialchars(trim($custom_duplicate_value)),
-					)
-				),
-				'order' => 'ASC',
-				'orderby' => 'ID'
-			);			
-			$query = new WP_Query( $args );
 			
-			if ( $query->have_posts() ) $duplicate_ids[] = $query->post->ID;
-
-			wp_reset_postdata();		
+			$sql = $wpdb->prepare("SELECT SQL_CALC_FOUND_ROWS " . $wpdb->posts . ".ID FROM " . $wpdb->posts . " INNER JOIN " . $wpdb->postmeta . " ON ( " . $wpdb->posts . ".ID = " . $wpdb->postmeta . ".post_id ) WHERE 1=1 AND ( ( " . $wpdb->postmeta . ".meta_key = %s AND CAST(" . $wpdb->postmeta . ".meta_value AS CHAR) = %s ) OR ( " . $wpdb->postmeta . ".meta_key = %s AND CAST(" . $wpdb->postmeta . ".meta_value AS CHAR) = %s ) ) AND " . $wpdb->posts . ".post_type IN ('". implode("','", $post_types) ."') AND ((" . $wpdb->posts . ".post_status <> 'trash' AND " . $wpdb->posts . ".post_status <> 'auto-draft')) GROUP BY " . $wpdb->posts . ".ID ORDER BY " . $wpdb->posts . ".ID ASC LIMIT 0, 15", trim($custom_duplicate_name), trim($custom_duplicate_value), trim($custom_duplicate_name), htmlspecialchars(trim($custom_duplicate_value)));
+			
+			$query = $wpdb->get_results( $sql );
+								
+			if ( ! empty($query) )
+					foreach ($query as $p) 
+						$duplicate_ids[] = $p->ID;			
 
 			if (empty($duplicate_ids)){
 

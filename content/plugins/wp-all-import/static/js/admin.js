@@ -1684,6 +1684,17 @@
 		$(this).hide();        
 	});	
 
+	if ($('#wp_all_import_code').length){
+		var editor = CodeMirror.fromTextArea(document.getElementById("wp_all_import_code"), {
+	        lineNumbers: true,
+	        matchBrackets: true,
+	        mode: "application/x-httpd-php",
+	        indentUnit: 4,
+	        indentWithTabs: true
+	    });
+	    editor.setCursor(1);
+	}    
+
 	$('.wpallimport-collapsed').each(function(){
 
 		if ( ! $(this).hasClass('closed')) $(this).find('.wpallimport-collapsed-content:first').slideDown();
@@ -1694,7 +1705,9 @@
 		var $parent = $(this).parents('.wpallimport-collapsed:first');
 		if ($parent.hasClass('closed')){			
 			$parent.removeClass('closed');
-			$parent.find('.wpallimport-collapsed-content:first').slideDown();
+			$parent.find('.wpallimport-collapsed-content:first').slideDown(400, function(){
+				if ($('#wp_all_import_code').length) editor.setCursor(1);
+			});
 		}
 		else{
 			$parent.addClass('closed');			
