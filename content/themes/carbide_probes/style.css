@@ -1870,6 +1870,8 @@ h1, h2, h3, h4, h5, h6 { font-family: "Open Sans"; color: inherit; }
 h1 { font-size: 60px; font-size: 3.75rem; font-weight: 700; color: #424240; }
 
 h2 { font-size: 48px; font-size: 3rem; font-weight: 600; color: #ef4c34; }
+h2 sub { font-size: .5em; }
+h2 sub span { margin-left: .25em; }
 
 h3 { font-size: 36px; font-size: 2.25rem; text-transform: uppercase; font-weight: 600; }
 
@@ -2031,7 +2033,7 @@ footer .footer-menu ul.menu li a { color: #fff; }
 @media (max-width: 1235px) { .home-page-widgets aside.widget_catalog_download_widget .catalog-img { z-index: -9999; } }
 
 .home-middle-blocks { position: relative; list-style: none; text-align: center; margin-top: 1em; margin-bottom: 0.5em; }
-.home-middle-blocks figure { position: relative; float: left; overflow: hidden; margin: 10px 1%; min-width: 320px; max-width: 100%; min-height: 270px; max-height: 360px; width: 100%; background: #ef4c34; text-align: center; cursor: pointer; }
+.home-middle-blocks figure { position: relative; float: left; overflow: hidden; margin: 10px 1%; min-width: 320px; max-width: 100%; max-height: 360px; width: 100%; background: #ef4c34; text-align: center; cursor: pointer; }
 .home-middle-blocks figure h2 { word-spacing: -0.15em; font-weight: 700; font-size: 1.35em; margin: 0; color: #000; }
 @media (max-width: 992px) { .home-middle-blocks figure h2 { font-size: 1em; } }
 .home-middle-blocks figure p { margin: 0; letter-spacing: 1px; font-size: 68.5%; max-width: 200px; }
@@ -2041,12 +2043,12 @@ footer .footer-menu ul.menu li a { color: #fff; }
 .home-middle-blocks figure figcaption:before { pointer-events: none; }
 .home-middle-blocks figure figcaption:after { pointer-events: none; }
 .home-middle-blocks figure.effect-ruby { background-color: transparent; -webkit-transition: background 0.35s, -webkit-transform 0.35s; transition: background 0.35s, transform 0.35s; }
-.home-middle-blocks figure.effect-ruby img { opacity: 0.2; -webkit-transition: opacity 0.35s, -webkit-transform 0.35s; transition: opacity 0.35s, transform 0.35s; -webkit-transform: scale(1.15); -ms-transform: scale(1.15); transform: scale(1.15); }
+.home-middle-blocks figure.effect-ruby img { opacity: 0.2; -webkit-transition: opacity 0.35s, -webkit-transform 0.35s; transition: opacity 0.35s, transform 0.35s; -webkit-transform: scale(1.15); -ms-transform: scale(1.25); transform: scale(1.25); }
 .home-middle-blocks figure.effect-ruby:hover { background: #ef4c34; background: -webkit-repeating-linear-gradient(135deg, #ff842e, #ff842e 9px, #ef4c34 10px, #ef4c34 12px); background: repeating-linear-gradient(-45deg, #ff842e, #ff842e 9px, #ef4c34 10px, #ef4c34 12px); }
-.home-middle-blocks figure.effect-ruby:hover img { opacity: 0.1; -webkit-transform: scale(1); -ms-transform: scale(1); transform: scale(1); }
+.home-middle-blocks figure.effect-ruby:hover img { opacity: 0.1; -webkit-transform: scale(1); -ms-transform: scale(1.15); transform: scale(1.15); }
 .home-middle-blocks figure.effect-ruby:hover h2 { -webkit-transform: translate3d(0, -20px, 0); transform: translate3d(0, -20px, 0); color: #fff; }
 .home-middle-blocks figure.effect-ruby:hover p { opacity: 1; -webkit-transform: translate3d(0, 0, 0) scale(1); transform: translate3d(0, 0, 0) scale(1); }
-.home-middle-blocks figure.effect-ruby h2 { margin-top: 10%; -webkit-transition: -webkit-transform 0.35s; transition: transform 0.35s; -webkit-transform: translate3d(0, 20px, 0); transform: translate3d(0, 20px, 0); }
+.home-middle-blocks figure.effect-ruby h2 { margin-top: 5%; -webkit-transition: -webkit-transform 0.35s; transition: transform 0.35s; -webkit-transform: translate3d(0, 20px, 0); transform: translate3d(0, 20px, 0); }
 @media (max-width: 992px) { .home-middle-blocks figure.effect-ruby h2 { margin-top: 3%; } }
 .home-middle-blocks figure.effect-ruby p { margin: 1em auto 0; padding: 1em; font-weight: 600; border: 1px solid #fff; opacity: 0; -webkit-transition: opacity 0.35s, -webkit-transform 0.35s; transition: opacity 0.35s, transform 0.35s; -webkit-transform: translate3d(0, 20px, 0) scale(1.1); transform: translate3d(0, 20px, 0) scale(1.1); }
 
