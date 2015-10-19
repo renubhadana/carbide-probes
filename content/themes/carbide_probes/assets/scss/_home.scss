@@ -74,7 +74,7 @@
     margin: 10px 1%;
     min-width: 320px;
     max-width: 100%;
-    min-height: 270px;
+    //min-height: 270px;
     max-height: 360px;
     width: 100%;
     background: $red-orange;
@@ -144,7 +144,7 @@
         -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
         transition: opacity 0.35s, transform 0.35s;
         -webkit-transform: scale(1.15);
-        transform: scale(1.15);
+        transform: scale(1.25);
       }
       &:hover {
         background: $red-orange;
@@ -152,7 +152,7 @@
         img {
           opacity: 0.1;
           -webkit-transform: scale(1);
-          transform: scale(1);
+          transform: scale(1.15);
         }
         h2 {
           -webkit-transform: translate3d(0,-20px,0);
@@ -166,7 +166,7 @@
         }
       }
       h2 {
-        margin-top: 10%;
+        margin-top: 5%;
         @media(max-width: 992px) {
           margin-top: 3%;
         }
@@ -176,7 +176,7 @@
         transform: translate3d(0,20px,0);
       }
       p {
-        margin: 1em auto 0;
+        margin: 0 auto;
         padding: 1em;
         font-weight: 600;
         border: 1px solid #fff;
