@@ -10,6 +10,8 @@ class WC_MS_Notes {
     public function __construct( WC_Ship_Multiple $wcms ) {
         $this->wcms = $wcms;
 
+        add_filter( 'wc_ms_multiple_shipping_checkout_locale', array(__CLASS__, 'add_datepicker_variables' ) );
+        add_action( 'wp_footer', array( __CLASS__, 'checkout_scripts' ) );
         add_action( 'wc_ms_shipping_package_block', array( __CLASS__, 'render_note_form'), 10, 2 );
 
         add_action( 'woocommerce_checkout_update_order_meta', array( __CLASS__, 'store_order_notes'), 20, 2 );
@@ -19,6 +21,85 @@ class WC_MS_Notes {
 
         add_action( 'wc_ms_order_package_block_before_address', array( __CLASS__, 'render_notes'), 11, 3 );
         add_action( 'wc_ms_order_package_block_before_address', array( __CLASS__, 'render_dates'), 11, 3 );
+    }
+
+    /**
+     * Add datepicker settings to the WCMS JS array
+     * @param array $wcms
+     * @return array
+     */
+    public static function add_datepicker_variables( $wcms ) {
+        $settings = get_option( 'woocommerce_multiple_shipping_settings', array() );
+
+        // set to enable all days by default
+        $wcms['datepicker_valid_days'] = array(0,1,2,3,4,5,6);
+
+        if ( $settings['checkout_datepicker'] == 'yes' && !empty( $settings['checkout_valid_days'] ) ) {
+            $wcms['datepicker_valid_days'] = array_map('absint', $settings['checkout_valid_days'] );
+        }
+
+        // set excluded dates
+        $wcms['datepicker_excluded_dates'] = array();
+        if ( $settings['checkout_datepicker'] == 'yes' && !empty( $settings['checkout_exclude_dates'] ) ) {
+            $wcms['datepicker_excluded_dates'] = $settings['checkout_exclude_dates'];
+        }
+
+        return $wcms;
+    }
+
+    /**
+     * Store the notes in the checkout form immediately after they are entered
+     */
+    public static function checkout_scripts() {
+
+        if ( !is_checkout() ) {
+            return;
+        }
+
+        ?>
+        <script>
+            function supports_html5_storage() {
+                try {
+                    return 'localStorage' in window && window['localStorage'] !== null;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            jQuery(document).ready(function($) {
+
+                if ( supports_html5_storage() ) {
+
+                    var apply_notes = function() {
+                        $("textarea.ms_shipping_note").each(function() {
+                            var index = $(this).data("index");
+                            var note  = localStorage["ms_note_"+ index];
+
+                            $(this).val(note);
+                        });
+                    };
+
+                    $("div.woocommerce").on("change", "textarea.ms_shipping_note", function() {
+                        var index = $(this).data("index");
+                        var note  = $(this).val();
+
+                        localStorage["ms_note_"+ index] = note;
+                    });
+
+                    $("body").bind("updated_checkout", function() {
+                        apply_notes();
+                    })
+
+                    $("form.checkout").on("submit", function() {
+                        $("textarea.ms_shipping_note").each(function() {
+                            var index = $(this).data("index");
+                            localStorage.removeItem("ms_note_"+index);
+                        });
+                    });
+                }
+            });
+        </script>
+        <?php
     }
 
     /**
@@ -96,7 +177,13 @@ class WC_MS_Notes {
                     continue;
                 }
 
-                $packages[ $idx ]['date'] = esc_html( $value );
+                $ts = strtotime( $value );
+
+                if ( $ts ) {
+                    $packages[ $idx ]['date'] = date( get_option('date_format'), $ts );
+                } else {
+                    $packages[ $idx ]['date'] = esc_html( $value );
+                }
 
             }
         }

@@ -51,6 +51,16 @@ if ( isset($_GET['edit']) ):
 
         <div class="address-column">
             <?php
+            if ( function_exists('wc_get_customer_default_location') ) {
+                $location = wc_get_customer_default_location();
+
+                if ( empty( $address ) && !empty( $location ) ) {
+                    foreach ( $location as $key => $value ) {
+                        $address['shipping_'. $key] = $value;
+                    }
+                }
+            }
+
             foreach ($shipFields as $key => $field) :
                 $val    = (isset($address[$key])) ? $address[$key] : '';
                 $id     = rtrim( str_replace( '[', '_', $key ), ']' );

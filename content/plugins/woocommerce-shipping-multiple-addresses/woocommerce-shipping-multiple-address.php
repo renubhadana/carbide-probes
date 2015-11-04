@@ -3,7 +3,7 @@
   * Plugin Name: WooCommerce Ship to Multiple Addresses
   * Plugin URI: http://woothemes.com/woocommerce
   * Description: Allow customers to ship orders with multiple products or quantities to separate addresses instead of forcing them to place multiple orders for different delivery addresses.
-  * Version: 3.3
+  * Version: 3.3.2
   * Author: 75nineteen Media LLC
   * Author URI: http://www.75nineteen.com
   * Text domain: wc_shipping_multiple_address
@@ -459,14 +459,14 @@ if ( is_woocommerce_active() ) {
             wp_enqueue_script( 'multiple_shipping_checkout', plugins_url( 'js/woocommerce-checkout.js', __FILE__), array( 'woocommerce', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-mouse', ) );
 
             if ( function_exists('wc_add_notice') ) {
-                wp_localize_script( 'multiple_shipping_checkout', 'WCMS', array(
+                wp_localize_script( 'multiple_shipping_checkout', 'WCMS', apply_filters( 'wc_ms_multiple_shipping_checkout_locale', array(
                         // URL to wp-admin/admin-ajax.php to process the request
                         'ajaxurl'   => admin_url( 'admin-ajax.php' ),
                         'base_url'  => plugins_url( '', __FILE__),
                         'wc_url'    => $woocommerce->plugin_url(),
                         'countries' => json_encode( array_merge( $woocommerce->countries->get_allowed_country_states(), $woocommerce->countries->get_shipping_country_states() ) ),
                         'select_state_text' => esc_attr__( 'Select an option&hellip;', 'woocommerce' ),
-                    )
+                    ) )
                 );
 
                 if ( WC_MS_Compatibility::is_wc_version_gte('2.3') ) {
@@ -516,7 +516,9 @@ if ( is_woocommerce_active() ) {
                 );
 
                 // load postcode lookup JS
-                if ( $handler->get_active_provider()->supports( 'postcode_lookup') ) {
+                $provider = $handler->get_active_provider();
+
+                if ( $provider && $provider->supports( 'postcode_lookup') ) {
 
                     wp_enqueue_script( 'wc_address_validation_postcode_lookup', $validator->get_plugin_url() . '/assets/js/frontend/wc-address-validation-postcode-lookup' . $suffix . '.js', array( 'jquery', 'woocommerce' ), WC_Address_Validation::VERSION, true );
 
@@ -524,14 +526,14 @@ if ( is_woocommerce_active() ) {
                 }
 
                 // load address validation JS
-                if ( $handler->get_active_provider()->supports( 'address_validation' ) && 'WC_Address_Validation_Provider_SmartyStreets' == get_class( $handler->get_active_provider() ) ) {
+                if ( $provider && $provider->supports( 'address_validation' ) && 'WC_Address_Validation_Provider_SmartyStreets' == get_class( $provider ) ) {
 
                     // load SmartyStreets LiveAddress jQuery plugin
                     wp_enqueue_script( 'wc_address_validation_smarty_streets', '//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/2.4/jquery.liveaddress.min.js', array( 'jquery' ), '2.4', true );
 
                     wp_enqueue_script( 'wcms_address_validation', plugins_url( 'js/address-validation.js', __FILE__ ), array('jquery') );
 
-                    $params['smarty_streets_key'] = $handler->get_active_provider()->html_key;
+                    $params['smarty_streets_key'] = $provider->html_key;
 
                     wp_localize_script( 'wcms_address_validation', 'wc_address_validation', $params );
 
@@ -540,7 +542,7 @@ if ( is_woocommerce_active() ) {
                 }
 
                 // allow other providers to load JS
-                do_action( 'wc_address_validation_load_js', $handler->get_active_provider(), $handler, $suffix );
+                do_action( 'wc_address_validation_load_js', $provider, $handler, $suffix );
             }
 
             // on the thank you page, remove the Shipping Address block if the order ships to multiple addresses
@@ -1424,7 +1426,7 @@ if ( is_woocommerce_active() ) {
             $packages           = get_post_meta($order_id, '_wcms_packages', true);
             $multiship          = get_post_meta($order_id, '_multiple_shipping', true);
 
-            if ( ( !$packages || count($packages) == 1 ) && $multiship != 'yes' )
+            if ( ( !$packages || count($packages) == 1 ) )
                 return;
 
             // load the address fields
