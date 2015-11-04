@@ -56,6 +56,22 @@ ob_start();
 
 	<?php endif; ?>
 
+    <?php
+        if ( array_key_exists( 'pa_oem-manufacturer', $attributes ) )
+            $attributes['pa_oem-manufacturer']['position'] = '7';
+        if ( array_key_exists( 'pa_oem-model-number', $attributes ) )
+            $attributes['pa_oem-model-number']['position'] = '8';
+        if ( array_key_exists( 'pa_oem-part-number', $attributes ) )
+            $attributes['pa_oem-part-number']['position'] = '9';
+
+        $tmp = Array();
+        foreach( $attributes as $ma ) {
+            $tmp[] = $ma['position'];
+        }
+
+        array_multisort( $tmp, $attributes );
+    ?>
+
 	<?php foreach ( $attributes as $attribute ) :
 		if ( empty( $attribute['is_visible'] ) || ( $attribute['is_taxonomy'] && ! taxonomy_exists( $attribute['name'] ) ) ) {
 			continue;

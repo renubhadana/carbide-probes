@@ -121,24 +121,13 @@ EOD;
     function display_order_shipping_addresses( $order ) {
         global $woocommerce;
         $order_id           = $order->id;
-        $addresses          = get_post_meta($order_id, '_shipping_addresses', true);
         $methods            = get_post_meta($order_id, '_shipping_methods', true);
         $packages           = get_post_meta($order_id, '_wcms_packages', true);
-        $items              = $order->get_items();
         $available_methods  = $woocommerce->shipping->load_shipping_methods();
 
-        //if (empty($addresses)) return;
         if ( !$packages || count($packages) == 1 ) {
             return;
         }
-
-        // load the address fields
-        $this->wcms->load_cart_files();
-
-        $checkout   = new WC_Checkout();
-        $cart       = new WC_Cart();
-
-        $shipFields = $woocommerce->countries->get_address_fields( $woocommerce->countries->get_base_country(), 'shipping_' );
 
         echo '<p><strong>'. __( 'This order ships to multiple addresses.', 'wc_shipping_multiple_address' ) .'</strong></p>';
         echo '<table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">';
@@ -160,12 +149,12 @@ EOD;
             }
 
             $address = ( isset($package['full_address']) && !empty($package['full_address']) )
-                ? wcms_get_formatted_address($package['full_address'])
+                ? $woocommerce->countries->get_formatted_address($package['full_address'])
                 : '';
 
             foreach ( $products as $i => $product ) {
                 echo '<tr>';
-                echo '<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;">'. get_the_title($product['data']->id) .'<br />'. $cart->get_item_data($product, true) .'</td>';
+                echo '<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;">'. get_the_title($product['data']->id) .'<br />'. self::get_item_data($product, true) .'</td>';
                 echo '<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;">'. $product['quantity'] .'</td>';
                 echo '<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;">'.  $address .'<br/><em>( '. $method .' )</em></td>';
                 echo '</tr>';
@@ -270,11 +259,6 @@ EOD;
             return;
         }
 
-        // load the address fields
-        //$this->load_cart_files();
-
-        $cart       = new WC_Cart();
-
         $shipFields = $woocommerce->countries->get_address_fields( $woocommerce->countries->get_base_country(), 'shipping_' );
 
         echo '<div class="item-addresses-holder">';
@@ -288,7 +272,7 @@ EOD;
             }
 
             foreach ( $products as $i => $product ) {
-                $attributes = $cart->get_item_data( $product, true );
+                $attributes = self::get_item_data( $product, true );
 
                 echo '<h4 style="margin: 0;">'. get_the_title($product['data']->id) .' &times; '. $product['quantity'];
 
@@ -305,7 +289,7 @@ EOD;
                     <div class="shipping_data">
                         <div class="address">
                             <p>
-                                '. wcms_get_formatted_address( $package['full_address'] ) .'
+                                '. $woocommerce->countries->get_formatted_address( $package['full_address'] ) .'
                             </p>
                         </div><br />';
 
@@ -477,7 +461,7 @@ EOD;
 
     function update_order_taxes( $order_id, $items ) {
         //return;
-        $order_taxes = $items['order_taxes'];
+        $order_taxes = isset($items['order_taxes']) ? $items['order_taxes'] : array();
         $tax_total = array();
         $packages = get_post_meta( $order_id, '_wcms_packages', true );
 
@@ -521,6 +505,10 @@ EOD;
 
         $packages = get_post_meta( $order->id, '_wcms_packages', true );
 
+        if ( !$packages ) {
+            return $items;
+        }
+
         foreach ( $items as $item_id => $item ) {
             if ( $item['type'] != 'line_item' ) {
                 continue;
@@ -552,7 +540,7 @@ EOD;
                 }
             }
 
-            if ( $modified ) {
+            if ( $modified && is_array( $tax_rate_ids ) ) {
                 foreach ( $tax_rate_ids as $rate_id ) {
                     if ( !isset( $item_tax_data['total'][ $rate_id ] ) ) {
                         $item_tax_data['total'][ $rate_id ] = 0;
@@ -734,7 +722,7 @@ EOD;
                     <h3><?php _e( 'Shipping address', 'woocommerce' ); ?></h3>
 
                     <?php
-                    echo '<div class="shipping_data"><div class="address">'. wcms_get_formatted_address( $package['full_address'] ) .'</div><br />';
+                    echo '<div class="shipping_data"><div class="address">'. $woocommerce->countries->get_formatted_address( $package['full_address'] ) .'</div><br />';
 
                     if ( isset($package['full_address']['notes']) && !empty($package['full_address']['notes']) ) {
                         echo '<blockquote>Shipping Notes:<br /><em>&#8220;'. $package['full_address']['notes'] .'&#8221;</em></blockquote>';
@@ -751,6 +739,84 @@ EOD;
         $contents = ob_get_clean();
 
         return $contents;
+    }
+
+    /**
+     * Gets and formats a list of cart item data + variations for display on the frontend.
+     *
+     * @param array $item
+     * @param bool $flat (default: false)
+     * @return string
+     */
+    public static function get_item_data( $item, $flat = false ) {
+        $item_data = array();
+
+        // Variation data
+        if ( ! empty( $item['data']->variation_id ) && is_array( $item['variation'] ) ) {
+
+            foreach ( $item['variation'] as $name => $value ) {
+
+                if ( '' === $value )
+                    continue;
+
+                $taxonomy = wc_attribute_taxonomy_name( str_replace( 'attribute_pa_', '', urldecode( $name ) ) );
+
+                // If this is a term slug, get the term's nice name
+                if ( taxonomy_exists( $taxonomy ) ) {
+                    $term = get_term_by( 'slug', $value, $taxonomy );
+                    if ( ! is_wp_error( $term ) && $term && $term->name ) {
+                        $value = $term->name;
+                    }
+                    $label = wc_attribute_label( $taxonomy );
+
+                    // If this is a custom option slug, get the options name
+                } else {
+                    $value              = apply_filters( 'woocommerce_variation_option_name', $value );
+                    $product_attributes = $item['data']->get_attributes();
+                    if ( isset( $product_attributes[ str_replace( 'attribute_', '', $name ) ] ) ) {
+                        $label = wc_attribute_label( $product_attributes[ str_replace( 'attribute_', '', $name ) ]['name'] );
+                    } else {
+                        $label = $name;
+                    }
+                }
+
+                $item_data[] = array(
+                    'key'   => $label,
+                    'value' => $value
+                );
+            }
+        }
+
+        // Filter item data to allow 3rd parties to add more to the array
+        $item_data = apply_filters( 'woocommerce_get_item_data', $item_data, $item );
+
+        // Format item data ready to display
+        foreach ( $item_data as $key => $data ) {
+            // Set hidden to true to not display meta on cart.
+            if ( ! empty( $data['hidden'] ) ) {
+                unset( $item_data[ $key ] );
+                continue;
+            }
+            $item_data[ $key ]['key']     = ! empty( $data['key'] ) ? $data['key'] : $data['name'];
+            $item_data[ $key ]['display'] = ! empty( $data['display'] ) ? $data['display'] : $data['value'];
+        }
+
+        // Output flat or in list format
+        if ( sizeof( $item_data ) > 0 ) {
+            ob_start();
+
+            if ( $flat ) {
+                foreach ( $item_data as $data ) {
+                    echo esc_html( $data['key'] ) . ': ' . wp_kses_post( $data['display'] ) . "\n";
+                }
+            } else {
+                wc_get_template( 'cart/cart-item-data.php', array( 'item_data' => $item_data ) );
+            }
+
+            return ob_get_clean();
+        }
+
+        return '';
     }
 
     private function round_up( $number, $precision = 2) {

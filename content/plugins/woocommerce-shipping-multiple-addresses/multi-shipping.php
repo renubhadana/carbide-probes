@@ -39,6 +39,62 @@ function woocommerce_multi_shipping_init() {
             add_action('woocommerce_update_options_shipping_multiple_shipping', array( $this, 'process_admin_options' ) );
             add_filter('woocommerce_settings_api_sanitized_fields_'. $this->id, array($this, 'save_settings') );
 
+            add_action( 'admin_head', array( $this, 'inline_scripts') );
+
+        }
+
+        public function inline_scripts() {
+            $screen = get_current_screen();
+
+            if ( $screen->id != 'woocommerce_page_wc-settings' ) {
+                return;
+            }
+
+            $js = '
+            $("#woocommerce_multiple_shipping_checkout_datepicker").change(function() {
+                if ( $(this).is(":checked") ) {
+                    $(":input.show-if-checkout-datepicker").removeAttr("disabled");
+                } else {
+                    $(":input.show-if-checkout-datepicker").attr("disabled", true);
+                }
+            }).change();
+
+            $(".datepicker-div").datepicker({
+                dateFormat: "mm-d-yy",
+                showButtonPanel: true,
+                onSelect: function(date) {
+                    var select = $(this).parents("fieldset").find("select.excluded-list");
+
+                    select
+                        .append("<option selected value="+date+">"+date+"</option>")
+                        .trigger("change");
+
+                }
+            });
+
+            $("#woocommerce_multiple_shipping_checkout_datepicker").change(function() {
+                if ( $(this).is(":checked") ) {
+                    $(".show-if-checkout-datepicker").parents("tr").show();
+                } else {
+                    $(".show-if-checkout-datepicker").parents("tr").hide();
+                }
+            }).change();
+            ';
+
+            if ( function_exists('wc_enqueue_js') ) {
+                wc_enqueue_js( $js );
+            } else {
+                global $woocommerce;
+                $woocommerce->add_inline_js( $js );
+            }
+
+            ?>
+            <style type="text/css">
+                .woocommerce table.ui-datepicker-calendar th {
+                    padding-right: 0 !important;
+                }
+            </style>
+            <?php
         }
 
         function calculate_shipping( $package = array() ) {
@@ -72,13 +128,6 @@ function woocommerce_multi_shipping_init() {
                     'type'          => 'title',
                     'title'         => __('Checkout Fields')
                 ),
-                'checkout_datepicker'   => array(
-                    'type'          => 'checkbox',
-                    'title'         => __('Date Picker', 'wc_shipping_multiple_address'),
-                    'label'         => __('Enable', 'wc_shipping_multiple_address'),
-                    'description'   => __('Allow customers to pick delivery dates for every shipping address selected.', 'wc_shipping_multiple_address'),
-                    'desc_tip'      => true
-                ),
                 'checkout_notes'    => array(
                     'type'          => 'checkbox',
                     'title'         => __('Delivery Notes', 'wc_shipping_multiple_address'),
@@ -86,6 +135,35 @@ function woocommerce_multi_shipping_init() {
                     'default'       => 'yes',
                     'description'   => __('Allow customers to write delivery notes to every shipping address selected.', 'wc_shipping_multiple_address'),
                     'desc_tip'      => true
+                ),
+                'checkout_datepicker'   => array(
+                    'type'          => 'checkbox',
+                    'title'         => __('Date Picker', 'wc_shipping_multiple_address'),
+                    'label'         => __('Enable', 'wc_shipping_multiple_address'),
+                    'description'   => __('Allow customers to pick delivery dates for every shipping address selected.', 'wc_shipping_multiple_address'),
+                    'desc_tip'      => true
+                ),
+                'checkout_valid_days' => array(
+                    'type'          => 'multiselect',
+                    'title'         => __('Valid Shipping Days', 'wc_shipping_multiple_address'),
+                    'label'         => __('Days', 'wc_shipping_multiple_address'),
+                    'options'       => array(
+                        0   => __('Sunday', 'wc_shipping_multiple_address'),
+                        1   => __('Monday', 'wc_shipping_multiple_address'),
+                        2   => __('Tuesday', 'wc_shipping_multiple_address'),
+                        3   => __('Wednesday', 'wc_shipping_multiple_address'),
+                        4   => __('Thursday', 'wc_shipping_multiple_address'),
+                        5   => __('Friday', 'wc_shipping_multiple_address'),
+                        6   => __('Saturday', 'wc_shipping_multiple_address')
+                    ),
+                    'default'       => array(0,1,2,3,4,5,6),
+                    'class'         => 'show-if-checkout-datepicker wc-enhanced-select'
+                ),
+                'checkout_exclude_dates' => array(
+                    'type'          => 'ms_multi_datepicker',
+                    'title'         => __('Excluded Delivery Dates', 'wc_shipping_multiple_address'),
+                    'label'         => __('Excluded Dates', 'wc_shipping_multiple_address'),
+                    'class'         => 'show-if-checkout-datepicker'
                 ),
                 'gift_section'  => array(
                     'type'          => 'title',
@@ -403,6 +481,60 @@ function woocommerce_multi_shipping_init() {
             return $html;
         }
 
+        function generate_ms_multi_datepicker_html( $key, $data ) {
+            $settings   = get_option( 'woocommerce_multiple_shipping_settings', array() );
+
+            $data['title']          = isset( $data['title'] ) ? $data['title'] : '';
+            $data['desc_tip']       = isset( $data['desc_tip'] ) ? $data['desc_tip'] : false;
+            $data['description']    = isset( $data['description'] ) ? $data['description'] : '';
+
+            // Description handling
+            if ( $data['desc_tip'] === true ) {
+                $description = '';
+                $tip         = $data['description'];
+            } elseif ( ! empty( $data['desc_tip'] ) ) {
+                $description = $data['description'];
+                $tip         = $data['desc_tip'];
+            } elseif ( ! empty( $data['description'] ) ) {
+                $description = $data['description'];
+                $tip         = '';
+            } else {
+                $description = $tip = '';
+            }
+
+            ob_start();
+            ?>
+            <tr valign="top">
+                <th scope="row" class="titledesc">
+                    <label for="<?php echo esc_attr( $this->plugin_id . $this->id . '_' . $key ); ?>"><?php echo wp_kses_post( $data['title'] ); ?></label>
+
+                    <?php if ( $tip ) {
+                        echo '<img class="help_tip" data-tip="' . esc_attr( $tip ) . '" src="' . WC()->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+                    }
+                    ?>
+                </th>
+                <td class="forminp">
+                    <fieldset><legend class="screen-reader-text"><span><?php echo wp_kses_post( $data['title'] ); ?></span></legend>
+                        <?php
+                        $excludes = isset($settings['checkout_exclude_dates']) ? $settings['checkout_exclude_dates'] : array();
+
+                        if ( !$excludes ) {
+                            $excludes = array();
+                        }
+                        ?>
+                        <div class="datepicker-div" style="float: right; width: 350px;"></div>
+                        <select class="wc-enhanced-select excluded-list show-if-checkout-datepicker" id="<?php echo esc_attr( $this->plugin_id . $this->id . '_' . $key ); ?>" name="<?php echo esc_attr( $this->plugin_id . $this->id . '_' . $key ); ?>[]" multiple>
+                            <?php foreach ( $excludes as $date ): ?>
+                                <option selected value="<?php echo $date; ?>"><?php echo $date; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </fieldset>
+                </td>
+            </tr>
+            <?php
+            return ob_get_clean();
+        }
+
         function save_settings( $settings ) {
             $settings['email_subject']          = (isset($_POST['woocommerce_multiple_shipping_email_subject'])) ? $_POST['woocommerce_multiple_shipping_email_subject'] : '';
             $settings['email_message']          = (isset($_POST['woocommerce_multiple_shipping_email_message'])) ? $_POST['woocommerce_multiple_shipping_email_message'] : '';
@@ -453,6 +585,27 @@ function woocommerce_multi_shipping_init() {
                 }
 
                 $text = $new;
+            }
+
+            return $text;
+        }
+
+        function validate_ms_multi_datepicker_field( $key ) {
+            $text = $this->get_option( $key );
+
+            if ( isset( $_POST[ $this->plugin_id . $this->id . '_' . $key ] ) && is_array( $_POST[ $this->plugin_id . $this->id .'_'. $key ] ) ) {
+                $val    = $_POST[ $this->plugin_id . $this->id . '_' . $key ];
+                $new    = array();
+
+                foreach ( $val as $value ) {
+                    $new[] = wp_kses_post( trim( stripslashes( $value ) ) );
+                }
+
+                $new = array_unique( $new );
+
+                $text = $new;
+            } else {
+                $text = array();
             }
 
             return $text;
