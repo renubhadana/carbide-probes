@@ -15,6 +15,21 @@ jQuery(document).ready(function($) {
         }
     }).change();
 
+    function disableDays(date) {
+        if ( $.inArray(date.getDay(), WCMS.datepicker_valid_days) == -1 ) {
+            return [false];
+        }
+
+        var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+        var mdy = (m+1) + '-' + d +'-'+ y;
+
+        if ( $.inArray( mdy, WCMS.datepicker_excluded_dates ) != -1 ) {
+            return [false];
+        }
+
+        return [true];
+    }
+
     $('body').bind('updated_checkout', function() {
 
         if ( _multi_shipping ) {
@@ -25,7 +40,10 @@ jQuery(document).ready(function($) {
                 _ms_reloaded = true;
             }
 
-            $(".ms_shipping_date").datepicker();
+            $(".ms_shipping_date").datepicker({
+                beforeShowDay: disableDays,
+                minDate: 0
+            });
         }
     });
 

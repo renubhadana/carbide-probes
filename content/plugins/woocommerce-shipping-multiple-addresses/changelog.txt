@@ -1,5 +1,16 @@
 *** Ship to Multiple Addresses Changelog ***
 
+2015.10.27 - version 3.3.2
+ * Feature: Added ability to limit shipping days and dates in the multi-shipping datepicker
+ * Bug fix: Remove cart dependency that caused order view to not load in some cases for multi-shipping orders
+ * Bug fix: Fixed a number of errors that could appear at checkout and in the order emails
+
+2015.10.13 - version 3.3.1
+ * Bug fix: Enhance the date picker for shipping date to support the localized date format
+ * Bug fix: Fixed address for to share the WooCommerce setting for default customer address
+ * Bug fix: Ensure that ->get_active_provider() returns an object to support all shipping methods
+ * Feature: Added localStorage to avoid losing existing notes when editing an address (requires browser that supports localStorage)
+
 2015.08.31 - version 3.3
  * Feature: Added support for WooCommerce PIP including product attributes
  * Feature: Added support WooCommerce Role base shipping methods
