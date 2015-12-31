@@ -3,8 +3,8 @@ Contributors: kucrut, joshuairl
 Donate Link: http://kucrut.org/#coffee
 Tags: menu, nav-menu, icons, navigation
 Requires at least: 4.3
-Tested up to: 4.3.1
-Stable tag: 0.8.1
+Tested up to: 4.4
+Stable tag: 0.9.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,10 @@ Spice up your navigation menus with pretty icons, easily.
 
 
 == Description ==
+
+= Upgrade Note =
+Before updating to `0.9.x`, please save the settings by clicking on the *Save* button on the *Menu Icons Settings* meta box. See [screenshot](https://ps.w.org/menu-icons/assets/screenshot-7.png?rev=979807).
+
 This plugin gives you the ability to add icons to your menu items, similar to the look of the latest dashboard menu.
 
 = Usage =
@@ -81,7 +85,7 @@ This is a bug with the font icon itself. When the font is updated, this plugin w
  * @param  array $types Registered icon types.
  * @return array
  */
-function myplugin_remove_menu_icons_type( $types ) {
+function my_remove_menu_icons_type( $types ) {
 	// Dashicons
 	//unset( $types['dashicons'] );
 
@@ -102,38 +106,15 @@ function myplugin_remove_menu_icons_type( $types ) {
 
 	return $types;
 }
-add_filter( 'menu_icons_types', 'myplugin_remove_menu_icons_type' );
+add_filter( 'menu_icons_types', 'my_remove_menu_icons_type' );
 `
 
-To add a new icon type, take a look at the `type-*.php` files inside the `includes` directory of this plugin.
+To add a new icon type, take a look at the files inside the `includes/library/icon-picker/includes/types` directory of this plugin.
 
 = I don't want the settings meta box. How do I remove/disable it? =
 Add this block of code to your [mu-plugin file](http://codex.wordpress.org/Must_Use_Plugins):
 `
 add_filter( 'menu_icons_disable_settings', '__return_true' );
-`
-
-= How can I use CSS file for a font type from a CDN instead of the bundled one? =
-You can filter the icon type properties from your plugin/theme:
-`
-/**
- * Modify icon type properties
- *
- * See myplugin_remove_menu_icons_type() above for the icon type keys
- *
- * @param  array  $props    Icon type properties.
- * @param  object $instance Icon type registration instance.
- * @return array
- */
-function _my_fontawesome_props( $props, $instance ) {
-	$props['stylesheet'] = sprintf(
-		'//maxcdn.bootstrapcdn.com/font-awesome/%s/css/font-awesome.min.css',
-		$instance->version
-	);
-
-	return $props;
-}
-add_filter( 'menu_icons_fa_props', '_my_fontawesome_props', 10, 2 );
 `
 
 = How can I change the CSS class for hiding the menu item labels? =
@@ -159,14 +140,14 @@ Add this block of code to your [mu-plugin file](http://codex.wordpress.org/Must_
 /**
  * Override menu item markup
  *
- * @param string  $markup      Menu item title markup.
- * @param integer $id          Menu item ID.
- * @param array   $meta_values Menu item meta values.
- * @param string  $title       Menu item title.
+ * @param string  $markup  Menu item title markup.
+ * @param integer $id      Menu item ID.
+ * @param array   $meta    Menu item meta values.
+ * @param string  $title   Menu item title.
  *
  * @return string
  */
-function my_menu_icons_override_markup( $markup, $id, $meta_values, $title ) {
+function my_menu_icons_override_markup( $markup, $id, $meta, $title ) {
 	// Do your thing.
 
 	return $markup;
@@ -181,7 +162,7 @@ Let me know via [GitHub issues](https://github.com/kucrut/wp-menu-icons/issues) 
 Add this block of code to your [mu-plugin file](http://codex.wordpress.org/Must_Use_Plugins):
 `
 /**
- * Disable menu icons
+ * Disable menu icons for a menu
  *
  * @param array $menu_settings Menu Settings.
  * @param int   $menu_id       Menu ID.
@@ -195,7 +176,7 @@ function my_menu_icons_menu_settings( $menu_settings, $menu_id ) {
 
 	return $menu_settings;
 }
-add_filter( 'menu_icons_menu_settings', '_kc_menu_icons_menu_settings', 10, 2 );
+add_filter( 'menu_icons_menu_settings', 'my_menu_icons_menu_settings', 10, 2 );
 `
 
 = How do I add an icon pack from Fontello? =
@@ -209,6 +190,18 @@ https://www.youtube.com/watch?v=B-5AVwgPaiw
 Read [this blog post](http://kucrut.org/add-custom-image-sizes-right-way/).
 
 == Changelog ==
+= 0.9.2 =
+* Update Icon Picker to [0.1.1](https://github.com/kucrut/wp-icon-picker/releases/tag/v0.1.1).
+
+= 0.9.1 =
+* Fix support for Composer.
+
+= 0.9.0 =
+* Performance optimization.
+* Modularisation. Developers: Take a look at the [Icon Picker](https://github.com/kucrut/wp-icon-picker) library.
+* Bug fixes.
+* Removed `menu_icons_{type_id}_props` filter.
+
 = 0.8.1 =
 * Fix disappearing icons from front-end when not logged-in, props [jj9617](http://profiles.wordpress.org/jj9617/)
 
