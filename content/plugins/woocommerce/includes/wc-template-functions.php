@@ -652,7 +652,7 @@ if ( ! function_exists( 'woocommerce_get_product_thumbnail' ) ) {
 	function woocommerce_get_product_thumbnail( $size = 'shop_catalog', $deprecated1 = 0, $deprecated2 = 0 ) {
 		global $post;
 
-		if ( has_post_thumbnail() ) {
+		if ( has_post_thumbnail() && wp_attachment_is_image( get_post_thumbnail_id() ) ) {
 			return get_the_post_thumbnail( $post->ID, $size );
 		} elseif ( wc_placeholder_img_src() ) {
 			return wc_placeholder_img( $size );
@@ -941,6 +941,17 @@ if ( ! function_exists( 'woocommerce_quantity_input' ) ) {
 		);
 
 		$args = apply_filters( 'woocommerce_quantity_input_args', wp_parse_args( $args, $defaults ), $product );
+
+		// Apply sanity to min/max args - min cannot be lower than 0
+		if ( '' !== $args['min_value'] && is_numeric( $args['min_value'] ) && $args['min_value'] < 0 ) {
+			$args['min_value'] = 0; // Cannot be lower than 0
+		}
+
+		// Max cannot be lower than 0 or min
+		if ( '' !== $args['max_value'] && is_numeric( $args['max_value'] ) ) {
+			$args['max_value'] = $args['max_value'] < 0 ? 0 : $args['max_value'];
+			$args['max_value'] = $args['max_value'] < $args['min_value'] ? $args['min_value'] : $args['max_value'];
+		}
 
 		ob_start();
 
