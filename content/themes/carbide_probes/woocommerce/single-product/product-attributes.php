@@ -16,22 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $has_row    = false;
 $alt        = 1;
 $attributes = $product->get_attributes();
-$len_units = 'inches';
-$ewl_units = 'inches';
-$dia_units = 'inches';
-
-$terms = get_the_terms( $product->id, 'product_cat' );
-foreach ( $terms as $term ) {
-    if ( $term->slug === 'cmm-replacement-styli' ) {
-        $len_units = 'mm';
-        $ewl_units = 'mm';
-        $dia_units = 'mm';
-
-    } elseif ( $term->slug === 'ball-metric' ) {
-        $dia_units = 'mm';
-
-    }
-}
 
 ob_start();
 
@@ -57,6 +41,8 @@ ob_start();
 	<?php endif; ?>
 
     <?php
+        // custom code from Todd Miller <todd@rainydaymedia.net>
+        // re-order the attributes to put the OEM stuff at the end.
         if ( array_key_exists( 'pa_oem-manufacturer', $attributes ) )
             $attributes['pa_oem-manufacturer']['position'] = '7';
         if ( array_key_exists( 'pa_oem-model-number', $attributes ) )
@@ -76,6 +62,7 @@ ob_start();
 		if ( empty( $attribute['is_visible'] ) || ( $attribute['is_taxonomy'] && ! taxonomy_exists( $attribute['name'] ) ) ) {
 			continue;
         } else if ( empty ( wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) ) ) ) {
+            // if there's no value in this attribute, don't display it
             continue;
 		} else {
 			$has_row = true;
@@ -87,23 +74,39 @@ ob_start();
 				if ( $attribute['is_taxonomy'] ) {
 
 					$values = wc_get_product_terms( $product->id, $attribute['name'], array( 'fields' => 'names' ) );
-                    if ( strpos( implode( ', ', $values ), 'mm' ) !== false )
+                    //echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values );
+
+                    // custom code from Todd Miller <todd@rainydaymedia.net>
+                    // certain attributes have measurement units attached (either in or mm)
+                    // we need to display the converted opposite unit as well
+                    if ( $attribute['name'] === 'pa_length' ) {
+                        $length_units = wc_get_product_terms( $product->id, 'pa_length-units', array( 'fields' => 'names' ) );
+                        $converted    = rdm_convert( $values[0], $length_units[0] );
+                        echo wpautop( $values[0] . ' ' . $length_units[0] . ' (' . $converted . ')' );
+
+                    } else if ( $attribute['name'] === 'pa_ewl' ) {
+                        $ewl_units = wc_get_product_terms( $product->id, 'pa_ewl-units', array( 'fields' => 'names' ) );
+                        $converted = rdm_convert( $values[0], $ewl_units[0] );
+                        echo wpautop( $values[0] . ' ' . $ewl_units[0] . ' (' . $converted . ')' );
+
+                    } else if ( $attribute['name'] === 'pa_radius' ) {
+                        $radius_units = wc_get_product_terms( $product->id, 'pa_radius-units', array( 'fields' => 'names' ) );
+                        $converted = rdm_convert( $values[0], $radius_units[0] );
+                        echo wpautop( $values[0] . ' ' . $radius_units[0] . ' (' . $converted . ')' );
+
+                    } else if ( $attribute['name'] === 'pa_diameter' ) {
+                        $diameter_units = wc_get_product_terms( $product->id, 'pa_diameter-units', array( 'fields' => 'names' ) );
+                        $converted = rdm_convert( $values[0], $diameter_units[0] );
+                        echo wpautop( $values[0] . ' ' . $diameter_units[0] . ' (' . $converted . ')' );
+
+                    } else if ( $attribute['name'] === 'pa_ball-diameter' ) {
+                        $ball_units = wc_get_product_terms( $product->id, 'pa_ball-units', array( 'fields' => 'names' ) );
+                        $converted = rdm_convert( $values[0], $ball_units[0] );
+                        echo wpautop( $values[0] . ' ' . $ball_units[0] . ' (' . $converted . ')' );
+
+                    } else {
                         echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values );
-
-                    elseif ( $attribute['name'] === 'pa_length')
-                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $len_units ) ), $attribute, $values );
-
-                    elseif ( $attribute['name'] === 'pa_ewl' )
-                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $ewl_units ) ), $attribute, $values );
-
-                    elseif ( $attribute['name'] === 'pa_ball-diameter' || $attribute['name'] === 'pa_diameter' )
-                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' ' . $dia_units ) ), $attribute, $values );
-
-                    elseif ( $attribute['name'] === 'pa_radius' )
-                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) . ' inches' ) ), $attribute, $values );
-
-                    else
-                        echo apply_filters( 'woocommerce_attribute', wpautop( wptexturize( implode( ', ', $values ) ) ), $attribute, $values );
+                    }
 
 				} else {
 
@@ -122,4 +125,18 @@ if ( $has_row ) {
 	echo ob_get_clean();
 } else {
 	ob_end_clean();
+}
+
+/**
+ * converts the given value and measurement to the opposite measurement
+ * eg. inches will be converted to mm and vice-versa
+ */
+function rdm_convert ($value, $units) {
+    if ( $units === 'in' ) {
+        $converted = number_format( $value / 0.03937, 4 );
+        return $converted . ' mm';
+    } else if ( $units === 'mm' ) {
+        $converted = number_format( $value * 0.03937, 4 );
+        return $converted . ' in';
+    }
 }
