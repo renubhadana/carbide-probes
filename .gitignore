@@ -10,6 +10,9 @@ bower_components
 components
 node_modules
 
+# local plugins
+carbide-importer/
+
 # Ignore automatically generated cruft
 *.log
 .sass-cache
