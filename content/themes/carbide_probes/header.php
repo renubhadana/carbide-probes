@@ -20,30 +20,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
  	<?php wp_head(); ?>
-    <!-- Start Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-26171803-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
-    <!-- End Google Analytics -->
-    <!-- Hotjar Tracking Code for carbideprobes.com -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:90965,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
-    <!-- END HOTJAR -->
+    <?php require_once get_template_directory() . '/inc/analytics.php' ?>
 </head>
 
 <body <?php body_class(); ?>>
@@ -74,8 +51,14 @@
         <div class="row">
             <div class="sixteen columns">
                 <div class="header-title">
-                    <h1>Find Exactly<br>What You Need.</h1>
-                    <h2>Finding the right gauge tip or stylus<br>has never been easier.</h2>
+                    <?php $homeTitle = get_field('home_page_title');
+                        if(is_page('home')){
+                            echo '<h1>' . $homeTitle . '</h1>';
+                        } else{
+                            the_title( '<h1 class="entry-title">', '</h1>' );
+                        }
+                    ?>
+                    <h2><?php the_field('sub_heading'); ?></h2>
                 </div>
             </div>
         </div>
@@ -107,8 +90,14 @@
         <div class="row">
             <div class="sixteen columns">
                 <div class="header-title">
-                    <h1>Find Exactly<br>What You Need.</h1>
-                    <h2>Finding the right gauge tip or stylus<br>has never been easier.</h2>
+                    <?php $homeTitle = get_field('home_page_title');
+                        if(is_page('home')){
+                            echo '<h1>' . $homeTitle . '</h1>';
+                        } else{
+                            the_title( '<h1 class="entry-title">', '</h1>' );
+                        }
+                    ?>
+                    <h2><?php the_field('sub_heading'); ?></h2>
                 </div>
             </div>
         </div>
