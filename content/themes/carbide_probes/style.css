@@ -1787,6 +1787,9 @@ span.right, li.right { float: right; }
 .right-caret { position: relative; }
 .right-caret:after { content: ''; position: absolute; top: 25%; left: 5px; border-top: 8px solid transparent; border-bottom: 7px solid transparent; border-left: 10px solid #ef4c34; }
 
+.blogroll{ border-bottom: 1px solid #f4f4f4; padding-bottom: .5em; }
+.blogroll:last-child{ border-bottom: none; }
+
 /* =Buttons
 ----------------------------------------------- */
 .btn, input[type="submit"] { cursor: pointer; }

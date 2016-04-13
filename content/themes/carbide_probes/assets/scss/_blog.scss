@@ -1,0 +1,21 @@
+.blogroll {
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: .5em
+}
+.blogroll:last-child{
+  border-bttom:none;
+}
+.post-align {
+    display: flex;
+    justify-content: space-around
+}
+
+.post-image {
+    padding: 5px;
+    margin-top: 10px;
+     @media(max-width: 767px) {
+        .post-align{
+            display: block;
+        }
+    }
+}
