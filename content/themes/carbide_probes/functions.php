@@ -124,6 +124,15 @@ function rdmgumby_widgets_init() {
 		'before_title'  => '<h1 class="widget-title">',
 		'after_title'   => '</h1>'
 	) );
+    register_sidebar( array(
+        'name'          => __( 'Products Page Widgets', 'rdmgumby' ),
+        'id'            => 'products-page-widgets',
+        'description'   => 'Widgets for the Products Category Page',
+        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</aside>',
+        'before_title'  => '<h1 class="widget-title">',
+        'after_title'   => '</h1>'
+    ) );
 }
 
 /**
@@ -378,4 +387,18 @@ add_action( 'wp_head', 'rdmgumby_output_favicons' );
 add_action( 'admin_head', 'rdmgumby_output_favicons' );
 add_action( 'login_head', 'rdmgumby_output_favicons' );
 
+// Adds a short title for the blog roll
+function short_title($before = '', $after = '', $echo = true, $length = false) { $title = get_the_title();
 
+	if ( $length && is_numeric($length) ) {
+		$title = substr( $title, 0, $length );
+	}
+
+	if ( strlen($title)> 0 ) {
+		$title = apply_filters('short_title', $before . $title . $after, $before, $after);
+		if ( $echo )
+			echo $title;
+		else
+			return $title;
+	}
+}
