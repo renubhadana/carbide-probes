@@ -51,7 +51,7 @@
         <div class="row">
             <div class="sixteen columns">
                 <div class="header-title">
-<!-- THIS IS MOBILE -->
+<!-- START MOBILE HEADER -->
                     <?php
                         $homeTitle = get_field('home_page_title');
                         if(is_page('home')){
@@ -110,7 +110,7 @@
             <div class="sixteen columns">
                 <div class="header-title">
                     <h1 class="entry-title">
-<!-- THIS IS DESKTOP -->
+<!-- START DESKTOP HEADER -->
                     <?php
                         $homeTitle = get_field('home_page_title');
                         if(is_page('home')){
