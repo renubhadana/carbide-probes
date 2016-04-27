@@ -19,13 +19,8 @@
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-<<<<<<< HEAD
  	<?php wp_head(); ?>
     <?php require_once get_template_directory() . '/inc/analytics.php' ?>
-=======
-    <?php wp_head(); ?>
-    <?php require_once get_template_directory() . '/inc/analytics.php'; ?>
->>>>>>> dev
 </head>
 
 <body <?php body_class(); ?>>
@@ -56,16 +51,6 @@
         <div class="row">
             <div class="sixteen columns">
                 <div class="header-title">
-<<<<<<< HEAD
-                    <?php $homeTitle = get_field('home_page_title');
-                        if(is_page('home')){
-                            echo '<h1>' . $homeTitle . '</h1>';
-                        } else{
-                            the_title( '<h1 class="entry-title">', '</h1>' );
-                        }
-                    ?>
-                    <h2><?php the_field('sub_heading'); ?></h2>
-=======
 <!-- THIS IS MOBILE -->
                     <?php
                         $homeTitle = get_field('home_page_title');
@@ -93,7 +78,6 @@
                             }
                         ?>
                     </h2>
->>>>>>> dev
                 </div>
             </div>
         </div>
@@ -125,16 +109,6 @@
         <div class="row">
             <div class="sixteen columns">
                 <div class="header-title">
-<<<<<<< HEAD
-                    <?php $homeTitle = get_field('home_page_title');
-                        if(is_page('home')){
-                            echo '<h1>' . $homeTitle . '</h1>';
-                        } else{
-                            the_title( '<h1 class="entry-title">', '</h1>' );
-                        }
-                    ?>
-                    <h2><?php the_field('sub_heading'); ?></h2>
-=======
                     <h1 class="entry-title">
 <!-- THIS IS DESKTOP -->
                     <?php
@@ -163,7 +137,6 @@
                             }
                         ?>
                     </h2>
->>>>>>> dev
                 </div>
             </div>
         </div>
