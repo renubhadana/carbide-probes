@@ -8,7 +8,7 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             <div class="sixteen columns">
                 <?php
-                    $args = array( 'posts_per_page' => 5, 'offset'=> 0, 'category' => 1 );
+                    $args = array( 'posts_per_page' => 5, 'offset'=> 0, 'category' => 0 );
                     $myposts = get_posts( $args );
                         foreach ( $myposts as $post ) : setup_postdata( $post );
 
