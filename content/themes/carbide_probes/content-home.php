@@ -40,7 +40,6 @@
     </div>
     <div style="clear: both;"></div>
 </div>
-
 <div class="home-middle-blocks hidden-xs">
     <div class="row">
         <div class="eight columns">
@@ -65,7 +64,37 @@
         </div>
     </div>
 </div>
+<div class="home-middle-blocks hidden-xs">
+    <div class="row">
+        <div class="sixteen columns blog-roll">
+            <div class="header-title-2">
+                <h3 class="blog entry-title"><span class="orange">Latest</span> News</h3>
+            </div>
+        <?php
+            $args = array( 'posts_per_page' => 1, 'offset'=> 0, 'category' => 0 );
+            $carbide_posts = get_posts( $args );
+                foreach ( $carbide_posts as $post ) : setup_postdata( $post );
 
+        ?>
+            <div class="blogroll post-align">
+                <article>
+                    <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+                        <?php the_post_thumbnail('large' ); ?>
+                    </a>
+                    <h3 class="entry-title">
+                        <a href="<?php the_permalink(); ?>"><?php short_title('','',true, '0'); ?></a>
+                    </h3>
+                    <p><?php echo substr(get_the_excerpt(), 0, 120); ?> [...]<br>
+                        <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><span class="btn blue-btn breath">Continue Reading »</span></a>
+                    </p>
+                </article>
+            </div>
+        <?php endforeach;
+            wp_reset_postdata();
+        ?>
+        </div>
+    </div>
+</div>
 <div class="row hidden-xs">
     <?php get_sidebar('home'); ?>
 </div>

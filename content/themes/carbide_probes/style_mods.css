@@ -1,0 +1,27 @@
+.breath{
+	margin: 15px 0;
+}
+.blog-roll{
+	border-top: 1px solid rgba(0,0,0,.1);
+	border-bottom: 1px solid rgba(0,0,0,.1);
+  padding-bottom: 1em;
+  margin: 2em 0 ;
+  color: #424240;
+}
+.header-title-2{
+	margin-top: 2.5em;
+}
+h3.blog{
+	text-transform: uppercase;
+  font-weight: 700;
+  font-size: 3.5em;
+  margin-bottom: 1em;
+  color: #000;
+  line-height: .8;
+}
+h3 span.orange{
+	color: rgba(217,74,46,1.00);
+}
+aside.post-image:first-child{
+	margin-right: 10%;
+}
